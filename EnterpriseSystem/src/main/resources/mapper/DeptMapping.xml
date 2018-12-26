@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+  <mapper namespace="io.dtchain.dao.DeptDao">
+  <!-- 添加部门 -->
+  	<insert id="addDept" parameterType="Map">
+  		insert into dept (id,deptName) values(#{id},#{deptName})
+  	</insert>
+  	<!-- 删除部门 -->
+  	<delete id="delDept" parameterType="string">
+  		delete from dept where id=#{id}
+  	</delete>
+  	<!-- 查询部门 -->
+  	<select id="queryDept" resultType="io.dtchain.entity.DeptInfo">
+  		select id,deptName from dept
+  	</select>
+  	<!-- 修改部门名称部门表 -->
+  	<update id="upDept" parameterType="io.dtchain.entity.DeptInfo">
+  		update  dept set deptName=#{deptName} where id=#{id} 
+  	</update>
+  </mapper>

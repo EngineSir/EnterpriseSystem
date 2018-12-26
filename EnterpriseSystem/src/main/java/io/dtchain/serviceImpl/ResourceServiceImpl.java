@@ -1,0 +1,29 @@
+package io.dtchain.serviceImpl;
+
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import io.dtchain.dao.ResourceDao;
+import io.dtchain.entity.Resource;
+import io.dtchain.service.ResourceService;
+@Service("ResourceService")
+public class ResourceServiceImpl implements ResourceService{
+	 @Autowired
+	private ResourceDao resourceDao;
+	/*
+	 * 加载用户资源
+	 * @see io.dtchain.service.ResourceService#loadUserResources(java.util.Map)
+	 */
+	public List<Resource> loadUserResources(Map<String, Object> map) {
+		
+		return resourceDao.loadUserResources(map);
+	}
+	public List<Resource> queryAll() {
+		
+		return resourceDao.queryAll();
+	}
+
+}

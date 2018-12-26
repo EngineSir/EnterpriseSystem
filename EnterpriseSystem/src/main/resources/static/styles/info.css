@@ -1,0 +1,10 @@
+.content {
+	position: absolute;
+	top: 20%;
+	left: 45%;
+}
+
+.layui-upload-list {
+	width: 612px;
+	height: 125px;
+}
