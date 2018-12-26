@@ -55,6 +55,7 @@
 								delTr();
 								if (result.state == 1) {
 									var dataRes = result.data;
+									/*<![CDATA[*/
 									for (var i = 0; i < dataRes.length; i++) {
 										create(dataRes[i].dates,
 												dataRes[i].workMorn,
@@ -62,6 +63,8 @@
 												dataRes[i].workAfter,
 												dataRes[i].atNight);
 									}
+									/*]]>*/
+									
 								}
 							},
 							error : function() {

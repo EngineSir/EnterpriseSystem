@@ -59,10 +59,10 @@ function createTr(empName, empSex, empDept, empId) {
 	str += "<th>" + empSex + "</th>";
 	str += "<th>" + empDept + "</th>";
 	str += "";
-	str += "<th style='width: 500px; height: 30px'><input type='checkbox'/>员工管理"
-			+ "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type='checkbox'/>部门管理&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
-			+ "<input type='checkbox'/>权限管理 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type='checkbox'/>请假审批 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" 
-			+ "<input type='checkbox'/>数据录入</th>";
+	str += "<th style='width: 500px; height: 30px'><input type='checkbox' name='/empManageAuthority'/>员工管理"
+			+ "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type='checkbox' name='/deptauthority'/>部门管理&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+			+ "<input type='checkbox' name='/authorityManage'/>权限管理 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type='checkbox' name='/approvalauthority'/>请假审批 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" 
+			+ "<input type='checkbox' name='/dataImportauthority'/>数据录入</th>";
 	str+="<th><button class='layui-btn layui-btn-primary layui-btn-sm'>分配权限</button></th>";
 	str += "</tr>";
 	var $str = $(str);

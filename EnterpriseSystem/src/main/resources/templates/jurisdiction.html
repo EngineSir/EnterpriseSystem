@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
 <meta charset="UTF-8"/>
@@ -19,7 +18,7 @@
 <script src="layui/layui.js"></script>
 <script type="text/javascript" src="scripts/jurisdiction.js"></script>
 </head>
-<script type="text/javascript">
+<script th:inline="javascript">
 	function doSearch(value, name) {
 		alert('You input: ' + value + '(' + name + ')');
 	}
@@ -27,7 +26,16 @@
 		$(".com").load("com.html");
 		queryEmp();	
 		$(".table_info").on("click","button",function(){
-			console.log($(this).parent().parent());
+			var $th=$($(this).parent().parent().find("th").eq(3));
+			var $input=$th.find("input");
+			/*<![CDATA[*/
+				for(var k=0;k<$input.length;k++){
+					
+					if($input[k].checked==true){
+						console.log($input[k].name)
+					}
+				}
+			/*]]>*/
 		});
 	});
 
