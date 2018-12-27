@@ -1,5 +1,6 @@
 package io.dtchain.shiro;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,11 +15,14 @@ import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
+import org.apache.shiro.mgt.RealmSecurityManager;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.subject.SimplePrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
+
 
 import io.dtchain.dao.MangageDao;
 import io.dtchain.entity.EmpInfo;
@@ -41,9 +45,28 @@ public class ShiroRealm extends AuthorizingRealm  {
         System.out.println("resourcesList:"+resourcesList);
         // 权限信息对象info,用来存放查出的用户的所有的角色（role）及权限（permission）
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+        Session session = SecurityUtils.getSubject().getSession();
+        boolean flog=true,flog1=true;
         for(Resource resources: resourcesList){
             info.addStringPermission(resources.getResUrl());
+            if("/empManageAuthority".equals(resources.getResUrl())) {
+                session.setAttribute("empManageAuthority", "/empManageAuthority");
+                flog=false;
+            }
+            	
+            
+            if("/deptauthority".equals(resources.getResUrl())) {
+                session.setAttribute("deptauthority", "/deptauthority");
+                flog1=false;
+            }
         }
+        if(flog) {
+        	 session.removeAttribute("empManageAuthority");
+        }
+        if(flog1) {
+       	 session.removeAttribute("deptauthority");
+       }
+        
         return info;
 	}
 
@@ -56,7 +79,7 @@ public class ShiroRealm extends AuthorizingRealm  {
         EmpInfo user=mangageDao.queryInfo(username);
         if(user==null) throw new UnknownAccountException();
         SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(
-                user.getEmpName(), //用户名  使用shiro:principal=""可以获取到改值SecurityUtils.getSubject().getPrincipal()可以获取到改值
+                user.getEmpName(), //用户名  使用shiro:principal=""可以获取到改值SecurityUtils.getSubject().getPrincipal()可以获取到该值
                 user.getEmpPass(), //密码
                 ByteSource.Util.bytes(username),
                 getName()  //realm name
@@ -67,5 +90,21 @@ public class ShiroRealm extends AuthorizingRealm  {
         session.setAttribute("userSessionId", user.getEmpId());
         return authenticationInfo;
 	}
-
+	
+	 /**
+     * 根据userId 清除当前session存在的用户的权限缓存
+     * @param userIds 已经修改了权限的userId
+     */
+    public void clearUserAuthByUserId(List<Integer> userIds){
+        if(null == userIds || userIds.size() == 0)	return ;
+        //定义返回
+        List<SimplePrincipalCollection> list = new ArrayList<SimplePrincipalCollection>();
+     
+        RealmSecurityManager securityManager =
+                (RealmSecurityManager) SecurityUtils.getSecurityManager();
+        ShiroRealm realm = (ShiroRealm)securityManager.getRealms().iterator().next();
+        for (SimplePrincipalCollection simplePrincipalCollection : list) {
+            realm.clearCachedAuthorizationInfo(simplePrincipalCollection);
+        }
+    }
 }

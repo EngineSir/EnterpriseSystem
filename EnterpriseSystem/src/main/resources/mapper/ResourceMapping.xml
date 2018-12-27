@@ -14,4 +14,7 @@
 	<select id="queryAll" resultType="io.dtchain.entity.Resource">
 		select * from resource
 	</select>
+	<select id="queryId" resultType="int" parameterType="String">
+		select resourceId from user_resource WHERE userid=#{userId}
+	</select>
 </mapper>

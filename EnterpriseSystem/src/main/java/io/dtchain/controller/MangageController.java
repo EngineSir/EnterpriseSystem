@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import io.dtchain.entity.EmpInfo;
 import io.dtchain.service.MangageService;
+import io.dtchain.service.ResourceService;
 import io.dtchain.utils.Result;
 
 /**
@@ -29,7 +30,6 @@ public class MangageController {
 
 	@Autowired
 	private MangageService mangageService;
-
 	@RequestMapping("/login.io")
 	//@ResponseBody
 	/**
@@ -37,7 +37,7 @@ public class MangageController {
 	 */
 	public String login(String username,String pass ,HttpServletResponse res,HttpServletRequest req) {
 		if(username==null||username.length()==0||pass==null||pass.length()==0) {
-			return "login";
+			return "redirect:login";
 		}
 		//Result<Object> result = mangageService.login(adminName, adminPassword, res);
 		Result<Object> result=new Result<Object>();
@@ -91,5 +91,10 @@ public class MangageController {
 	public Result<Object> upEmpInfo(EmpInfo emp) {
 		Result<Object> result = mangageService.upEmpInfo(emp);
 		return result;
+	}
+	@RequestMapping("/authorityUrl.io")
+	@ResponseBody
+	public Result<Object> authorityUrl(String url){
+		return mangageService.authorityUrl(url);
 	}
 }

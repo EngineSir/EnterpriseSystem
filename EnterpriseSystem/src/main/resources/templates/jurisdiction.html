@@ -20,23 +20,12 @@
 </head>
 <script th:inline="javascript">
 	function doSearch(value, name) {
-		alert('You input: ' + value + '(' + name + ')');
+		
 	}
 	$(function() {
-		$(".com").load("com.html");
+		$(".com").load("com");
 		queryEmp();	
-		$(".table_info").on("click","button",function(){
-			var $th=$($(this).parent().parent().find("th").eq(3));
-			var $input=$th.find("input");
-			/*<![CDATA[*/
-				for(var k=0;k<$input.length;k++){
-					
-					if($input[k].checked==true){
-						console.log($input[k].name)
-					}
-				}
-			/*]]>*/
-		});
+		$(".table_info").on("click","button",getAuthority);
 	});
 
 </script>

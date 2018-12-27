@@ -41,4 +41,6 @@ public interface MangageService
 	 * 更新员工信息
 	 */
 	public Result<Object> upEmpInfo(EmpInfo emp);
+	
+	public Result<Object> authorityUrl(String url);
 }

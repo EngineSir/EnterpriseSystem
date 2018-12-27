@@ -9,4 +9,10 @@
   	<select id="queryCount"  resultType="int">
   		select count(*) from EmpTable where empDept IS NOT NULL
   	</select>
+  	<insert id="addAuthority" parameterType="Map">
+  		INSERT INTO user_resource VALUES(#{userId},#{resourceId});
+  	</insert>
+  	<delete id="delAuthority" parameterType="Map">
+  		delete from user_resource where userId=#{userId} and resourceId=#{resourceId}
+  	</delete>
   </mapper>

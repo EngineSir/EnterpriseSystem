@@ -164,6 +164,20 @@ function clickSure(){
 }
 //动态创建tr
 function createTr(empId,empName,empSex,empDept,empNum,empPhone,empPhone,empMail){
+	var state=0;
+	$.ajax({
+		url:"mangage/authorityUrl.io",
+		type:"post",
+		async : false,
+		dataType:"json",
+		data:{"url":"empManageAuthority"},
+		success:function(result){
+			state=result.state;
+		},
+		error:function(){
+			alert("权限url查询失败");
+		}
+	});
 	var str="<tr>";
 	str+="<td>"+empName+"</td>";
 	str+="<td>"+empSex+"</td>";
@@ -171,8 +185,10 @@ function createTr(empId,empName,empSex,empDept,empNum,empPhone,empPhone,empMail)
 	str+="<td>"+empNum+"</td>";
 	str+="<td>"+empPhone+"</td>";
 	str+="<td>"+empMail+"</td>";
-	str+="<td><button type='button' shiro:hasPermission='/empManageAuthority' class='layui-btn layui-btn-normal delete'>删除</button></td>";
-	str+="<td><button type='button' shiro:hasPermission='/empManageAuthority' class='layui-btn layui-btn-normal update'>修改</button></td>";
+	if(state==1){
+		str+="<td><button type='button' shiro:hasPermission='/empManageAuthority' class='layui-btn layui-btn-normal delete'>删除</button></td>";
+		str+="<td><button type='button' shiro:hasPermission='/empManageAuthority' class='layui-btn layui-btn-normal update'>修改</button></td>";
+	}
 	str+="</tr>";
 	var $str=$(str);
 	$str.data("empId",empId);

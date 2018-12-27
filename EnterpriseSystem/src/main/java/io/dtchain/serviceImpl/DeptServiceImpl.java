@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Service;
 
 import io.dtchain.dao.DeptDao;
@@ -84,4 +85,5 @@ public class DeptServiceImpl implements DeptService {
 
 		return result;
 	}
+
 }

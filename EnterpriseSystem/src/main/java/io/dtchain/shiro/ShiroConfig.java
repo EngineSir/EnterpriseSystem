@@ -61,6 +61,7 @@ public class ShiroConfig {
 		shiroFilterFactoryBean.setSuccessUrl("/index");
 		// 未授权界面;
 		shiroFilterFactoryBean.setUnauthorizedUrl("/403");
+		System.out.println("拦截");
 		// 拦截器.
 		Map<String, String> filterChainDefinitionMap = new LinkedHashMap<String, String>();
 
@@ -90,7 +91,6 @@ public class ShiroConfig {
 
 	@Bean
 	public SecurityManager securityManager() {
-		System.out.println("securityManager");
 		DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
 		// 设置realm.
 		securityManager.setRealm(myShiroRealm());
@@ -114,7 +114,6 @@ public class ShiroConfig {
 	 */
 	@Bean
 	public HashedCredentialsMatcher hashedCredentialsMatcher() {
-		System.out.println("Md5");
 		HashedCredentialsMatcher hashedCredentialsMatcher = new HashedCredentialsMatcher();
 
 		hashedCredentialsMatcher.setHashAlgorithmName("md5");// 散列算法:这里使用MD5算法;

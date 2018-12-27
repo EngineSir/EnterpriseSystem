@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Service;
 
 import io.dtchain.dao.MangageDao;
@@ -125,6 +126,20 @@ public class MangageServiceImpl implements MangageService {
 			result.setState(1);
 		} else {
 			result.setMsg("更新信息失败");
+			result.setState(0);
+		}
+		return result;
+	}
+	
+	@Override
+	public Result<Object> authorityUrl(String url) {
+		Result<Object> result=new Result<Object>();
+		String getAuthotity=(String)SecurityUtils.getSubject().getSession().getAttribute(url);
+		if(getAuthotity!=null&&getAuthotity.length()>0) {
+			result.setMsg("拥有该权限");
+			result.setState(1);
+		}else {
+			result.setMsg("没有改权限");
 			result.setState(0);
 		}
 		return result;

@@ -112,10 +112,26 @@ function sureUp(){
  * 动态创建tr
  * */
 function createTr(id,deptName){
+	var state=0;
+	$.ajax({
+		url:"dept/authorityUrl.io",
+		type:"post",
+		async : false,
+		dataType:"json",
+		data:{"url":"deptauthority"},
+		success:function(result){
+			state=result.state;
+		},
+		error:function(){
+			alert("权限url查询失败");
+		}
+	});
 	var str="<tr>";
-	str+="<td>"+deptName+"</td>";
-	str+="<td><button type='button' shiro:hasPermission='/deptauthority' class='layui-btn layui-btn-normal delete'>删除</button></td>";
-	str+="<td><button type='button' shiro:hasPermission='/deptauthority' class='layui-btn layui-btn-normal update'>修改</button></td>";
+	str+="<th style='width:200px;'>"+deptName+"</th>";
+	if(state==1){
+		str+="<th style='width:200px;'><button type='button' class='layui-btn layui-btn-normal delete'>删除</button></th>";
+		str+="<th style='width:200px;'><button type='button' class='layui-btn layui-btn-normal update'>修改</button></th>";
+	}
 	str+="</tr>";
 	var $str=$(str);
 	$str.data("id",id);
