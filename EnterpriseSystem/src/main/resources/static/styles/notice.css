@@ -1,18 +1,33 @@
-.body_border{
+.body_content{
 	position:absolute;
-	left:27%;
-	width:55%;
-	height:83%;
-	border:2px solid #0080ff;
+	width:100%;
+	height:86%;
+	overflow-y: scroll;
+	overflow-x: hidden;
+	left:13%;
 }
-.intro{
+#span_title{
 	position:absolute;
 	left:35%;
-	top:2%;
-	font-weight:bold;
-	font-size:17px;
 }
-.text{
+.notice_list{
 	position:absolute;
-	top:8%;
+	top:20%;
+	left:15%;
+	width:80%;
+}
+.layui-table td{
+	border-width:0;
+}
+.paging{
+	position:absolute;
+	top:90%;
+	left:45%;
+	width:80%;
+}
+a{
+	color:#009;
+}
+.notice_list a:hover{
+	color:#ff8080;
 }

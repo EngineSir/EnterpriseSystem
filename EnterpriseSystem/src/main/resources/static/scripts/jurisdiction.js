@@ -124,6 +124,9 @@ function getAuthority() {
 			data:{"empId":empId,"resourceId":resourceId},
 			success:function(result){
 				alert(result.msg);
+				if(result.state==-1){
+					window.location.href="index";
+				}
 			},
 			error:function(){
 				alert("添加权限失败");

@@ -29,7 +29,7 @@
 	left: -5%;
 }
 </style>
-<script type="text/javascript">
+<script th:inline="javascript">
 	layui.use('laydate', function() {
 		var laydate = layui.laydate;
 
@@ -43,16 +43,15 @@
 		});
 	});
 	$(function() {
-		$(".com").load("com.html");
-
+		$(".com").load("com");
 	});
 </script>
 <body class="layui-layout-body">
 	<div class="com"></div>
 	<div style="margin: 20px 0;"></div>
 
-	<form action="File/upload.io" method="post"
-		enctype="multipart/form-data" class="content">
+	 <form action="File/upload.io" method="post"
+		enctype="multipart/form-data" class="content"> 
 
 		<span>需要导入数据的日期</span>
 
@@ -82,9 +81,10 @@
 					data-options="prompt:'选择文件...'" style="width: 100%"/>
 			</div>
 			<div>
-				<button type="submit" class="easyui-linkbutton" style="width: 100%">上传</button>
+				<button type="submit" class="easyui-linkbutton" id="subBtn" style="width: 100%">上传</button>
 			</div>
 		</div>
-	</form>
+	 </form> 
+
 </body>
 </html>

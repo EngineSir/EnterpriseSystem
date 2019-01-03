@@ -86,7 +86,7 @@
 				</div>
 			</div>
 			<div class="add">
-				<label class="layui-form-label">审批人</label>
+				<label class="layui-form-label">审批人:</label>
 				<div class="layui-btn-group">
 
 					<button type="button" class="layui-btn layui-btn-sm" id="add">
@@ -118,7 +118,13 @@
 	<!-- 隐藏的添加审批人页面 -->
 	<div class="show" hidden="hidden">
 		<span id="leftTitle">审批人</span>
-		<div class="showBody"></div>
+		<div class="showBody">
+			<table class="layui-hide" id="tabData"></table>
+		</div>
+		<div class="btnGroup">
+			   <button class="layui-btn layui-btn-primary layui-btn-sm">确定</button>
+			      <button class="layui-btn layui-btn-primary layui-btn-sm">取消</button>
+		</div>
 	</div>
 </body>
 </html>

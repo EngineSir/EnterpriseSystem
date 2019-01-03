@@ -52,6 +52,7 @@ function delDept(){
 function queryDept(){
 	$.ajax({
 		url:"dept/queryDept.io",
+		type:"get",
 		success:function(result){
 			if(result.state==1){
 				delTr();
