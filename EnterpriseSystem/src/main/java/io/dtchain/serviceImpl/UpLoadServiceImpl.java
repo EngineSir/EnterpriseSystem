@@ -11,14 +11,15 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
@@ -29,11 +30,17 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.shiro.SecurityUtils;
+import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ResourceUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import io.dtchain.dao.DataProceDao;
 import io.dtchain.dao.MangageDao;
 import io.dtchain.dao.RecordDao;
+import io.dtchain.dao.ResourceDao;
 import io.dtchain.dao.UpLoadDao;
 import io.dtchain.entity.AttendTable;
 import io.dtchain.entity.DataProceTable;
@@ -47,14 +54,16 @@ import io.dtchain.utils.Result;
 
 @Service("UpLoadService")
 public class UpLoadServiceImpl implements UpLoadService {
-	@Resource
+	@Autowired
 	private UpLoadDao uploadDao;
-	@Resource
+	@Autowired
 	private RecordDao recordDao;
-	@Resource
+	@Autowired
 	private MangageDao mangageDao;
-	@Resource
+	@Autowired
 	private DataProceDao dataProceDao;
+	@Autowired
+	private ResourceDao resourcesDao;
 	private Map<String, String> map = new HashMap<String, String>();
 	private Map<String, String> overMap = new HashMap<String, String>();// 储存加班信息
 	private Map<Integer, String> dataNum = new HashMap<Integer, String>();
@@ -63,6 +72,19 @@ public class UpLoadServiceImpl implements UpLoadService {
 	 * 上传文件
 	 */
 	public void upLoad(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		String userId=(String)SecurityUtils.getSubject().getSession().getAttribute("userSessionId");
+		
+		//从数据库获取，该权限
+		List<String> list=resourcesDao.queryResourceName(userId);
+		if(list==null||list.size()<1||!list.contains("/dataImport")) {
+			//result.setMsg("联系管理员获取该权限");
+			//result.setState(-1);
+			//return result;
+			req.getSession().setAttribute("state", -1);
+			res.sendRedirect("../index");
+			return;
+		}
+		
 
 		String dateS = "";
 		String dateE = "";
@@ -73,11 +95,14 @@ public class UpLoadServiceImpl implements UpLoadService {
 
 			}
 		}
-
+	
 		// 文件保存路径
-		String savePath = req.getServletContext().getRealPath("/WEB-INF/upload");
+	//	String savePath = req.getServletContext().getRealPath("/WEB-INF/upload");
+		String savePath = ResourceUtils.getURL("src\\main\\resources\\upload").getPath();
+		savePath=savePath.substring(1).replace('/', '\\');
 		// 上传生成的临时文件保存目录
-		String tempPath = req.getServletContext().getRealPath("/WEB-INF/temp");
+		//String tempPath = req.getServletContext().getRealPath("/WEB-INF/temp");
+		String tempPath=ResourceUtils.getURL("src\\main\\resources\\temp").getPath();
 		File tmpFile = new File(tempPath);
 		// 文件不存在就创建
 		if (!tmpFile.exists()) {
@@ -95,7 +120,7 @@ public class UpLoadServiceImpl implements UpLoadService {
 		ServletFileUpload upload = new ServletFileUpload(factory);
 		// 监听文件上传进度
 		upload.setProgressListener(new ProgressListener() {
-
+			
 			public void update(long pBytesRead, long pContentLength, int arg2) {
 				System.out.println("文件大小为：" + pContentLength + ",当前已处理：" + pBytesRead);
 
@@ -178,7 +203,7 @@ public class UpLoadServiceImpl implements UpLoadService {
 						if (delFile.exists()) {
 							boolean f = delFile.delete();
 						}
-						res.sendRedirect("../index.html");
+						res.sendRedirect("../index");
 					} else {
 						System.out.println("不支持后缀为：" + fileExtName + " 的格式");
 					}
@@ -187,7 +212,9 @@ public class UpLoadServiceImpl implements UpLoadService {
 		} catch (FileUploadException e) {
 			e.printStackTrace();
 		}
+		
 	}
+	
 
 	/**
 	 * 创建目录，用于保存文件
