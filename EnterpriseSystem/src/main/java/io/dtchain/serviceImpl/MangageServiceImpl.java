@@ -46,35 +46,6 @@ public class MangageServiceImpl implements MangageService {
 	}
 
 	/**
-	 * 登录校验
-	 */
-	public Result<Object> login(String adminName, String adminPassword, HttpServletResponse res) {
-		Result<Object> result = new Result<Object>();
-
-		/* 超级管理员帐户
-		if (adminName.equals("admin") && adminPassword.equals("123456")) {
-			result.setMsg("登录成功");
-			result.setState(1);
-			return result;
-		}*/
-		EmpInfo emp = mangageDao.login(adminName);
-		if (emp == null) {
-			result.setMsg("用户名错误");
-			result.setState(0);
-		} else if (emp.getEmpPass().equals(adminPassword)) {
-			result.setMsg("登录成功");
-			result.setState(1);
-			result.setData(emp.getEmpId());
-			// cookie=new Cookie("name",adminName);
-			// res.addCookie(cookie);
-		} else {
-			result.setMsg("密码错误");
-			result.setState(2);
-		}
-		return result;
-	}
-
-	/**
 	 * 查询员工信息
 	 */
 	public Result<List<EmpInfo>> queryEmpInfo(String value, int page) {
@@ -85,7 +56,7 @@ public class MangageServiceImpl implements MangageService {
 		map.put("begin", begin);
 		map.put("info", value);
 		list = mangageDao.queryDeptEmpInfo(map);
-	
+
 		result.setData(list);
 		result.setMsg("查询成功");
 		result.setState(1);
@@ -130,15 +101,15 @@ public class MangageServiceImpl implements MangageService {
 		}
 		return result;
 	}
-	
+
 	@Override
 	public Result<Object> authorityUrl(String url) {
-		Result<Object> result=new Result<Object>();
-		String getAuthotity=(String)SecurityUtils.getSubject().getSession().getAttribute(url);
-		if(getAuthotity!=null&&getAuthotity.length()>0) {
+		Result<Object> result = new Result<Object>();
+		String getAuthotity = (String) SecurityUtils.getSubject().getSession().getAttribute(url);
+		if (getAuthotity != null && getAuthotity.length() > 0) {
 			result.setMsg("拥有该权限");
 			result.setState(1);
-		}else {
+		} else {
 			result.setMsg("没有改权限");
 			result.setState(0);
 		}
