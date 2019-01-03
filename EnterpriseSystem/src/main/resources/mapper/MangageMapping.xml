@@ -32,7 +32,7 @@
 	<update id="upEmpInfo" parameterType="io.dtchain.entity.EmpInfo">
 		update EmpTable
 		set
-		empName=#{empName},empDept=#{empDept},empPhone=#{empPhone},empNum=#{empNum},empMail=#{empMail},empSex=#{empSex},empPass=#{empPass}
+		empName=#{empName},empDept=#{empDept},empPhone=#{empPhone},empNum=#{empNum},empMail=#{empMail},empSex=#{empSex}
 		where empId=#{empId}
 	</update>
 	<!-- 根据员工名字查询部门 -->
