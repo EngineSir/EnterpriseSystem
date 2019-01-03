@@ -13,6 +13,7 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import io.dtchain.entity.EmpInfo;
@@ -30,16 +31,15 @@ public class MangageController {
 
 	@Autowired
 	private MangageService mangageService;
-	@RequestMapping("/login.io")
-	//@ResponseBody
-	/**
-	 * 登录校验
-	 */
+	
+		/**
+		 * 登录校验
+		 */
+	@RequestMapping(value="/login.io",method=RequestMethod.POST)
 	public String login(String username,String pass ,HttpServletResponse res,HttpServletRequest req) {
 		if(username==null||username.length()==0||pass==null||pass.length()==0) {
 			return "redirect:login";
 		}
-		//Result<Object> result = mangageService.login(adminName, adminPassword, res);
 		Result<Object> result=new Result<Object>();
 		Subject subject = SecurityUtils.getSubject();
 		 UsernamePasswordToken token=new UsernamePasswordToken(username,pass);
@@ -58,41 +58,36 @@ public class MangageController {
 	        }
 		return "redirect:../index";
 	}
-
-	@RequestMapping("/addEmp.io")
-	@ResponseBody
 	/**
 	 * 添加员工
 	 */
+	@RequestMapping(value="/addEmp.io",method=RequestMethod.POST)
+	@ResponseBody
 	public Result<Object> addEmp(EmpInfo emp) {
-		Result<Object> result = mangageService.addEmp(emp);
-		return result;
+		return mangageService.addEmp(emp);
 	}
 
 	// 查询员工信息
-	@RequestMapping("/allSearch.io")
+	@RequestMapping(value="/allSearch.io",method=RequestMethod.POST)
 	@ResponseBody
 	public Result<List<EmpInfo>> queryEmpInfo( String value, int page) {
-		Result<List<EmpInfo>> result = mangageService.queryEmpInfo( value, page);
-		return result;
+		return mangageService.queryEmpInfo( value, page);
 	}
 
 	// 删除员工信息
-	@RequestMapping("/delEmpInfo.io")
+	@RequestMapping(value="/delEmpInfo.io",method=RequestMethod.POST)
 	@ResponseBody
 	public Result<Object> delEmpInfo(String empId) {
-		Result<Object> result = mangageService.delEmpInfo(empId);
-		return result;
+		return mangageService.delEmpInfo(empId);
 	}
 
 	// 更新员工信息
-	@RequestMapping("/upEmpInfo.io")
+	@RequestMapping(value="/upEmpInfo.io",method=RequestMethod.POST)
 	@ResponseBody
 	public Result<Object> upEmpInfo(EmpInfo emp) {
-		Result<Object> result = mangageService.upEmpInfo(emp);
-		return result;
+		return  mangageService.upEmpInfo(emp);
 	}
-	@RequestMapping("/authorityUrl.io")
+	@RequestMapping(value="/authorityUrl.io",method=RequestMethod.POST)
 	@ResponseBody
 	public Result<Object> authorityUrl(String url){
 		return mangageService.authorityUrl(url);

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -28,40 +29,36 @@ public class RecordController {
 	@Resource
 	private QueryRecordService queryRecordService;
 
-	@RequestMapping("/queryRecord.io")
-	@ResponseBody
 	/**
 	 * 查询考勤记录
 	 */
+	@RequestMapping(value="/queryRecord.io",method=RequestMethod.POST)
+	@ResponseBody
 	public Result<List<RecordTable>> queryRecord(QueryRecord qr) {
-		Result<List<RecordTable>> result = queryRecordService.queryRecord(qr);
-		System.out.println("result: "+result);
-		return result;
+		return queryRecordService.queryRecord(qr);
 	}
 
-	@RequestMapping("/detailed.io")
-	@ResponseBody
 	/*
 	 * 查询迟到，早退
 	 */
+	@RequestMapping(value="/detailed.io",method=RequestMethod.POST)
+	@ResponseBody
 	public Result<List<RecordTable>> queryDetailed(QueryRecord qr) {
-		Result<List<RecordTable>> result = queryRecordService.queryDetailed(qr);
-		return result;
+		return queryRecordService.queryDetailed(qr);
 	}
 
 	/*
 	 * 查询迟到早退加班明细
 	 */
-	@RequestMapping("/detailedInfo.io")
+	@RequestMapping(value="/detailedInfo.io",method=RequestMethod.POST)
 	@ResponseBody
 	public Result<List<RecordTable>> queryDetailedInfo(QueryRecord qr) {
-		Result<List<RecordTable>> result = queryRecordService.queryDetailedInfo(qr);
-		return result;
+		return queryRecordService.queryDetailedInfo(qr);
 	}
 	/**
 	 * 查询符合查询条件的记录总数
 	 */
-	@RequestMapping("/queryCount.io")
+	@RequestMapping(value="/queryCount.io",method=RequestMethod.POST)
 	@ResponseBody
 	public Result<Object> queryCount(QueryRecord qr){
 		return queryRecordService.quertCount(qr);
@@ -69,14 +66,13 @@ public class RecordController {
 	/**
 	 * 点击其他分页，查询记录
 	 */
-	@RequestMapping("/otherPage.io")
+	@RequestMapping(value="/otherPage.io",method=RequestMethod.POST)
 	@ResponseBody
 	public Result<List<RecordTable>> queryOtherPage(QueryRecord qr){
-		
 		return queryRecordService.queryOtherPage(qr);
 	}
 	
-	@RequestMapping("/downloadExcel.io")
+	@RequestMapping(value="/downloadExcel.io",method=RequestMethod.GET)
 	public void downloadExcel(HttpServletRequest req,HttpServletResponse res) throws Exception{
 		
 			QueryRecord qr=new QueryRecord();

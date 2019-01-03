@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import io.dtchain.entity.QueryRecord;
@@ -19,7 +20,7 @@ public class AttendController
 {
 	@Resource
 	private AttendService attendService;
-	@RequestMapping("/statistic.io")
+	@RequestMapping(value="/statistic.io",method=RequestMethod.POST)
 	@ResponseBody
 	/*
 	 * 查询工时统计表

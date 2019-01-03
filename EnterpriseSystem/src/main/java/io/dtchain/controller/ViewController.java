@@ -61,4 +61,8 @@ public class ViewController {
 	public String info() {
 		return "info";
 	}
+	@RequestMapping(value="/editeNotice",method=RequestMethod.GET)
+	public String editeNotice() {
+		return "editeNotice";
+	}
 }

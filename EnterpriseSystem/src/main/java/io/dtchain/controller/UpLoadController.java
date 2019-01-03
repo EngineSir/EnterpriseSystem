@@ -8,7 +8,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import io.dtchain.entity.QueryRecord;
 import io.dtchain.entity.ResultProce;
@@ -27,15 +30,14 @@ public class UpLoadController
 	/**
 	 * 上传文件
 	 */
-	@RequestMapping("/upload.io")
+	@RequestMapping(value="/upload.io",method=RequestMethod.POST)
 	public void upLoad(HttpServletRequest req,HttpServletResponse res)throws Exception{
 		upLoadService.upLoad(req, res);
 	}
-	@RequestMapping("/dataImport.io")
+	@RequestMapping(value="/dataImport.io",method=RequestMethod.POST)
 	@ResponseBody
 	public Result<List<ResultProce>> queryWeekInfo(QueryRecord qr){
-		Result<List<ResultProce>> result=upLoadService.queryWeekInfo(qr);
-		return result;
+		return upLoadService.queryWeekInfo(qr);
 	}
 	
 }
