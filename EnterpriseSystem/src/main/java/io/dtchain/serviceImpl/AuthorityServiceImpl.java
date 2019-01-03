@@ -45,6 +45,15 @@ public class AuthorityServiceImpl implements AuthorityService {
 	public Result<Object> addAuthority(Integer[] resourceIdArray, String empId) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		Result<Object> result = new Result<Object>();
+		String userId=(String)SecurityUtils.getSubject().getSession().getAttribute("userSessionId");
+		//从数据库获取，该权限
+		List<String> list=resourcesDao.queryResourceName(userId);
+		if(list==null||list.size()<1||!list.contains("/jurisdiction")) {
+			result.setMsg("联系管理员获取该权限");
+			result.setState(-1);
+			return result;
+		}
+		
 		List<Integer> listId = resourcesDao.queryId(empId);
 		if ((listId == null || listId.size() == 0) && (resourceIdArray.length == 1)) {
 			result.setMsg("无权限分配");
