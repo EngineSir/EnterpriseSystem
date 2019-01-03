@@ -107,13 +107,13 @@ public class NoticeServiceImpl implements NoticeService {
 
 	@Override
 	public Result<Object> queryNoticeCount() {
-		Result<Object> result=new Result<Object>();
-		int n=noticeDao.queryNoticeCount();
-		if(n>0) {
+		Result<Object> result = new Result<Object>();
+		int n = noticeDao.queryNoticeCount();
+		if (n > 0) {
 			result.setData(n);
 			result.setState(1);
 			result.setMsg("查询总数成功");
-		}else {
+		} else {
 			result.setState(0);
 			result.setMsg("查询总数失败或者没有通知");
 		}

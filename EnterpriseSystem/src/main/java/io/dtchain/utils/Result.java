@@ -2,39 +2,38 @@ package io.dtchain.utils;
 
 import java.io.Serializable;
 
-public class Result<T> implements Serializable
-{
+public class Result<T> implements Serializable {
 	private int state;
 	private String msg;
 	private T data;
-	public int getState()
-	{
+
+	public int getState() {
 		return state;
 	}
-	public void setState(int state)
-	{
+
+	public void setState(int state) {
 		this.state = state;
 	}
-	public String getMsg()
-	{
+
+	public String getMsg() {
 		return msg;
 	}
-	public void setMsg(String msg)
-	{
+
+	public void setMsg(String msg) {
 		this.msg = msg;
 	}
-	public T getData()
-	{
+
+	public T getData() {
 		return data;
 	}
-	public void setData(T data)
-	{
+
+	public void setData(T data) {
 		this.data = data;
 	}
+
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		return "Result [state=" + state + ", msg=" + msg + ", data=" + data + "]";
 	}
-	
+
 }

@@ -45,15 +45,15 @@ public class AuthorityServiceImpl implements AuthorityService {
 	public Result<Object> addAuthority(Integer[] resourceIdArray, String empId) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		Result<Object> result = new Result<Object>();
-		String userId=(String)SecurityUtils.getSubject().getSession().getAttribute("userSessionId");
-		//从数据库获取，该权限
-		List<String> list=resourcesDao.queryResourceName(userId);
-		if(list==null||list.size()<1||!list.contains("/jurisdiction")) {
+		String userId = (String) SecurityUtils.getSubject().getSession().getAttribute("userSessionId");
+		// 从数据库获取，该权限
+		List<String> list = resourcesDao.queryResourceName(userId);
+		if (list == null || list.size() < 1 || !list.contains("/jurisdiction")) {
 			result.setMsg("联系管理员获取该权限");
 			result.setState(-1);
 			return result;
 		}
-		
+
 		List<Integer> listId = resourcesDao.queryId(empId);
 		if ((listId == null || listId.size() == 0) && (resourceIdArray.length == 1)) {
 			result.setMsg("无权限分配");
@@ -95,7 +95,7 @@ public class AuthorityServiceImpl implements AuthorityService {
 				map.clear();
 			}
 		}
-		
+
 		for (int i = 0; i < listId.size(); i++) {
 			boolean flog = true;
 			for (int j = 1; j < resourceIdArray.length; j++) {
@@ -120,11 +120,9 @@ public class AuthorityServiceImpl implements AuthorityService {
 	@Override
 	public Result<List<Integer>> queryAuthorityId(String empId) {
 		List<Integer> listId = resourcesDao.queryId(empId);
-		Result<List<Integer>> result=new Result<List<Integer>>();
+		Result<List<Integer>> result = new Result<List<Integer>>();
 		result.setData(listId);
 		return result;
 	}
-
-	
 
 }

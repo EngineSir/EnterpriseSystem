@@ -20,7 +20,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.ProgressListener;
@@ -72,19 +71,18 @@ public class UpLoadServiceImpl implements UpLoadService {
 	 * 上传文件
 	 */
 	public void upLoad(HttpServletRequest req, HttpServletResponse res) throws Exception {
-		String userId=(String)SecurityUtils.getSubject().getSession().getAttribute("userSessionId");
-		
-		//从数据库获取，该权限
-		List<String> list=resourcesDao.queryResourceName(userId);
-		if(list==null||list.size()<1||!list.contains("/dataImport")) {
-			//result.setMsg("联系管理员获取该权限");
-			//result.setState(-1);
-			//return result;
+		String userId = (String) SecurityUtils.getSubject().getSession().getAttribute("userSessionId");
+
+		// 从数据库获取，该权限
+		List<String> list = resourcesDao.queryResourceName(userId);
+		if (list == null || list.size() < 1 || !list.contains("/dataImport")) {
+			// result.setMsg("联系管理员获取该权限");
+			// result.setState(-1);
+			// return result;
 			req.getSession().setAttribute("state", -1);
 			res.sendRedirect("../index");
 			return;
 		}
-		
 
 		String dateS = "";
 		String dateE = "";
@@ -95,14 +93,14 @@ public class UpLoadServiceImpl implements UpLoadService {
 
 			}
 		}
-	
+
 		// 文件保存路径
-	//	String savePath = req.getServletContext().getRealPath("/WEB-INF/upload");
+		// String savePath = req.getServletContext().getRealPath("/WEB-INF/upload");
 		String savePath = ResourceUtils.getURL("src\\main\\resources\\upload").getPath();
-		savePath=savePath.substring(1).replace('/', '\\');
+		savePath = savePath.substring(1).replace('/', '\\');
 		// 上传生成的临时文件保存目录
-		//String tempPath = req.getServletContext().getRealPath("/WEB-INF/temp");
-		String tempPath=ResourceUtils.getURL("src\\main\\resources\\temp").getPath();
+		// String tempPath = req.getServletContext().getRealPath("/WEB-INF/temp");
+		String tempPath = ResourceUtils.getURL("src\\main\\resources\\temp").getPath();
 		File tmpFile = new File(tempPath);
 		// 文件不存在就创建
 		if (!tmpFile.exists()) {
@@ -120,7 +118,7 @@ public class UpLoadServiceImpl implements UpLoadService {
 		ServletFileUpload upload = new ServletFileUpload(factory);
 		// 监听文件上传进度
 		upload.setProgressListener(new ProgressListener() {
-			
+
 			public void update(long pBytesRead, long pContentLength, int arg2) {
 				System.out.println("文件大小为：" + pContentLength + ",当前已处理：" + pBytesRead);
 
@@ -212,9 +210,8 @@ public class UpLoadServiceImpl implements UpLoadService {
 		} catch (FileUploadException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
-	
 
 	/**
 	 * 创建目录，用于保存文件
@@ -588,11 +585,10 @@ public class UpLoadServiceImpl implements UpLoadService {
 						flog = true;
 						// index=j;
 						/*
-						 * 进门 获取早上上班时间如果为null,即为未打卡
-						 * 获取下午上班时间如果只有一个即为上班时间,如果是两个即取最小值
+						 * 进门 获取早上上班时间如果为null,即为未打卡 获取下午上班时间如果只有一个即为上班时间,如果是两个即取最小值
 						 * 
-						 * 出门 获取中午下班时间如果为null即为未打卡,如果获取到一个极为下班时间(如果下午上班时间为null,
-						 * 即未出公司设置为null) 如果只为两个即取最大值,
+						 * 出门 获取中午下班时间如果为null即为未打卡,如果获取到一个极为下班时间(如果下午上班时间为null, 即未出公司设置为null)
+						 * 如果只为两个即取最大值,
 						 */
 						/*
 						 * 对数据进行逻辑判别

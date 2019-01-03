@@ -35,7 +35,7 @@ public class DeptServiceImpl implements DeptService {
 		map.put("id", id);
 		map.put("deptName", deptName);
 		System.out.println(map);
-		
+
 		int n = deptDao.addDept(map);
 		System.out.println(n);
 		if (n > 0) {
