@@ -29,10 +29,7 @@ public class MangageServiceImpl implements MangageService {
 		Result<Object> result = new Result<Object>();
 		String empId = Utils.createId();
 		emp.setEmpId(empId);
-		// 设置人力资源部 初始密码123456
-		if (emp.getEmpDept().equals("人力资源部")) {
-			emp.setEmpPass("123456");
-		}
+		emp.setEmpPass(Utils.Md5(emp.getEmpName(), emp.getEmpNum()));
 		int n = mangageDao.addEmp(emp);
 		if (n == 1) {
 			result.setMsg("添加员工成功");
@@ -86,11 +83,6 @@ public class MangageServiceImpl implements MangageService {
 	 */
 	public Result<Object> upEmpInfo(EmpInfo emp) {
 		Result<Object> result = new Result<Object>();
-		if (emp.getEmpDept().equals("人力资源部")) {
-			emp.setEmpPass("123456");
-		} else {
-			emp.setEmpPass("");
-		}
 		int n = mangageDao.upEmpInfo(emp);
 		if (n > 0) {
 			result.setMsg("更新信息成功");
