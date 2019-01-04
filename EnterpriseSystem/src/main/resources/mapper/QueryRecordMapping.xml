@@ -19,21 +19,6 @@
   						)
   					</foreach>
   	</insert>
-  	<!-- 查询个人workTime -->
-  	<select id="queryWorkTime" parameterType="io.dtchain.entity.QueryRecord" resultType="io.dtchain.entity.RecordTable">
-  		select empName,dept,dates,workMorn,atNoon,workAfter,atNight from workTimeTable where empName=#{empName} and dates between 
-  			#{start} and #{end} and dept=#{empDept} order by dept,empName,dates limit 0,10
-  	</select>
-  	<!-- 查询部门员工的workTime -->
-  	<select id="queryDeptWorkTime" parameterType="io.dtchain.entity.QueryRecord" resultType="io.dtchain.entity.RecordTable">
-  		select empName,dept,dates,workMorn,atNoon,workAfter,atNight from workTimeTable where dates between 
-  			#{start} and #{end} and dept=#{empDept} order by dept,empName,dates limit 0,10
-  	</select>
-  	<!-- 查询所有员工的workTime -->
-  	<select id="queryAllWorkTime" parameterType="io.dtchain.entity.QueryRecord" resultType="io.dtchain.entity.RecordTable">
-  		select empName,dept,dates,workMorn,atNoon,workAfter,atNight from workTimeTable where empName=#{empName} and dates between 
-  			#{start} and #{end}  order by dept,empName,dates limit 0,10
-  	</select>
   	<delete id="emptyNull">
   		delete from workTimeTable where workMorn="未打卡" and atNoon="未打卡" and atNight="未打卡" and workAfter="未打卡"
   	</delete>
@@ -110,13 +95,12 @@
   			#{start} and #{end} and dept=#{empDept}	
   				order by dept,empName,dates limit #{page},10
   	</select>
-  	
+  		<!-- 查询部门员工记录-->
   		<select id="queryDeptPage" parameterType="io.dtchain.entity.QueryRecord" resultType="io.dtchain.entity.RecordTable">
   		select empName,dept,dates,workMorn,atNoon,workAfter,atNight from workTimeTable where dates between 
   			#{start} and #{end} and dept=#{empDept} 
   			order by dept,empName,dates limit #{page},10
   	</select>
-  	
   	<!-- 查询总的记录数用于下载 -->
   	<select id="queryAllRecord" parameterType="io.dtchain.entity.QueryRecord" resultType="io.dtchain.entity.RecordTable">
   		select empName,dept,dates,workMorn,atNoon,workAfter,atNight from workTimeTable where dates between 
