@@ -1,3 +1,22 @@
+$(document).ready(function() {
+	$(".com").load("com.html");
+	//添加部门
+	$("#sure").click(addDept);
+	//删除
+	$("#tab").on("click", ".delete", delDept);
+	//查询
+	$("#query").click(queryDept);
+	//修改
+	$("#tab").on("click", ".update", updateDept);
+	//取消
+	$("#close").click(function() {
+		$(".show").hide();
+		$(".opacity_bg").hide();
+	});
+	//确定
+	$("#sureUP").click(sureUp);
+})
+
 /*
  * 添加部门
  */
@@ -31,7 +50,7 @@ function delDept(){
 	if(id!=""){
 		$.ajax({
 			url:"dept/delDept.io",
-			type:"post",
+			type:"delete",
 			dataType:"json",
 			data:{"id":id},
 			success:function(result){
@@ -77,7 +96,7 @@ function queryDept(){
  */
 function updateDept(){
 	var $tr=$(this).parent().parent();
-	var deptName=$tr.find("td").first().text();
+	var deptName=$tr.find("th").first().text();
 	$("#upDept").val(deptName);
 	$(".show").show();
 	$(".opacity_bg").show();
@@ -93,12 +112,12 @@ function sureUp(){
 	if(id!="" && deptName!=""){
 		$.ajax({
 			url:"dept/upDept.io",
-			type:"post",
+			type:"put",
 			dataType:"json",
 			data:{"id":id,"deptName":deptName},
 			success:function(result){
 				if(result.state==1){
-					$tr.find("td").first().text(deptName);
+					$tr.find("th").first().text(deptName);
 				}
 			},
 			error:function(){
@@ -116,7 +135,7 @@ function createTr(id,deptName){
 	var state=0;
 	$.ajax({
 		url:"dept/authorityUrl.io",
-		type:"post",
+		type:"get",
 		async : false,
 		dataType:"json",
 		data:{"url":"deptauthority"},

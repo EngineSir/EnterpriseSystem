@@ -23,20 +23,6 @@
 <script type="text/javascript" src="scripts/cookie_util.js"></script>
 <script src="layui/layui.js"></script>
 <script src="scripts/queryDept.js"></script>
-<script>
-	var count = 0;
-	$(function() {
-		$(".com").load("com");
-		//点击检索信息
-		$("#sear_info").click(searchInfo);
-		//数据导出
-		$("#dataImport").click(dataImport);
-		//获取部门信息
-		queryDept();
-		//限定日期选取不能在今天之后
-		dateValid();
-	});
-</script>
 </head>
 <body class="layui-layout-body">
 	<div class="com"></div>

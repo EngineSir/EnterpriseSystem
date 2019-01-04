@@ -19,40 +19,6 @@
 <script src="layui/layui.js"></script>
 <script type="text/javascript" src="scripts/queryDeptInfo.js"></script>
 <link rel="stylesheet" href="styles/mangage.css"/>
-
-<script>
-	var page = 1;
-	var Gvalue = "";
-	var form;
-	$(function() {
-		layui.use('form', function() {
-			form = layui.form;
-		});
-		//加载公共页面
-		$(".com").load("com.html");
-		$("#up").attr('disabled', true);
-		$("#down").attr('disabled', true);
-		//点击添加
-		$('#add').click(clickAdd);
-		//点击取消
-		$('.close').click(clickClose);
-		//点击添加确定
-		$('#sure').click(clickSure);
-		//点击删除
-		$(".table_info").on("click", ".delete", deleteInfo);
-		//点击修改
-		$(".table_info").on("click", ".update", updateInfo);
-		//点击修改确认
-		$("#up_sure").click(upSure);
-		//确认删除
-		$(".del_sure").click(delSure);
-		//下一页
-		$("#down").click(downPage);
-		//上一页
-		$("#up").click(upPage);
-		queryDept();
-	});
-</script>
 </head>
 <body>
 

@@ -24,69 +24,6 @@
 <script type="text/javascript" src="scripts/path.js"></script>
 <script src="layui/layui.js"></script>
 <script src="scripts/queryDept.js"></script>
-<script>
-	$(function() {
-		$(".com").load("com");
-		//检索信息
-		$("#search_info").click(searchInfo);
-		//数据导出
-		$("#dataImport").click(dataImport);
-		//绑定双击事件
-		$("#tt").datagrid(
-				{
-					onDblClickRow : function(rowIndex) {
-						var start = calecon($("#start").val().trim());
-						var end = calecon($("#end").val().trim());
-						$(".layer").show();
-						$(".opacity_bg").show();
-						$("#tt").datagrid("selectRow", rowIndex);
-						var currentRow = $("#tt").datagrid("getSelected");
-						var empName = currentRow.name;
-						$.ajax({
-							url : "record/detailedInfo.io",
-							type : "post",
-							dataType : "json",
-							data : {
-								"empName" : empName,
-								"start" : start,
-								"end" : end
-							},
-							success : function(result) {
-								delTr();
-								if (result.state == 1) {
-									var dataRes = result.data;
-									/*<![CDATA[*/
-									for (var i = 0; i < dataRes.length; i++) {
-										create(dataRes[i].dates,
-												dataRes[i].workMorn,
-												dataRes[i].atNoon,
-												dataRes[i].workAfter,
-												dataRes[i].atNight);
-									}
-									/*]]>*/
-									
-								}
-							},
-							error : function() {
-								alert("查看失败");
-							}
-						});
-
-						//取消选中
-						$("#tt").datagrid("unselectRow", rowIndex);
-					}
-				});
-		//关闭显示以及背景层
-		$("#close_show").click(function() {
-			$(".layer").hide();
-			$(".opacity_bg").hide();
-		});
-		//获取部门信息
-		queryDept();
-		//限定日历不能选取今天之后的日期
-		dateValid();
-	});
-</script>
 </head>
 <body class="layui-layout-body">
 	<div class="com"></div>
@@ -114,10 +51,6 @@
 						<td class="cale td"><select class="easyui-combobox" id="dept"
 							name="state" style="width: 303px;"
 							data-options="valueField:'id', textField:'text'">
-								<!--<option value="A1">技术研发部</option>
-								<option value="A2">财务部</option>
-								<option value="A3">人力资源部</option>
-								<option value="A4">全部</option>-->
 						</select></td>
 						<td class="td">结束日期</td>
 						<td class="cale td"><input class="easyui-datebox" id="end"

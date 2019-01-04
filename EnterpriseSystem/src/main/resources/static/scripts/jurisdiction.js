@@ -1,8 +1,17 @@
+$(document).ready(function() {
+	$(".com").load("com");
+	queryEmp();
+	$(".table_info").on("click", "button", getAuthority);
+})
+function doSearch(value, name) {
+
+}
+
 function queryEmp() {
 	var count = 0;
 	$.ajax({
 		url : "authority/queryCount.io",
-		type : "post",
+		type : "get",
 		async : false,
 		success : function(result) {
 			count = result.data;
@@ -32,7 +41,7 @@ function queryEmp() {
 function paging(page) {
 	$.ajax({
 		url : "authority/empInfo.io",
-		type : "post",
+		type : "get",
 		dataType : "json",
 		data : {
 			"page" : page
@@ -54,43 +63,53 @@ function paging(page) {
 	});
 }
 function createTr(empName, empSex, empDept, empId) {
-	
+
 	var str = "<tr>";
 	str += "<th>" + empName + "</th>";
 	str += "<th>" + empSex + "</th>";
 	str += "<th>" + empDept + "</th>";
 	str += "";
-	str += "<th style='width: 500px; height: 30px'><input type='checkbox' name='1' id='"+empId+"1'/>员工管理"
-			+ "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type='checkbox' name='2' id='"+empId+"2'/>部门管理&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
-			+ "<input type='checkbox' name='3' id='"+empId+"3'/>权限管理 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type='checkbox' name='4' id='"+empId+"4'/>请假审批 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
-			+ "<input type='checkbox' name='5' id='"+empId+"5'/>数据录入</th>";
+	str += "<th style='width: 500px; height: 30px'><input type='checkbox' name='1' id='"
+			+ empId
+			+ "1'/>员工管理"
+			+ "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type='checkbox' name='2' id='"
+			+ empId
+			+ "2'/>部门管理&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+			+ "<input type='checkbox' name='3' id='"
+			+ empId
+			+ "3'/>权限管理 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type='checkbox' name='4' id='"
+			+ empId
+			+ "4'/>请假审批 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+			+ "<input type='checkbox' name='5' id='" + empId + "5'/>数据录入</th>";
 	str += "<th><button class='layui-btn layui-btn-primary layui-btn-sm'>分配权限</button></th>";
 	str += "</tr>";
 	var $str = $(str);
 	$str.data("empId", empId);
 	$('.table_info').append($str);
-	
+
 	$.ajax({
-		url:"authority/queryAuthorityId.io",
-		type:"post",
-		dataType:"json",
+		url : "authority/queryAuthorityId.io",
+		type : "get",
+		dataType : "json",
 		async : false,
-		data:{"empId":empId},
-		success:function(result){
-			var data=result.data;
-			if(data!=null || data.length!=0){
-				for(var i=0;i<data.length;i++){
-					var ss="#"+empId+""+data[i];
-					$(ss).attr('checked',true);				
+		data : {
+			"empId" : empId
+		},
+		success : function(result) {
+			var data = result.data;
+			if (data != null || data.length != 0) {
+				for (var i = 0; i < data.length; i++) {
+					var ss = "#" + empId + "" + data[i];
+					$(ss).attr('checked', true);
 				}
 			}
 		},
-		error:function(){
+		error : function() {
 			alert("查询权限失败");
 		}
 	});
-	
-//	
+
+	//	
 }
 // 删除表格行
 function delTr() {
@@ -105,9 +124,9 @@ function getAuthority() {
 	var empId = $tr.data("empId");
 	var $th = $tr.find("th").eq(3);
 	var $input = $th.find("input");
-	var resourceId=new Array();
+	var resourceId = new Array();
 	resourceId.push(-1);
-	var index=0;
+	var index = 0;
 	for (var k = 0; k < $input.length; k++) {
 
 		if ($input[k].checked == true) {
@@ -115,20 +134,23 @@ function getAuthority() {
 			index++;
 		}
 	}
-	
-	if(empId!=null&&empId.length!=0){
+
+	if (empId != null && empId.length != 0) {
 		$.ajax({
-			url:"authority/addAuthority.io",
-			type:"post",
-			dataType:"json",
-			data:{"empId":empId,"resourceId":resourceId},
-			success:function(result){
+			url : "authority/addAuthority.io",
+			type : "post",
+			dataType : "json",
+			data : {
+				"empId" : empId,
+				"resourceId" : resourceId
+			},
+			success : function(result) {
 				alert(result.msg);
-				if(result.state==-1){
-					window.location.href="index";
+				if (result.state == -1) {
+					window.location.href = "index";
 				}
 			},
-			error:function(){
+			error : function() {
 				alert("添加权限失败");
 			}
 		});

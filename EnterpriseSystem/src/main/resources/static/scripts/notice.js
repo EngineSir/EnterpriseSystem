@@ -1,8 +1,12 @@
+$(document).ready(function() {
+	$(".com").load("com");
+	queryNoticeCount();
+})
 function queryNoticeCount() {
 	var count = 0;
 	$.ajax({
 		url : "notice/queryNoticeCount.io",
-		type : "post",
+		type : "get",
 		async : false,
 		success : function(result) {
 			if (result.state == 1) {
@@ -32,7 +36,7 @@ function queryNoticeCount() {
 function queryNoticeTitle(page) {
 	$.ajax({
 		url : "notice/queryNoticeTitle.io",
-		type : "post",
+		type : "get",
 		dataType : "json",
 		data : {
 			"page" : page

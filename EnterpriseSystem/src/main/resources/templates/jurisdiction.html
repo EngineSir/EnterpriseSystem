@@ -1,34 +1,22 @@
-<html xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
-<meta charset="UTF-8"/>
+<meta charset="UTF-8" />
 <title>权限管理</title>
 <link rel="stylesheet" type="text/css"
-	href="easyui/themes/default/easyui.css"/>
-<link rel="stylesheet" type="text/css" href="easyui/themes/icon.css"/>
-<link rel="stylesheet" type="text/css" href="easyui/demo/demo.css"/>
-<link rel="stylesheet" href="layui/css/layui.css"/>
-<link rel="stylesheet" href="styles/jurisdiction.css"/>
-<link rel="shortcut icon" 
-           href="images/favicon.ico" type="image/x-icon" />
+	href="easyui/themes/default/easyui.css" />
+<link rel="stylesheet" type="text/css" href="easyui/themes/icon.css" />
+<link rel="stylesheet" type="text/css" href="easyui/demo/demo.css" />
+<link rel="stylesheet" href="layui/css/layui.css" />
+<link rel="stylesheet" href="styles/jurisdiction.css" />
+<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
 <script type="text/javascript" src="scripts/jquery.min.js"></script>
 <script type="text/javascript" src="scripts/cookie_util.js"></script>
-<script type="text/javascript"
-	src="easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="scripts/path.js"></script>
 <script src="layui/layui.js"></script>
 <script type="text/javascript" src="scripts/jurisdiction.js"></script>
 </head>
-<script th:inline="javascript">
-	function doSearch(value, name) {
-		
-	}
-	$(function() {
-		$(".com").load("com");
-		queryEmp();	
-		$(".table_info").on("click","button",getAuthority);
-	});
-
-</script>
 <body class="layui-layout-body">
 	<div class="com"></div>
 	<div class="pageId">
@@ -41,20 +29,20 @@
 				data-options="prompt:'输入名字或部门',searcher:doSearch"
 				style="height: 30px; width: 200px" id="search"></input>
 		</div>
-		<hr class="bg"/>
+		<hr class="bg" />
 	</div>
 	<div class="jd_table">
 		<table class="layui-table table_info" border="1" cellspacing="0">
-			
-				<tr>
+
+			<tr>
 				<th>姓名</th>
 				<th>性别</th>
 				<th>部门</th>
 				<th>操作选项</th>
 				<th>权限操作</th>
 			</tr>
-			 
-			
+
+
 		</table>
 	</div>
 

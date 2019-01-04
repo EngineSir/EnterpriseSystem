@@ -12,6 +12,7 @@
 <script type="text/javascript" src="scripts/jquery.min.js"></script>
 <script type="text/javascript" src="easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="scripts/cookie_util.js"></script>
+<script type="text/javascript" src="scripts/dataImport.js"></script>
 <script src="layui/layui.js"></script>
 </head>
 <style>
@@ -29,23 +30,6 @@
 	left: -5%;
 }
 </style>
-<script th:inline="javascript">
-	layui.use('laydate', function() {
-		var laydate = layui.laydate;
-
-		//执行一个laydate实例
-		laydate.render({
-			elem : '#date' //指定元素
-
-		});
-		laydate.render({
-			elem : '#date1'//指定元素
-		});
-	});
-	$(function() {
-		$(".com").load("com");
-	});
-</script>
 <body class="layui-layout-body">
 	<div class="com"></div>
 	<div style="margin: 20px 0;"></div>

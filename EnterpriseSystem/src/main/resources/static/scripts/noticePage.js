@@ -1,3 +1,7 @@
+$(document).ready(function() {
+	$(".com").load("com");
+	showNotice();
+}
 function showNotice() {
 	var url = location.href;
 	var start = url.indexOf("=");
@@ -5,7 +9,7 @@ function showNotice() {
 	if (id != "") {
 		$.ajax({
 			url : "notice/queryNoticeContent.io",
-			type : "post",
+			type : "get",
 			dataType : "json",
 			data : {
 				"id" : id

@@ -1,4 +1,5 @@
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <style>
 a {
 	text-decoration: none;
@@ -10,19 +11,7 @@ a {
 </style>
 <script src="scripts/path.js"></script>
 <script>
-	/*var name = cookie("name");
-	if (name != "") {
-		alert("ssss");
-		$(".admin").text(name);
-	} else {
-		window.location.href = "login";
-	}
-	$("#break").click(function() {
-		delCookie("name");
-		if (cookie("name") == "") {
-			window.location.href = "login";
-		}
-	});*/
+	
 </script>
 <div class="layui-layout layui-layout-admin">
 	<div class="layui-header">
@@ -37,11 +26,12 @@ a {
 			<li class="layui-nav-item"><a href="record">考勤记录</a></li>
 			<li class="layui-nav-item"><a href="attend">考勤管理</a></li>
 			<li class="layui-nav-item"><a href="notice">公告</a></li>
-			
+
 		</ul>
 		<ul class="layui-nav layui-layout-right">
-			<li class="layui-nav-item" ><a href="info" shiro:principal="" class="admin"></a></li>
-			
+			<li class="layui-nav-item"><a href="info" shiro:principal=""
+				class="admin"></a></li>
+
 			<li class="layui-nav-item"><a href="logout" id="break">退出</a></li>
 		</ul>
 	</div>
@@ -50,12 +40,14 @@ a {
 		<div class="layui-side-scroll">
 			<!-- 左侧导航区域（可配合layui已有的垂直导航） -->
 			<ul class="layui-nav layui-nav-tree" lay-filter="test">
-				<li class="layui-nav-item" shiro:hasPermission="/dataImport" ><a  class="" href="dataImport">数据导入</a>
-				</li>
-				<li class="layui-nav-item" ><a href="javascript:;" shiro:principal="" class="admin"></a>
+				<li class="layui-nav-item" shiro:hasPermission="/dataImport"><a
+					class="" href="dataImport">数据导入</a></li>
+				<li class="layui-nav-item"><a href="javascript:;"
+					shiro:principal="" class="admin"></a>
 					<dl class="layui-nav-child">
 						<dd>
-							<a href="dept">部门信息</a> <a shiro:hasPermission="/jurisdiction" href="jurisdiction">权限管理</a>
+							<a href="dept">部门信息</a> <a shiro:hasPermission="/jurisdiction"
+								href="jurisdiction">权限管理</a>
 						</dd>
 					</dl></li>
 				<li class="layui-nav-item"><a href="javascript:;">审批管理</a>
@@ -64,7 +56,7 @@ a {
 							<a href="approval">请假申请</a> <a href="myApproval">我的审批</a>
 						</dd>
 					</dl></li>
-					<li class="layui-nav-item"><a href="javascript:;">公告管理</a>
+				<li class="layui-nav-item"><a href="javascript:;">公告管理</a>
 					<dl class="layui-nav-child">
 						<dd>
 							<a href="editeNotice">编辑公告</a>

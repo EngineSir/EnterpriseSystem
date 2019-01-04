@@ -1,3 +1,15 @@
+var count = 0;
+$(document).ready(function() {
+	$(".com").load("com");
+	//点击检索信息
+	$("#sear_info").click(searchInfo);
+	//数据导出
+	$("#dataImport").click(dataImport);
+	//获取部门信息
+	queryDept();
+	//限定日期选取不能在今天之后
+	dateValid();
+})
 //检索信息
 function searchInfo() {
 	var name = $("#name").val();
@@ -42,7 +54,7 @@ function queryCount() {
 
 		$.ajax({
 			url :  "record/queryCount.io",
-			type : "post",
+			type : "get",
 			dataType : "json",
 			data : {
 				"empName" : name,
@@ -89,7 +101,7 @@ function queryCount() {
 function paging(name, dept, start, end, currPage) {
 	$.ajax({
 		url :  "record/otherPage.io",
-		type : "post",
+		type : "get",
 		dataType : "json",
 		data : {
 			"empName" : name,
