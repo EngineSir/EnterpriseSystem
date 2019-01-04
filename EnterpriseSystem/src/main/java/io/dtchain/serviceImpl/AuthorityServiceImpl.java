@@ -60,9 +60,6 @@ public class AuthorityServiceImpl implements AuthorityService {
 			result.setState(0);
 			return result;
 		}
-		// 123 12 1234 134
-		// 123
-		//
 		if (listId == null || listId.size() == 0) {
 			for (int i = 1; i < resourceIdArray.length; i++) {
 				map.put("userId", empId);
@@ -74,7 +71,7 @@ public class AuthorityServiceImpl implements AuthorityService {
 			result.setState(1);
 			return result;
 		}
-		//
+
 		if (resourceIdArray.length == 1) {
 			for (int i = 0; i < listId.size(); i++) {
 				map.put("userId", empId);
@@ -86,7 +83,7 @@ public class AuthorityServiceImpl implements AuthorityService {
 			result.setState(2);
 			return result;
 		}
-		//
+
 		for (int i = 1; i < resourceIdArray.length; i++) {
 			if (!listId.contains(resourceIdArray[i])) {
 				map.put("userId", empId);

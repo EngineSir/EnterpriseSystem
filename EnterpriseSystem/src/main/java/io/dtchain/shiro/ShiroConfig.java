@@ -18,9 +18,6 @@ import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 import io.dtchain.entity.Resource;
 import io.dtchain.service.ResourceService;
 
-/**
- * Created by yangqj on 2017/4/23.
- */
 @Configuration
 public class ShiroConfig {
 	@Autowired
@@ -33,8 +30,6 @@ public class ShiroConfig {
 
 	/**
 	 * ShiroDialect，为了在thymeleaf里使用shiro的标签的bean
-	 * 
-	 * @return
 	 */
 	@Bean
 	public ShiroDialect shiroDialect() {
@@ -60,13 +55,21 @@ public class ShiroConfig {
 		// 登录成功后要跳转的链接
 		shiroFilterFactoryBean.setSuccessUrl("/index");
 		// 未授权界面;
-		shiroFilterFactoryBean.setUnauthorizedUrl("/403");
+		shiroFilterFactoryBean.setUnauthorizedUrl("/404");
 		System.out.println("拦截");
 		// 拦截器.
 		Map<String, String> filterChainDefinitionMap = new LinkedHashMap<String, String>();
 
 		// 配置退出 过滤器,其中的具体的退出代码Shiro已经替我们实现了
 		filterChainDefinitionMap.put("/logout", "logout");
+		
+		//swagger-ui可以匿名访问
+		filterChainDefinitionMap.put("/swagger-ui.html", "anon");
+		filterChainDefinitionMap.put("/v2/api-docs", "anon");
+		filterChainDefinitionMap.put("/swagger/**", "anon");
+		filterChainDefinitionMap.put("/swagger-resources/**", "anon");
+		filterChainDefinitionMap.put("/webjars/**", "anon");
+		
 		filterChainDefinitionMap.put("/mangage/login.io", "anon");
 		filterChainDefinitionMap.put("/easyui/**", "anon");
 		filterChainDefinitionMap.put("/images/**", "anon");

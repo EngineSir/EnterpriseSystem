@@ -11,7 +11,7 @@ import io.dtchain.utils.Result;
 
 public interface NoticeService {
 	// 公告内容中上传图片
-	public String uploadImage(MultipartFile file, HttpServletRequest req) throws Exception;
+	public String uploadImage(MultipartFile file) throws Exception;
 
 	public String noticeContent(Notice notice);
 

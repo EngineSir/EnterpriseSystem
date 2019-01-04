@@ -18,41 +18,11 @@ import io.dtchain.entity.RecordTable;
 import io.dtchain.service.QueryRecordService;
 import io.dtchain.utils.Result;
 
-/**
- * 查询考勤记录的ServiceImpl
- * 
- * @author acer-yu
- *
- */
 @Service("queryRecordService")
 public class QueryRecordServiceImpl implements QueryRecordService {
 	@Resource
 	private RecordDao recordDao;
 	private String[] excelHead = { "姓名", "部门", "日期", "早上上班", "中午下班", "下午上班", "晚上下班" };
-
-	/**
-	 * 根据检索条件qr 查询考勤记录
-	 */
-	public Result<List<RecordTable>> queryRecord(QueryRecord qr) {
-		// 存储返回结果
-		Result<List<RecordTable>> result = new Result<List<RecordTable>>();
-		List<RecordTable> list = new ArrayList<RecordTable>();
-		if (qr.getEmpDept().equals("全部")) { // 搜索全部
-			list = recordDao.queryAllWorkTime(qr);
-		} else if (qr.getEmpName() == "") { // 按部门搜索
-			list = recordDao.queryDeptWorkTime(qr);
-		} else {
-			list = recordDao.queryWorkTime(qr); // 搜索个人
-		}
-		if (!list.isEmpty()) {
-			result.setData(list);
-			result.setMsg("查询成功");
-			result.setState(1);
-		} else {
-			result.setMsg("查询失败");
-		}
-		return result;
-	}
 
 	/**
 	 * 查询迟到早退
@@ -61,9 +31,7 @@ public class QueryRecordServiceImpl implements QueryRecordService {
 		// 存储返回结果
 		Result<List<RecordTable>> result = new Result<List<RecordTable>>();
 		List<RecordTable> list = new ArrayList<RecordTable>();
-		if (qr.getEmpDept().equals("全部")) { // 搜索全部
-			list = recordDao.queryAllDetailed(qr);
-		} else if (qr.getEmpName() == "") { // 按部门搜索
+		if (qr.getEmpName() == "") { // 按部门搜索
 			list = recordDao.queryDeptDetailed(qr);
 		} else {
 			list = recordDao.queryDetailed(qr); // 搜索个人
@@ -99,11 +67,9 @@ public class QueryRecordServiceImpl implements QueryRecordService {
 	public Result<Object> quertCount(QueryRecord qr) {
 		Result<Object> result = new Result<Object>();
 		int n = 0;
-		if (qr.getEmpDept().equals("全部")) { // 搜索全部
-			n = recordDao.queryAllCount(qr);
-		} else if (qr.getEmpName() == "") { // 按部门搜索
+		 if (qr.getEmpName() == "") { // 按部门搜索
 			n = recordDao.queryDeptCount(qr);
-		} else {
+		}else {
 			n = recordDao.queryCount(qr); // 搜索个人
 		}
 		result.setData(n);

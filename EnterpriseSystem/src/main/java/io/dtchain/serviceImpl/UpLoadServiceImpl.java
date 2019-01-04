@@ -1037,9 +1037,7 @@ public class UpLoadServiceImpl implements UpLoadService {
 	public Result<List<ResultProce>> queryWeekInfo(QueryRecord qr) {
 		Result<List<ResultProce>> result = new Result<List<ResultProce>>();
 		List<ResultProce> list = new ArrayList<ResultProce>();
-		if (qr.getEmpDept().equals("全部")) {
-			list = uploadDao.queryAllWeekInfo(qr);
-		} else if (qr.getEmpName() == "") {
+	 if (qr.getEmpName() == "") {
 			list = uploadDao.queryDeptWeekInfo(qr);
 		} else {
 			list = uploadDao.queryWeekInfo(qr);

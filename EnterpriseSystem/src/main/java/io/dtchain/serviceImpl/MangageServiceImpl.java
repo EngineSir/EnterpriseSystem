@@ -9,6 +9,10 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.LockedAccountException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Service;
 
 import io.dtchain.dao.MangageDao;
@@ -22,9 +26,6 @@ public class MangageServiceImpl implements MangageService {
 	@Resource
 	private MangageDao mangageDao;
 
-	/**
-	 * 添加员工信息
-	 */
 	public Result<Object> addEmp(EmpInfo emp) {
 		Result<Object> result = new Result<Object>();
 		String empId = Utils.createId();
@@ -42,10 +43,7 @@ public class MangageServiceImpl implements MangageService {
 		return result;
 	}
 
-	/**
-	 * 查询员工信息
-	 */
-	public Result<List<EmpInfo>> queryEmpInfo(String value, int page) {
+	public Result<List<EmpInfo>> queryDeptEmpInfo(String value, int page) {
 		Result<List<EmpInfo>> result = new Result<List<EmpInfo>>();
 		List<EmpInfo> list = new ArrayList<EmpInfo>();
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -60,9 +58,6 @@ public class MangageServiceImpl implements MangageService {
 		return result;
 	}
 
-	/**
-	 * 删除员工信息
-	 */
 	public Result<Object> delEmpInfo(String empId) {
 		Result<Object> result = new Result<Object>();
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -78,9 +73,6 @@ public class MangageServiceImpl implements MangageService {
 		return result;
 	}
 
-	/**
-	 * 更新员工信息
-	 */
 	public Result<Object> upEmpInfo(EmpInfo emp) {
 		Result<Object> result = new Result<Object>();
 		int n = mangageDao.upEmpInfo(emp);
@@ -106,5 +98,22 @@ public class MangageServiceImpl implements MangageService {
 			result.setState(0);
 		}
 		return result;
+	}
+
+	@Override
+	public String login(String username, String pass) {
+		if(username==null||username.length()==0||pass==null||pass.length()==0) {
+			return "redirect:login";
+		}
+		Subject subject = SecurityUtils.getSubject();
+		 UsernamePasswordToken token=new UsernamePasswordToken(username,pass);
+		 try {
+	            subject.login(token);
+	        }catch (LockedAccountException lae) {
+	            token.clear();
+	        } catch (AuthenticationException e) {
+	            token.clear();
+	        }
+		return "redirect:../index";
 	}
 }

@@ -7,10 +7,15 @@ package io.dtchain.entity;
  *
  */
 public class QueryRecord {
+
 	private String empName;
+
 	private String empDept;
+
 	private String start;
+
 	private String end;
+
 	private int page;
 
 	public int getPage() {

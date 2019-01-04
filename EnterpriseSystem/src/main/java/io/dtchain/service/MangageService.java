@@ -24,7 +24,7 @@ public interface MangageService {
 	 * @param value
 	 * @return
 	 */
-	public Result<List<EmpInfo>> queryEmpInfo(String value, int page);
+	public Result<List<EmpInfo>> queryDeptEmpInfo(String value, int page);
 
 	/**
 	 * 删除员工信息
@@ -41,4 +41,6 @@ public interface MangageService {
 	public Result<Object> upEmpInfo(EmpInfo emp);
 
 	public Result<Object> authorityUrl(String url);
+	
+	public String login(String username,String pass);
 }

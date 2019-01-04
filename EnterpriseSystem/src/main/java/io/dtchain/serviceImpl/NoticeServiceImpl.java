@@ -28,7 +28,7 @@ public class NoticeServiceImpl implements NoticeService {
 	private NoticeDao noticeDao;
 
 	@Override
-	public String uploadImage(MultipartFile file, HttpServletRequest req) throws Exception {
+	public String uploadImage(MultipartFile file) throws Exception {
 
 		String path = ResourceUtils.getURL("src\\main\\resources\\static\\images").getPath();
 		path = path.substring(1).replace('/', '\\');
@@ -56,7 +56,6 @@ public class NoticeServiceImpl implements NoticeService {
 	public static String changeName(String oldName) {
 		String newName = oldName.substring(oldName.indexOf('.'));
 		newName = new Date().getTime() + newName;
-
 		return newName;
 	}
 

@@ -26,11 +26,7 @@ public class AttendServiceImpl implements AttendService {
 		Result<List<ResultProce>> result = new Result<List<ResultProce>>();
 		List<DataProceTable> list = new ArrayList<DataProceTable>();
 		List<ResultProce> rp = new ArrayList<ResultProce>();
-		if (qr.getEmpDept().equals("全部")) {
-			// 查询全部
-			list = attendDao.searchAllProce(qr);
-			rp = proce(list);
-		} else if (qr.getEmpName() == "") {
+		if (qr.getEmpName() == "") {
 			// 查询部门
 			list = attendDao.searchDeptProce(qr);
 			rp = proce(list);

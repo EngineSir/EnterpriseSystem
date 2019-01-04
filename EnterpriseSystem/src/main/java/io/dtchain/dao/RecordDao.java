@@ -12,15 +12,6 @@ public interface RecordDao {
 	// 将数据写入worktimetable
 	public int workTable(List<RecordTable> list);
 
-	// 查询个人workTime
-	public List<RecordTable> queryWorkTime(QueryRecord qr);
-
-	// 查询部门workTIme
-	public List<RecordTable> queryDeptWorkTime(QueryRecord qr);
-
-	// 查询全部员工的workTime
-	public List<RecordTable> queryAllWorkTime(QueryRecord qr);
-
 	// 清空都为null的记录
 	public int emptyNull();
 
