@@ -1,68 +1,106 @@
 package io.dtchain.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 @Controller
+@Api(description = "页面跳转相关接口")
+@CrossOrigin
 public class ViewController {
 
-	@RequestMapping(value="/login",method=RequestMethod.GET)
-	
+	@ApiOperation(value = "登陆页面")
+	@GetMapping(value="/login")
 	public String login() {
 		return "login";
 	}
-	@RequestMapping(value="/index",method=RequestMethod.GET)
+	
+	@ApiOperation(value = "系统首页")
+	@GetMapping(value="/index")
 	public String index() {
 		return "index";
 	}
-	@RequestMapping(value="/stassMang",method=RequestMethod.GET)
+	
+	@ApiOperation(value = "员工管理页面")
+	@GetMapping(value="/stassMang")
 	public String mangage() {
 		return "mangage";
 	}
-	@RequestMapping(value="/record",method=RequestMethod.GET)
+	
+	@ApiOperation(value = "考勤记录页面")
+	@GetMapping(value="/record")
 	public String record() {
 		return "record";
 	}
-	@RequestMapping(value="/attend",method=RequestMethod.GET)
+	
+	@ApiOperation(value = "考勤管理页面")
+	@GetMapping(value="/attend")
 	public String attend() {
 		return "attend";
 	}
-	@RequestMapping(value="/notice",method=RequestMethod.GET)
+	
+	@ApiOperation(value = "公告通知页面")
+	@GetMapping(value="/notice")
 	public String notice() {
 		return "notice";
 	}
-	@RequestMapping(value="/dataImport",method=RequestMethod.GET)
+	
+	@ApiOperation(value = "数据导入页面")
+	@GetMapping(value="/dataImport")
 	public String dataImport() {
 		return "dataImport";
 	}
-	@RequestMapping(value="/jurisdiction",method=RequestMethod.GET)
+	
+	@ApiOperation(value = "权限管理页面")
+	@GetMapping(value="/jurisdiction")
 	public String jurisdiction() {
 		return "jurisdiction";
 	}
-	@RequestMapping(value="/myApproval",method=RequestMethod.GET)
+	
+	@ApiOperation(value = "我的审批页面")
+	@GetMapping(value="/myApproval")
 	public String myApproval() {
 		return "myApproval";
 	}
-	@RequestMapping(value="/com",method=RequestMethod.GET)
+	
+	@ApiOperation(value = "公共模板页面")
+	@GetMapping(value="/com")
 	public String com() {
 		return "com";
 	}
-	@RequestMapping(value="/dept",method=RequestMethod.GET)
+	
+	@ApiOperation(value = "部门管理页面")
+	@GetMapping(value="/dept")
 	public String dept() {
 		return "dept";
 	}
-	@RequestMapping(value="/approval",method=RequestMethod.GET)
+	
+	@ApiOperation(value = "请假申请页面")
+	@GetMapping(value="/approval")
 	public String approval() {
 		return "approval";
 	}
-	@RequestMapping(value="/info",method=RequestMethod.GET)
+	
+	@ApiOperation(value = "信息修改页面")
+	@GetMapping(value="/info")
 	public String info() {
 		return "info";
 	}
-	@RequestMapping(value="/editeNotice",method=RequestMethod.GET)
+	
+	@ApiOperation(value = "公告编辑页面")
+	@GetMapping(value="/editeNotice")
 	public String editeNotice() {
 		return "editeNotice";
+	}
+	
+	@ApiOperation(value = "404页面")
+	@GetMapping(value="/404")
+	public String fail() {
+		return "404";
 	}
 }
