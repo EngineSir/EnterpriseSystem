@@ -64,7 +64,7 @@
 }
 .add{
 	position:absolute;
-	left:-1%;
+	left:1%;
 	top:75%;
 }
 .opacity_bg{
@@ -92,7 +92,7 @@
 .showBody{
 	position:absolute;
 	left:1%;
-	top:5%;
+	top:6%;
 	width:685px;
 	height:465px;
 	background-color:#fff;
@@ -105,8 +105,42 @@
 	font-weight:bold;
 	font-size:12px;
 }
+
+#btnClose{
+	position:absolute;
+	top:1%;
+	left:96%;
+	height:20px;
+	padding:0px;
+}
+
+.layui-btn{
+		line-height:0px;
+}
+.tab{
+	position:absolute;
+	width:610px;
+	height:450px;
+	left:6%;
+}
 .btnGroup{
 	position:absolute;
-	top:30%;
-	
+	left:40%;
+	top:92%;
+}
+.ulList{
+	position:absolute;
+	top:90%;
+	left:15%;
+	width:880px;
+	height:40px;
+	overflow:hidden;
+}
+.ulList li{
+	display:inline;
+	font-size:13px;
+	background-color:#d7d7d7;
+}
+.ulList li img{
+	cursor:pointer;
 }
