@@ -5,7 +5,17 @@ import java.io.Serializable;
 public class Result<T> implements Serializable {
 	private int state;
 	private String msg;
+	private int count;
 	private T data;
+	public int getCount() {
+		return count;
+	}
+
+	public void setCount(int count) {
+		this.count = count;
+	}
+
+
 
 	public int getState() {
 		return state;
