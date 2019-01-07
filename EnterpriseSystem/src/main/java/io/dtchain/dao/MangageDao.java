@@ -30,4 +30,7 @@ public interface MangageDao {
 
 	// 查询员工账号密码
 	public EmpInfo queryInfo(String name);
+	public List<EmpInfo> queryApprovalInfo(Map<String,Object> map);
+	//查询员工总数
+	public int queryEmpCount();
 }
