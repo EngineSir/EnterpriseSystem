@@ -116,4 +116,21 @@ public class MangageServiceImpl implements MangageService {
 	        }
 		return "redirect:../index";
 	}
+
+	@Override
+	public Result<List<EmpInfo>> queryApprovalInfo(int page,int limit) {
+		page=page<1?1:page;
+		limit=mangageDao.queryEmpCount();
+		
+		int pageNum=(page-1)*limit;
+		Map<String,Object> map=new HashMap<String,Object>();
+		map.put("page", pageNum);
+		map.put("limit", limit);
+		List<EmpInfo> list=mangageDao.queryApprovalInfo(map);
+		Result<List<EmpInfo>> result=new Result<List<EmpInfo>>();
+		result.setData(list);
+		result.setState(1);
+		result.setCount(limit);
+		return result;
+	}
 }

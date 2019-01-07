@@ -43,4 +43,8 @@ public interface MangageService {
 	public Result<Object> authorityUrl(String url);
 	
 	public String login(String username,String pass);
+	/*
+	 * 查询审批人
+	 */
+	public Result<List<EmpInfo>> queryApprovalInfo(int page,int limit);
 }

@@ -52,4 +52,11 @@
 		select empName,empPass,empId from EmpTable where
 		empName=#{adminName}
 	</select>
+	<!-- 查询审批人信息 -->
+	<select id="queryApprovalInfo" parameterType="map" resultType="io.dtchain.entity.EmpInfo">
+		select empName,empDept from EmpTable limit #{page},#{limit}
+	</select>
+	<select id="queryEmpCount" resultType="int">
+		SELECT COUNT(*) FROM EmpTable
+	</select>
 </mapper>
