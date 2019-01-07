@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.dtchain.dao.ApprovalDao">
+	<insert id="leaveApplication" parameterType="io.dtchain.entity.LeaveTable">
+		insert into leaveTable (id,leaveType,startTime,endTime,leaveNum,createTime,leaveRegard,approver,approverStatue,applicant)
+			values
+				(#{id},#{leaveType},#{startTime},#{endTime},#{leaveNum},#{createTime},
+				#{leaveRegard},#{approver},#{approverStatue},#{applicant})
+	</insert>
+	<select id="queryCount" parameterType="map" resultType="int">
+		select count(*) from leaveTable where (approver=#{applicant}  or applicant=#{applicant}) and approverStatue=#{approverStatue}
+	</select>
+	<select id="queryAdminCount" parameterType="map" resultType="int">
+		select count(*) from leaveTable where approverStatue=#{approverStatue}
+	</select>
+	<select id="getPendingApproval" parameterType="map" resultType="io.dtchain.entity.LeaveTable">
+		select id,leaveType,startTime,endTime,leaveNum,leaveRegard,approverStatue,applicant
+		 from leaveTable where (approver=#{applicant}  or applicant=#{applicant}) and approverStatue=#{approverStatue} limit #{page},10 
+	</select>
+	<select id="getAdminPendingApproval" parameterType="map" resultType="io.dtchain.entity.LeaveTable">
+		select id,leaveType,startTime,endTime,leaveNum,leaveRegard,approverStatue,applicant 
+			from leaveTable where approverStatue=#{approverStatue} limit #{page},10 
+	</select>
+</mapper>
