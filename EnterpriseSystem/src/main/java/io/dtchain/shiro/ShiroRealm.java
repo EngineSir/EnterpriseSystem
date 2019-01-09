@@ -52,7 +52,6 @@ public class ShiroRealm extends AuthorizingRealm {
 		 * jd.append("吕冠森", "Engine");
 		 */
 
-		System.out.println("resourcesList:" + resourcesList);
 		// 权限信息对象info,用来存放查出的用户的所有的角色（role）及权限（permission）
 		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
 		Session session = SecurityUtils.getSubject().getSession();
