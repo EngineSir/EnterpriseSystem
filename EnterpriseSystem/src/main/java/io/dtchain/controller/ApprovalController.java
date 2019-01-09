@@ -30,41 +30,45 @@ public class ApprovalController {
 	private MangageService mangageService;
 	@Autowired
 	private ApprovalService approvalService;
-	
+
 	@ApiOperation(value = "查询审批人")
 	@GetMapping(value = "/approval.io")
 	@ResponseBody
-	public Result<List<EmpInfo>> queryApprovalInfo(@ApiParam(value = "当前页数", required = true)  @RequestParam(value = "page") int page,
-												   @ApiParam(value = "页面显示数据量", required = true) @RequestParam(value = "limit") int limit){
-		return mangageService.queryApprovalInfo(page,limit);
+	public Result<List<EmpInfo>> queryApprovalInfo(
+			@ApiParam(value = "当前页数", required = true) @RequestParam(value = "page") int page,
+			@ApiParam(value = "每页多少条", required = true) @RequestParam(value = "limit") int limit) {
+		return mangageService.queryApprovalInfo(page, limit);
 	}
-	
+
 	@ApiOperation(value = "请假申请")
 	@PostMapping(value = "/leaveApplication.io")
 	@ResponseBody
-	public Result<Object> leaveApplication(@ApiParam(value = "请假类型", required = true) @RequestParam(value = "leaveType") String leaveType,
-										   @ApiParam(value = "开始时间", required = true) @RequestParam(value = "start") String start,
-										   @ApiParam(value = "结束时间", required = true) @RequestParam(value = "end") String end,
-										   @ApiParam(value = "请假天数", required = true) @RequestParam(value = "leaveNum") int leaveNum,
-										   @ApiParam(value = "请假事由", required = true) @RequestParam(value = "leaveRegard") String leaveRegard,
-										   @ApiParam(value = "审批人", required = true) @RequestParam(value = "approver") String approver){
+	public Result<Object> leaveApplication(
+			@ApiParam(value = "请假类型", required = true) @RequestParam(value = "leaveType") String leaveType,
+			@ApiParam(value = "开始时间", required = true) @RequestParam(value = "start") String start,
+			@ApiParam(value = "结束时间", required = true) @RequestParam(value = "end") String end,
+			@ApiParam(value = "请假天数", required = true) @RequestParam(value = "leaveNum") int leaveNum,
+			@ApiParam(value = "请假事由", required = true) @RequestParam(value = "leaveRegard") String leaveRegard,
+			@ApiParam(value = "审批人", required = true) @RequestParam(value = "approver") String approver) {
 		return approvalService.leaveApplication(leaveType, start, end, leaveNum, leaveRegard, approver);
-		
+
 	}
-	
+
 	@ApiOperation(value = "待审批总数")
 	@GetMapping(value = "/queryCount.io")
 	@ResponseBody
-	public Result<Object> queryCount(@ApiParam(value = "审批状态  0:拒绝 1:同意 2:待审批") @RequestParam(value = "approverStatue") int approverStatue){
+	public Result<Object> queryCount(
+			@ApiParam(value = "审批状态  0:拒绝 1:同意 2:待审批") @RequestParam(value = "approverStatue") int approverStatue) {
 		return approvalService.queryCount(approverStatue);
 	}
-	
+
 	@ApiOperation(value = "获取待审批记录")
-	@GetMapping(value= "/getPendingApproval.io")
+	@GetMapping(value = "/getPendingApproval.io")
 	@ResponseBody
-	public Result<List<LeaveTable>> getPendingApproval(@ApiParam(value = "当前页数", required = true) @RequestParam(value = "page") int page,
-													   @ApiParam(value = "审批状态  0:拒绝 1:同意 2:待审批  ", required = true) @RequestParam(value = "approverStatue") int approverStatue){
+	public Result<List<LeaveTable>> getPendingApproval(
+			@ApiParam(value = "当前页数", required = true) @RequestParam(value = "page") int page,
+			@ApiParam(value = "审批状态  0:拒绝 1:同意 2:待审批  ", required = true) @RequestParam(value = "approverStatue") int approverStatue) {
 		return approvalService.getPendingApproval(page, approverStatue);
 	}
-	
+
 }
