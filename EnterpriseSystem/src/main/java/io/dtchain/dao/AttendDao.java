@@ -10,7 +10,7 @@ public interface AttendDao {
 	/**
 	 * 查询部门的工时统计表
 	 * 
-	 * @param qr
+	 * @param qr			检索信息
 	 * @return
 	 */
 	public List<DataProceTable> searchDeptProce(QueryRecord qr);
@@ -18,7 +18,7 @@ public interface AttendDao {
 	/**
 	 * 查询个人的工时统计表
 	 * 
-	 * @param qr
+	 * @param qr			检索信息
 	 * @return
 	 */
 	public List<DataProceTable> searchProce(QueryRecord qr);

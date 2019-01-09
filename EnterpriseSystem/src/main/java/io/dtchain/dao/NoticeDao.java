@@ -6,11 +6,34 @@ import java.util.Map;
 import io.dtchain.entity.Notice;
 
 public interface NoticeDao {
+	
+	/**
+	 * 发布公告
+	 * 
+	 * @param notice		公告信息
+	 */
 	public void saveNotice(Notice notice);
 
+	/**
+	 * 获取公告标题列表
+	 * 
+	 * @param map			当前页面
+	 * @return
+	 */
 	public List<Notice> queryNoticeTitle(Map<String, Object> map);
 
+	/**
+	 * 获取公告内容
+	 * 
+	 * @param id			公告id
+	 * @return
+	 */
 	public Notice queryNoticeContent(String id);
 
+	/**
+	 * 获取公告总数
+	 * 
+	 * @return
+	 */
 	public int queryNoticeCount();
 }
