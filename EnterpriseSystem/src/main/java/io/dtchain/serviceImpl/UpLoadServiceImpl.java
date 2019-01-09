@@ -2,35 +2,25 @@ package io.dtchain.serviceImpl;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileUploadException;
-import org.apache.commons.fileupload.ProgressListener;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.shiro.SecurityUtils;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
@@ -70,168 +60,48 @@ public class UpLoadServiceImpl implements UpLoadService {
 	/**
 	 * 上传文件
 	 */
-	public void upLoad(HttpServletRequest req, HttpServletResponse res) throws Exception {
+	public void upLoad(MultipartFile file,HttpServletRequest req, HttpServletResponse res) throws Exception {
 		String userId = (String) SecurityUtils.getSubject().getSession().getAttribute("userSessionId");
 
 		// 从数据库获取，该权限
 		List<String> list = resourcesDao.queryResourceName(userId);
 		if (list == null || list.size() < 1 || !list.contains("/dataImport")) {
-			// result.setMsg("联系管理员获取该权限");
-			// result.setState(-1);
-			// return result;
 			req.getSession().setAttribute("state", -1);
 			res.sendRedirect("../index");
 			return;
 		}
 
-		String dateS = "";
-		String dateE = "";
-		List<Map<String, Object>> listNum = mangageDao.queryNum();
-		if (!listNum.isEmpty()) {
-			for (Map<String, Object> m : listNum) {
-				dataNum.put(Integer.parseInt(m.get("empNum").toString()), m.get("empName").toString());
-
-			}
-		}
-
-		// 文件保存路径
-		// String savePath = req.getServletContext().getRealPath("/WEB-INF/upload");
 		String savePath = ResourceUtils.getURL("src\\main\\resources\\upload").getPath();
 		savePath = savePath.substring(1).replace('/', '\\');
-		// 上传生成的临时文件保存目录
-		// String tempPath = req.getServletContext().getRealPath("/WEB-INF/temp");
-		String tempPath = ResourceUtils.getURL("src\\main\\resources\\temp").getPath();
-		File tmpFile = new File(tempPath);
-		// 文件不存在就创建
-		if (!tmpFile.exists()) {
-			tmpFile.mkdirs();
-		}
-		// 消息提示
-		String message = "";
-		// 创建DiskFileItemFactory工厂
-		DiskFileItemFactory factory = new DiskFileItemFactory();
-		// 设置工厂的缓冲区大小，上传文件超过缓冲区大小就会产生临时文件500kb,默认10kb
-		factory.setSizeThreshold(1024 * 500);
-		// 临时文件保存路径
-		factory.setRepository(tmpFile);
-		// 创建文件上传解析器
-		ServletFileUpload upload = new ServletFileUpload(factory);
-		// 监听文件上传进度
-		upload.setProgressListener(new ProgressListener() {
+		String name = file.getOriginalFilename();
+		String fileName = savePath + name;
+		File fileSave=new File(fileName);
+		String dateS=req.getParameter("dateS").replace('-', '/');
+		String dateE=req.getParameter("dateE").replace('-', '/');
+		String fileExtName = name.substring(name.lastIndexOf(".") + 1);
+		if(null!=dateS && null!=dateE && !"".equals(dateS) && !"".equals(dateE) && (fileExtName.equals("xlsx") || fileExtName.equals("xltx"))) {
+			file.transferTo(fileSave);
+			System.out.println("文件上传成功");
+			List<Map<String, Object>> listNum = mangageDao.queryNum();
+			if (!listNum.isEmpty()) {
+				for (Map<String, Object> m : listNum) {
+					dataNum.put(Integer.parseInt(m.get("empNum").toString()), m.get("empName").toString());
 
-			public void update(long pBytesRead, long pContentLength, int arg2) {
-				System.out.println("文件大小为：" + pContentLength + ",当前已处理：" + pBytesRead);
-
-			}
-
-		});
-		// 解决上传名为中文的乱码
-		upload.setHeaderEncoding("UTF-8");
-		// 判断是否是表单提交上来的数据
-		if (!ServletFileUpload.isMultipartContent(req)) {
-			// 按照传统方式获取数据
-			return;
-		}
-		// 设置单个文件最大值1MB
-		upload.setFileSizeMax(1024 * 1024);
-		// 设置上传文件的总量最大值10MB
-		upload.setSizeMax(1024 * 1024 * 10);
-
-		try {
-			List<?> fileItems = upload.parseRequest(req);
-			Iterator<FileItem> fileItem = (Iterator<FileItem>) fileItems.iterator();
-			while (fileItem.hasNext()) {
-				// FileItemStream item=fileItem.next();
-				FileItem item = fileItem.next();
-				// 如果fileitem中封装的是普通输入项的数据
-				if (item.isFormField()) {
-					String fieldName = item.getFieldName();// 获取字段名
-					String value = item.getString("UTF-8");// 获取字段值
-					if ("dateS".equals("" + fieldName)) {
-						dateS = value.replace('-', '/');
-					}
-					if ("dateE".equals("" + fieldName)) {
-						dateE = value.replace('-', '/');
-					}
-				} else {// 如果fileitem中封装的是上传文件
-						// 得到上传的文件名称，
-					String filename = item.getName();
-					if (filename == null || filename.trim().equals("")) {
-						continue;
-					}
-					// 注意：不同的浏览器提交的文件名是不一样的，有些浏览器提交上来的文件名是带有路径的，如：
-					// c:\a\b\1.txt，而有些只是单纯的文件名，如：1.txt
-					// 处理获取到的上传文件的文件名的路径部分，只保留文件名部分
-					filename = filename.substring(filename.lastIndexOf("\\") + 1);
-					// 得到上传文件的扩展名
-					String fileExtName = filename.substring(filename.lastIndexOf(".") + 1);
-					// 仅支持后缀为xltx xlsx
-					if (fileExtName.equals("xltx") || fileExtName.equals("xlsx")) {
-						// 获取item中的上传文件的输入流
-						// InputStream in = item.openStream();
-						InputStream in = item.getInputStream();
-						// 得到文件保存的名称
-						// String saveFilename = makeFileName(filename);
-						// 得到文件的保存目录
-						String realSavePath = makePath(filename, savePath);
-						// 创建一个文件输出流
-						FileOutputStream out = new FileOutputStream(realSavePath + "\\" + filename);
-						// 创建一个缓冲区
-						byte buffer[] = new byte[1024];
-						// 判断输入流中的数据是否已经读完的标识
-						int len = 0;
-						// 循环将输入流读入到缓冲区当中，(len=in.read(buffer))>0就表示in里面还有数据
-						while ((len = in.read(buffer)) > 0) {
-							// 使用FileOutputStream输出流将缓冲区的数据写入到指定的目录(savePath +
-							// "\\" + filename)当中
-							out.write(buffer, 0, len);
-						}
-						// 关闭输入流
-						in.close();
-						// 关闭输出流
-						out.close();
-						message = "文件上传成功！";
-						String realfileName = realSavePath + "\\" + filename;
-
-						System.out.println(dateS + " " + dateE);
-						// 插入考勤记录
-						insertAttendRecord(realfileName, dateS, dateE);
-						// 读取完删除文件
-						File delFile = new File(realfileName);
-						if (delFile.exists()) {
-							boolean f = delFile.delete();
-						}
-						res.sendRedirect("../index");
-					} else {
-						System.out.println("不支持后缀为：" + fileExtName + " 的格式");
-					}
 				}
 			}
-		} catch (FileUploadException e) {
-			e.printStackTrace();
+			//插入考勤记录
+			insertAttendRecord(fileName, dateS, dateE);
+			// 读取完删除文件
+			if (fileSave.exists()) {
+				fileSave.delete();
+			}
+			res.sendRedirect("../index");
+			return;
+		}else {
+			res.sendRedirect("../dataImport");
+			return;
 		}
-
-	}
-
-	/**
-	 * 创建目录，用于保存文件
-	 */
-	private String makePath(String filename, String savePath) {
-		// 得到文件名的hashCode的值，得到的就是filename这个字符串对象在内存中的地址
-		int hashcode = filename.hashCode();
-		int dir1 = hashcode & 0xf; // 0--15
-		int dir2 = (hashcode & 0xf0) >> 4; // 0-15
-		// 构造新的保存目录
-		String dir = savePath + "\\" + dir1 + "\\" + dir2; // upload\2\3
-															// upload\3\5
-		// File既可以代表文件也可以代表目录
-		File file = new File(dir);
-		// 如果目录不存在
-		if (!file.exists()) {
-			// 创建目录
-			file.mkdirs();
-		}
-		return dir;
+		
 	}
 
 	/**
@@ -248,12 +118,16 @@ public class UpLoadServiceImpl implements UpLoadService {
 			AttendTable record;
 			// 获取到工作薄
 			XSSFWorkbook workbook = new XSSFWorkbook(realfileName);
+			
+			
+			
 			int num = workbook.getNumberOfSheets(); // 获取工作表格数
 			XSSFSheet sheet;
 			int rowNum = 0;
 			for (int i = 0; i < num; i++) {
 				sheet = workbook.getSheetAt(i); // 获取第i个工作表格
 				rowNum = sheet.getLastRowNum(); // 获取最后一行行号，即行数
+	
 				SimpleDateFormat sdf = null;
 				Cell[] cell = new Cell[7];
 				for (int j = 1; j <= rowNum; j++) { // 循环取行
@@ -278,16 +152,20 @@ public class UpLoadServiceImpl implements UpLoadService {
 						record.setDirection(cellNull(cell[5])); // 进出门
 						record.setSourceEvent(((int) cell[6].getNumericCellValue())); // 事件码
 
-						if (dataNum.get((int) cell[1].getNumericCellValue()) != null) {
+						if (dataNum.get((int)cell[1].getNumericCellValue()) != null) {
+						
 							record.setUserName(dataNum.get((int) cell[1].getNumericCellValue()));
 						} else {
 							continue;
 						}
 
+						//限定上传指定日期范围
 						if (dateS.compareTo(cale) <= 0 && dateE.compareTo(cale) >= 0) {
 							if (cellNull(cell[5]).equals("进门")) {
+						
 								enter.add(record);
 							} else {
+							
 								out.add(record);
 							}
 							// 添加到集合
@@ -296,9 +174,11 @@ public class UpLoadServiceImpl implements UpLoadService {
 						}
 
 					}
+					
+		
 					// 批量处理数据写入数据库，每次200条记录
 					if ((list.size() + 1) % 201 == 0) {
-
+			
 						uploadDao.insertAttendRecord(list);
 						list.clear();
 					}
@@ -309,6 +189,7 @@ public class UpLoadServiceImpl implements UpLoadService {
 				uploadDao.insertAttendRecord(list);
 			}
 
+			
 			workbook.close();
 			// 判断上下班时间信息
 			List<EnterTable> enterList = new ArrayList<EnterTable>();
@@ -849,7 +730,7 @@ public class UpLoadServiceImpl implements UpLoadService {
 					data.setHours(calcHours(rt, "20:59:59", "19:00:00"));
 
 				}
-			} else if (!rt.getAtNight().equals("未打卡")) { // 晚上上班卡已打
+			} else if (!rt.getAtNight().equals("未打卡")) { // 晚上下班卡已打
 				if (Time.valueOf(rt.getAtNight()).before(Time.valueOf("20:59:59"))
 						&& Time.valueOf(rt.getAtNight()).after(Time.valueOf("15:00:00"))) {
 
@@ -1161,6 +1042,7 @@ public class UpLoadServiceImpl implements UpLoadService {
 	 * 早上上班未打卡，计算全天正常上班时长
 	 */
 	private int calcAfterTime(RecordTable rt, String time) {
+		
 		int num = 0;
 		if (!rt.getAtNoon().equals("未打卡")) {
 			// if(!rt.getAtNight().equals("未打卡")){ //晚上下班打卡
@@ -1168,7 +1050,14 @@ public class UpLoadServiceImpl implements UpLoadService {
 		} else { // 早上没有上班
 			// if(!rt.getAtNight().equals("未打卡")){
 			if (!rt.getWorkAfter().equals("未打卡")) {
-				num = (hoursCale(time, rt.getWorkAfter()));
+				//下午来上班的时间
+				if(Time.valueOf(rt.getWorkAfter()).after(Time.valueOf("14:00:00"))) {
+					num = (hoursCale(time, rt.getWorkAfter()));
+				}else {
+					num = (hoursCale(time, "14:00:00"));
+				}
+				
+				
 			}
 			// }
 		}
