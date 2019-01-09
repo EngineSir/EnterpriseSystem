@@ -38,7 +38,7 @@ public class DeptServiceImpl implements DeptService {
 
 	public Result<Object> delDept(String id) {
 		Result<Object> result = new Result<Object>();
-		int n = deptDao.delDept(id);
+		int n = deptDao.delDept(id.substring(id.indexOf("=")+1));
 		if (n > 0) {
 			result.setState(1);
 			result.setMsg("删除成功");

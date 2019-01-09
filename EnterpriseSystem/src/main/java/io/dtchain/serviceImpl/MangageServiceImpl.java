@@ -43,13 +43,13 @@ public class MangageServiceImpl implements MangageService {
 		return result;
 	}
 
-	public Result<List<EmpInfo>> queryDeptEmpInfo(String value, int page) {
+	public Result<List<EmpInfo>> queryDeptEmpInfo(String deptName, int page) {
 		Result<List<EmpInfo>> result = new Result<List<EmpInfo>>();
 		List<EmpInfo> list = new ArrayList<EmpInfo>();
 		Map<String, Object> map = new HashMap<String, Object>();
 		int begin = (page - 1) * 6;
 		map.put("begin", begin);
-		map.put("info", value);
+		map.put("info", deptName);
 		list = mangageDao.queryDeptEmpInfo(map);
 
 		result.setData(list);
@@ -61,7 +61,7 @@ public class MangageServiceImpl implements MangageService {
 	public Result<Object> delEmpInfo(String empId) {
 		Result<Object> result = new Result<Object>();
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("empId", empId);
+		map.put("empId", empId.substring(empId.indexOf("=")+1));
 		int n = mangageDao.delEmpInfo(map);
 		if (n > 0) {
 			result.setMsg("删除信息成功");
