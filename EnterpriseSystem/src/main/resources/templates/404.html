@@ -1,18 +1,18 @@
 <!doctype html>
-
-<html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 
 <head>
 
 <meta charset="UTF-8">
  
-<title>404-对不起！您访问的页面不存在</title>
+<title>对不起！您访问的页面不存在</title>
  
 <style type="text/css">
  
-.head404{ width:580px; height:234px; margin:50px auto 0 auto; background:url(images/head404.png) no-repeat; }
+.head404{ width:580px; height:234px; margin:50px auto 0 auto; background:url(http://localhost:8080/images/head404.png) no-repeat; }
  
-.txtbg404{ width:499px; height:169px; margin:10px auto 0 auto; background:url(images/txtbg404.png) no-repeat;}
+.txtbg404{ width:499px; height:169px; margin:10px auto 0 auto; background:url(http://localhost:8080/images/txtbg404.png) no-repeat;}
  
 .txtbg404 .txtbox{ width:390px; position:relative; top:30px; left:60px;color:#eee; font-size:13px;}
  
@@ -38,8 +38,8 @@
  
   <div class="txtbox">
  
-      <p>对不起，您请求的页面不存在、或已被删除、或暂时不可用</p>
- 
+      <p th:text="${code}">对不起，您请求的页面不存在、或已被删除、或暂时不可用</p>
+ 	  <p th:text="${msg}"></p>
       <p class="paddingbox">请点击以下链接继续浏览网页</p>
  
       <p>》<a style="cursor:pointer" onclick="history.back()">返回上一页面</a></p>
