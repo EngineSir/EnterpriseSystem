@@ -6,11 +6,13 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import io.dtchain.entity.LeaveTable;
 import io.dtchain.entity.QueryLeave;
+import io.dtchain.exception.CustomException;
 import io.dtchain.service.LeaveService;
 import io.dtchain.utils.Result;
 import io.swagger.annotations.Api;
@@ -42,5 +44,13 @@ public class LeaveController {
 	public Result<List<LeaveTable>> searchLeave(QueryLeave ql) {
 		Result<List<LeaveTable>> result = leaveService.searchLeave(ql);
 		return result;
+	}
+	
+	/*
+	 * 异常测试
+	 */
+	 @GetMapping(value = "/exception.io")
+	public void exception() {
+		throw new CustomException("参数不足","308");
 	}
 }
