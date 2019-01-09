@@ -57,7 +57,7 @@ public class DeptController
 		return deptService.queryDept();
 	}
 	 
-	@ApiOperation(value = "更新部门名称")
+	@ApiOperation(value = "更新部门信息")
 	@PutMapping(value="/upDept.io")
 	@ResponseBody
 	public Result<Object> upDept(@ApiParam(value = "部门id",required=true)  @RequestParam(value="id") String id,
