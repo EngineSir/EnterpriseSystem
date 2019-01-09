@@ -157,3 +157,11 @@ input[type=text],input[type=password]{
 	color:red;
 	font-size:20px;
 }
+#count{
+	text-indent: 30px;
+	background:#fff url(../images/username.png) no-repeat 7px 5px;
+}
+#password{
+	text-indent: 30px;
+	background:#fff url(../images/pass.png) no-repeat 7px 5px;
+}
