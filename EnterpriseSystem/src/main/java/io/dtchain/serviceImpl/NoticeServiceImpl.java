@@ -44,9 +44,10 @@ public class NoticeServiceImpl implements NoticeService {
 		map.put("src", "http://localhost:8080/images/" + newName);
 		map.put("title", newName);
 		map1.put("data", map);
-
+		
 		// 上传文件
 		file.transferTo(file1);
+		
 		return new JSONObject(map1).toString();
 	}
 
