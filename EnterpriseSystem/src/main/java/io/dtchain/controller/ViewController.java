@@ -98,9 +98,15 @@ public class ViewController {
 		return "editeNotice";
 	}
 	
-	@ApiOperation(value = "404页面")
-	@GetMapping(value="/404")
+	@ApiOperation(value = "异常页面")
+	@GetMapping(value="/error")
 	public String fail() {
+		return "error";
+	}
+	
+	@ApiOperation(value = "未授权页面")
+	@GetMapping(value="/404")
+	public String notAuthority() {
 		return "404";
 	}
 }
