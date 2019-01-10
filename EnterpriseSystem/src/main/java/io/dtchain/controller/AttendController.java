@@ -1,9 +1,13 @@
 package io.dtchain.controller;
 
+import java.io.OutputStream;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,5 +44,22 @@ public class AttendController {
 		qr.setEnd(end);
 		qr.setStart(start);
 		return attendService.statistic(qr);
+	}
+	
+	@ApiOperation(value = "导出工时统计")
+	@GetMapping(value = "/downloadExcel.io")
+	public void downloadExcel(HttpServletRequest req,HttpServletResponse res) throws Exception{
+		QueryRecord qr=new QueryRecord();
+		qr.setEmpName(req.getParameter("name"));
+		qr.setEmpDept(req.getParameter("dept"));
+		qr.setEnd(req.getParameter("end"));
+		qr.setStart(req.getParameter("start"));
+		HSSFWorkbook wb=attendService.download(qr);
+        res.setContentType("application/vnd.ms-excel");
+        res.setHeader("Content-disposition", "attachment;filename="+new String("工时统计表".getBytes(),"iso-8859-1")+".xls" );
+        OutputStream ouputStream = res.getOutputStream();
+        wb.write(ouputStream);
+        ouputStream.flush();
+        ouputStream.close();
 	}
 }
