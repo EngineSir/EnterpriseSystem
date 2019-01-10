@@ -21,18 +21,4 @@ public interface DataProceDao {
 	 */
 	public int emptyZero();
 
-	/**
-	 * 清空双休工时统计为0的记录
-	 * 
-	 * @return
-	 */
-	public int empzero();
-
-	/**
-	 * 写入双休上班信息
-	 * 
-	 * @param list		双休上班数据集合
-	 * @return
-	 */
-	public int weekInfo(List<DataProceTable> list);
 }

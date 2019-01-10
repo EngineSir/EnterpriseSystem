@@ -211,7 +211,9 @@ public class UpLoadServiceImpl implements UpLoadService {
 		}
 	}
 
-	// 过滤逗号
+	/**
+	 * 过滤逗号 
+	 */
 	private String judge(String userName) {
 		int n = userName.indexOf("'");
 		String str;
@@ -701,7 +703,7 @@ public class UpLoadServiceImpl implements UpLoadService {
 	 */
 	private void dataProce(List<RecordTable> list) throws ParseException {
 		List<DataProceTable> proce = new ArrayList<DataProceTable>();
-		List<DataProceTable> db = new ArrayList<DataProceTable>();
+		//List<DataProceTable> db = new ArrayList<DataProceTable>();
 		List<RecordTable> detailed = new ArrayList<RecordTable>();
 
 		DataProceTable data = null;
@@ -821,14 +823,7 @@ public class UpLoadServiceImpl implements UpLoadService {
 			}
 			data.setLate(late);
 			data.setEarlyRetr(early);
-			// 排除周末
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-			Calendar cale = Calendar.getInstance();
-			cale.setTime(sdf.parse(rt.getDates()));
-			if ((cale.get(Calendar.DAY_OF_WEEK) - 1) == 0 || (cale.get(Calendar.DAY_OF_WEEK) - 1) == 6) {
-				db.add(data);
-				continue;
-			}
+	
 			// 添加到集合
 			proce.add(data);
 			if (fog) {
@@ -840,17 +835,13 @@ public class UpLoadServiceImpl implements UpLoadService {
 		if (!detailed.isEmpty()) {
 			recordDao.detailed(detailed);
 		}
-		// 储存双休上班表
-		if (!db.isEmpty()) {
-			dataProceDao.weekInfo(db);
-			dataProceDao.empzero();
-		}
+	
 		// 写入工时统计表
 		dataProceDao.dataProce(proce);
 
 	}
 
-	/*
+	/**
 	 * 大于半小时则算一小时
 	 */
 	private int hoursCale(String night, String times) {
@@ -866,12 +857,11 @@ public class UpLoadServiceImpl implements UpLoadService {
 	}
 
 	/**
-	 * 判断出去是否超过半小时
+	 * 判断加班过程中出去的时间
 	 */
 	private int forCale(List<AttendTable> oud, List<AttendTable> end, String time) {
 		int n = 0;
 
-		// 修改
 		if (!oud.isEmpty() && !end.isEmpty())
 			if (Time.valueOf(oud.get(0).getTimes()).before(Time.valueOf(end.get(0).getTimes()))) {
 				n += hoursCale(oud.get(0).getTimes(), time);
@@ -892,7 +882,7 @@ public class UpLoadServiceImpl implements UpLoadService {
 	}
 
 	/**
-	 * 计算上班过程中出去的时间
+	 * 计算正常上班过程中出去的时间
 	 */
 	private int caleOut(List<AttendTable> oud, List<AttendTable> end, String time) {
 		int n = 0;
@@ -913,23 +903,6 @@ public class UpLoadServiceImpl implements UpLoadService {
 	}
 
 	/**
-	 * 查询双休信息
-	 */
-	public Result<List<ResultProce>> queryWeekInfo(QueryRecord qr) {
-		Result<List<ResultProce>> result = new Result<List<ResultProce>>();
-		List<ResultProce> list = new ArrayList<ResultProce>();
-	 if (qr.getEmpName() == "") {
-			list = uploadDao.queryDeptWeekInfo(qr);
-		} else {
-			list = uploadDao.queryWeekInfo(qr);
-		}
-		result.setData(list);
-		result.setMsg("查询双休信息成功");
-		result.setState(1);
-		return result;
-	}
-
-	/*
 	 * 计算加班时长
 	 */
 	private int clacOverTime(RecordTable rt, String time) {
@@ -979,7 +952,7 @@ public class UpLoadServiceImpl implements UpLoadService {
 		return num;
 	}
 
-	/*
+	/**
 	 * 计算正常上班时长
 	 */
 	private int calcHours(RecordTable rt, String time, String time2) { // time是加班时间的分界点,time2是正常下班时间点18:00:00或者19:00:00
@@ -1038,7 +1011,7 @@ public class UpLoadServiceImpl implements UpLoadService {
 
 	}
 
-	/*
+	/**
 	 * 早上上班未打卡，计算全天正常上班时长
 	 */
 	private int calcAfterTime(RecordTable rt, String time) {

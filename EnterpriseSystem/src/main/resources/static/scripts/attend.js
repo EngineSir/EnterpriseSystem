@@ -153,108 +153,13 @@ function dataImport() {
 	var dept = $("#dept").combobox("getText");
 	// 需要转化日期格式且转换为Date对象
 	var start = calecon($("#start").val().trim());
-	;
 	var end = calecon($("#end").val().trim());
 	if (dept != "" && $("#start").val().trim() != ""
-			&& $("#end").val().trim() != "" && end >= start) {
-		$.ajax({
-			url : "File/dataImport.io",
-			type : "get",
-			dataType : "json",
-			async : false,
-			data : {
-				"empName" : name,
-				"empDept" : dept,
-				"start" : start,
-				"end" : end
-			},
-			success : function(result) {
-				if (result.state == 1) {
-					data = result.data;
-				}
-			},
-			error : function() {
-				alert("查询双休信息失败");
-			}
-		});
-
-		$.ajax({
-			url : "record/detailed.io",
-			type : "get",
-			dataType : "json",
-			async : false,
-			data : {
-				"empName" : name,
-				"empDept" : dept,
-				"start" : start,
-				"end" : end
-			},
-			success : function(result) {
-				if (result.state == 1) {
-					DATA = result.data;
-
-				}
-			},
-			error : function() {
-				alert("查询早退迟到加班信息失败");
-			}
-		});
+		&& $("#end").val().trim() != "" && end >= start){
+		
+		location.href ="attend/downloadExcel.io?name=" + name
+		+ "&dept=" + dept + "&start=" + start + "&end=" + end;
 	}
-	var str = "姓名,部门,上班天数,小时数,迟到,早退,加班,总工时\n";
-	var rows = $('#tt').datagrid('getRows');
-	for (var i = 0; i < rows.length; i++) {
-		for ( var item in rows[i]) {
-			str += `${rows[i][item] + '\t'},`;
-		}
-		str += '\n';
-	}
-	if (data.length != 0) {
-		str += "姓名,部门,小时数,迟到,早退,加班,日期,星期\n"
-	}
-
-	for (var i = 0; i < data.length; i++) {
-		var g = 0;
-		for ( var item in data[i]) {
-			g++;
-			if (g == 3) {
-				continue;
-			}
-
-			str += `${data[i][item] + '\t'},`;
-		}
-		if (new Date(data[i].dates).getDay() == 0) {
-			str += `${"星期日" + '\t'},`;
-		}
-		if (new Date(data[i].dates).getDay() == 6) {
-
-			str += `${"星期六"+ '\t'},`;
-		}
-		str += '\n';
-	}
-	if (DATA.length != 0) {
-		str += "姓名,日期,早上上班,中午下班,下午上班,晚上下班,部门 \n"
-	}
-	for (var i = 0; i < DATA.length; i++) {
-		var g = 0;
-		for ( var item in DATA[i]) {
-			g++;
-			if (g == 8) {
-				continue;
-			}
-			str += `${DATA[i][item]+ '\t'},`;
-		}
-		str += '\n';
-	}
-	// encodeURIComponent解决中文乱码
-	let uri = 'data:text/csv;charset=utf-8,\ufeff' + encodeURIComponent(str);
-	// 通过创建a标签实现
-	var link = document.createElement("a");
-	link.href = uri;
-	// 对下载的文件命名
-	link.download = "工时统计表.csv";
-	document.body.appendChild(link);
-	link.click();
-	document.body.removeChild(link);
 }
 // 创建tr
 function create(dates, morn, noon, after, nigth) {

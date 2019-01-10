@@ -25,13 +25,6 @@ public interface UpLoadDao {
 	 */
 	public List<AttendTable> queryOverTime(Map<String, String> map);
 
-	/**
-	 * 查询全部双休信息
-	 * 
-	 * @param qr
-	 * @return
-	 */
-	public List<ResultProce> queryAllWeekInfo(QueryRecord qr);
 
 	/**
 	 * 部门双休信息

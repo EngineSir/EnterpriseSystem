@@ -10,13 +10,6 @@ import io.dtchain.utils.Result;
 
 public interface QueryRecordService {
 
-	/**
-	 * 查询迟到早退
-	 * 
-	 * @param qr			检索信息
-	 * @return
-	 */
-	public Result<List<RecordTable>> queryDetailed(QueryRecord qr);
 
 	/**
 	 * 查询迟到早退加班明细

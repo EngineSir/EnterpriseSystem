@@ -32,24 +32,6 @@ public class RecordController {
 	@Resource
 	private QueryRecordService queryRecordService;
 
-	@ApiOperation(value = "查询迟到，早退")
-	@GetMapping(value="/detailed.io")
-	@ResponseBody
-	public Result<List<RecordTable>> queryDetailed(@ApiParam(value = "名字", required = false) @RequestParam(value = "empName") String empName,
-												   @ApiParam(value = "部门", required = true) @RequestParam(value = "empDept") String empDept,
-												   @ApiParam(value = "开始日期", required = true) @RequestParam(value = "start") String start,
-												   @ApiParam(value = "结束日期", required = true) @RequestParam(value = "end") String end) {
-		
-		
-		QueryRecord qr=new QueryRecord();
-		qr.setEmpDept(empDept);
-		qr.setEmpName(empName);
-		qr.setEnd(end);
-		qr.setStart(start);
-		return queryRecordService.queryDetailed(qr);
-	}
-
-	
 	@ApiOperation(value = "查询迟到早退加班明细")
 	@GetMapping(value="/detailedInfo.io")
 	@ResponseBody
@@ -95,7 +77,7 @@ public class RecordController {
 		return queryRecordService.queryOtherPage(qr);
 	}
 	
-	@ApiOperation(value = "导出考勤记录到excel")
+	@ApiOperation(value = "导出考勤记录")
 	@GetMapping(value="/downloadExcel.io")
 	public void downloadExcel(HttpServletRequest req,HttpServletResponse res) throws Exception{
 		
@@ -106,7 +88,7 @@ public class RecordController {
 			qr.setStart(req.getParameter("start"));
 			HSSFWorkbook wb=queryRecordService.download(qr);
 	        res.setContentType("application/vnd.ms-excel");
-	        res.setHeader("Content-disposition", "attachment;filename=AttendRecord.xls" );
+	        res.setHeader("Content-disposition", "attachment;filename="+new String("考勤记录表".getBytes(),"iso-8859-1")+".xls" );
 	        OutputStream ouputStream = res.getOutputStream();
 	        wb.write(ouputStream);
 	        ouputStream.flush();

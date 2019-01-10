@@ -5,7 +5,7 @@
   <mapper namespace="io.dtchain.dao.RecordDao">
   		<!-- worktimetable -->
   	<insert id="workTable" parameterType="java.util.List">
-  		insert into workTimeTable (empName,dept,dates,workMorn,atNoon,workAfter,atNight)
+  		insert ignore into workTimeTable (empName,dept,dates,workMorn,atNoon,workAfter,atNight)
   				values
   					<foreach collection="list" item="work" index="index" separator=",">
   						(
@@ -34,15 +34,10 @@
   			#{start} and #{end} and dept=#{empDept} and (conbin LIKE '%l%' OR conbin LIKE '%e%')
   					 order by dept,empName,dates
   	</select>
-  	<!-- 查询所有员工的早退明细 
-  	<select id="queryAllDetailed" parameterType="io.dtchain.entity.QueryRecord" resultType="io.dtchain.entity.RecordTable">
-  		select empName,dept,dates,workMorn,atNoon,workAfter,atNight from Detailed where dates between 
-  			#{start} and #{end} and (conbin LIKE '%l%' OR conbin LIKE '%e%')
-  						order by dept,empName,dates
-  	</select>-->
+  	
   	<!-- 迟到早退,加班记录 -->
   	<insert id="detailed" parameterType="java.util.List">
-  		insert into Detailed (empName,dept,dates,workMorn,atNoon,workAfter,atNight,conBin)
+  		insert ignore into Detailed (empName,dept,dates,workMorn,atNoon,workAfter,atNight,conBin)
   				values
   					<foreach collection="list" item="work" index="index" separator=",">
   						(
@@ -64,11 +59,7 @@
   				order by dept,empName,dates
   	</select>
   	
-  	<!-- 查询总员工记录总数 
-  	<select id="queryAllCount" parameterType="io.dtchain.entity.QueryRecord" resultType="int">
-  		select count(*) from workTimeTable where dates between 
-  			#{start} and #{end} order by dept,empName,dates
-  	</select>-->
+  
   	<!-- 部门总记录数 -->
   	<select id="queryDeptCount" parameterType="io.dtchain.entity.QueryRecord" resultType="int">
   		select count(*) from workTimeTable where dates between 
@@ -95,12 +86,7 @@
   			#{start} and #{end} and dept=#{empDept}	
   				order by dept,empName,dates limit #{page},10
   	</select>
-  		<!-- 查询部门员工记录
-  		<select id="queryDeptPage" parameterType="io.dtchain.entity.QueryRecord" resultType="io.dtchain.entity.RecordTable">
-  		select empName,dept,dates,workMorn,atNoon,workAfter,atNight from workTimeTable where dates between 
-  			#{start} and #{end} and dept=#{empDept} 
-  			order by dept,empName,dates limit #{page},10
-  	</select>-->
+  	
   	<!-- 查询总的记录数用于下载 -->
   	<select id="queryAllRecord" parameterType="io.dtchain.entity.QueryRecord" resultType="io.dtchain.entity.RecordTable">
   		select empName,dept,dates,workMorn,atNoon,workAfter,atNight from workTimeTable where dates between 

@@ -17,34 +17,13 @@ import io.dtchain.entity.QueryRecord;
 import io.dtchain.entity.RecordTable;
 import io.dtchain.service.QueryRecordService;
 import io.dtchain.utils.Result;
+import io.dtchain.utils.Utils;
 
 @Service("queryRecordService")
 public class QueryRecordServiceImpl implements QueryRecordService {
 	@Resource
 	private RecordDao recordDao;
 	private String[] excelHead = { "姓名", "部门", "日期", "早上上班", "中午下班", "下午上班", "晚上下班" };
-
-	/**
-	 * 查询迟到早退
-	 */
-	public Result<List<RecordTable>> queryDetailed(QueryRecord qr) {
-		// 存储返回结果
-		Result<List<RecordTable>> result = new Result<List<RecordTable>>();
-		List<RecordTable> list = new ArrayList<RecordTable>();
-		if (qr.getEmpName() == "") { // 按部门搜索
-			list = recordDao.queryDeptDetailed(qr);
-		} else {
-			list = recordDao.queryDetailed(qr); // 搜索个人
-		}
-		if (!list.isEmpty()) {
-			result.setData(list);
-			result.setMsg("查询成功");
-			result.setState(1);
-		} else {
-			result.setMsg("查询失败");
-		}
-		return result;
-	}
 
 	/*
 	 * 查询迟到早退，加班信息明细
@@ -133,28 +112,9 @@ public class QueryRecordServiceImpl implements QueryRecordService {
 			row.createCell(6).setCellValue(record.getAtNight());
 
 		}
-		excelFormat(wb, sheet);
+		Utils.excelFormat(wb, sheet);
 		return wb;
 	}
 
-	private static void excelFormat(HSSFWorkbook wb, HSSFSheet sheet) {
-		HSSFCellStyle style = wb.createCellStyle();
-		style.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-
-		style.setBorderBottom(HSSFCellStyle.BORDER_THIN); // 下边框
-		style.setBorderLeft(HSSFCellStyle.BORDER_THIN);// 左边框
-		style.setBorderTop(HSSFCellStyle.BORDER_THIN);// 上边框
-		style.setBorderRight(HSSFCellStyle.BORDER_THIN);// 右边框
-		for (int j = 1; j <= sheet.getLastRowNum(); j++) {
-			HSSFRow r = sheet.getRow(j);
-			if (r != null) {
-				for (int l = 0; l < r.getLastCellNum(); l++) {
-					HSSFCell c = r.getCell(l);
-					c.setCellStyle(style);
-					sheet.setColumnWidth(l, 20 * 300);
-				}
-			}
-		}
-	}
 
 }

@@ -139,7 +139,6 @@ function dataImport() {
 
 	// 需要转化日期格式且转换为Date对象
 	var start = calecon($("#start").val().trim());
-	;
 	var end = calecon($("#end").val().trim());
 	// 判断检索条件
 	if ($("#start").val().trim() != "" && $("#end").val().trim() != ""

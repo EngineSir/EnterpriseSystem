@@ -5,7 +5,7 @@
   <mapper namespace="io.dtchain.dao.DataProceDao">
   <!-- 原始数据批量插入数据到数据库 -->
   	<insert id="dataProce" parameterType="java.util.List">
-  		insert into dataProce_t (empName,dates,dept,days,hours,late,earlyRetr,overTime) 
+  		insert ignore into dataProce_t (empName,dates,dept,days,hours,late,earlyRetr,overTime) 
   			values 
   				<foreach collection="list" item="attend" index="index" separator=",">
   					(
@@ -23,22 +23,4 @@
   	<delete id="emptyZero">
   		delete from dataProce_t where hours=0 and late=0 and earlyRetr=0 and overTime=0
   	</delete>
-  	<delete id="empzero">
-  		delete from doubleBreak where hours=0 and late=0 and earlyRetr=0 and overTime=0 or dept is null
-  	</delete>
-  	<insert id="weekInfo" parameterType="java.util.List">
-  		insert into doubleBreak (empName,dates,dept,hours,late,earlyRetr,overTime) 
-  			values 
-  				<foreach collection="list" item="attend" index="index" separator=",">
-  					(
-  						#{attend.empName},
-  						#{attend.dates},
-  						#{attend.dept},
-  						#{attend.hours},
-  						#{attend.late},
-  						#{attend.earlyRetr},
-  						#{attend.overTime}
-  					)
-  				</foreach>
-  	</insert>
   </mapper>

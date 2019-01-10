@@ -5,7 +5,7 @@
   <mapper namespace="io.dtchain.dao.UpLoadDao">
   <!-- 原始数据批量插入数据到数据库 -->
   	<insert id="insertAttendRecord" parameterType="java.util.List">
-  		insert into attendRecord (userName,empNum,cardNum,dates,times,direction,sourceEvent) 
+  		insert ignore into attendRecord (userName,empNum,cardNum,dates,times,direction,sourceEvent) 
   			values 
   				<foreach collection="list" item="attend" index="index" separator=",">
   					(
@@ -30,20 +30,18 @@
   		select times from attendRecord where userName=#{userName} and 
   			dates=#{dates} and direction=#{direction} and times>"14:00:00" and times <![CDATA[ < ]]> #{times} order by dates,times
   	</select>
-  	<!-- 查询全部双休信息 -->
-  	<select id="queryAllWeekInfo" parameterType="io.dtchain.entity.QueryRecord" resultType="io.dtchain.entity.ResultProce">
-  		select empname,dept,dates,hours,late,earlyRetr,overTime from doubleBreak where dates between 
-  			#{start} and #{end} order by dept,empName,dates
-  	</select> 
+  	
   	
   	<!-- 查询部门双休信息 -->
   	<select id="queryDeptWeekInfo" parameterType="io.dtchain.entity.QueryRecord" resultType="io.dtchain.entity.ResultProce">
-  		select empname,dept,dates,hours,late,earlyRetr,overTime from doubleBreak where dept=#{empDept} and dates between 
+  	SELECT empName,dates,dept,hours,late,earlyRetr,overTime FROM 
+  	(SELECT  *,DAYOFWEEK(dates) wk FROM dataProce_t dp) d WHERE (wk=7 OR wk=1) AND dept=#{empDept} and dates between 
   			#{start} and #{end} order by dept,empName,dates
   	</select> 
   	<!-- 查询个人双休信息 -->
   	<select id="queryWeekInfo" parameterType="io.dtchain.entity.QueryRecord" resultType="io.dtchain.entity.ResultProce">
-  		select empname,dept,dates,hours,late,earlyRetr,overTime from doubleBreak where empname=#{empName} and dates between 
+  	SELECT empName,dates,dept,hours,late,earlyRetr,overTime FROM 
+  	(SELECT  *,DAYOFWEEK(dates) wk FROM dataProce_t dp) d WHERE (wk=7 OR wk=1) AND empname=#{empName} and dates between 
   			#{start} and #{end} order by dept,empName,dates
   	</select> 
   </mapper>
