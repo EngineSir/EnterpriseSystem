@@ -50,4 +50,20 @@ public interface NoticeService {
 	 * @return
 	 */
 	public Result<Object> queryNoticeCount();
+	
+	/**
+	 * 删除公告
+	 * 
+	 * @param id				公告id
+	 * @return
+	 */
+	public Result<Object> delNotice(String id);
+	
+	/**
+	 * 修改公告详情
+	 * 
+	 * @param notice			公告详情
+	 * @return
+	 */
+	public Result<Object> updateNotice(Notice notice);
 }

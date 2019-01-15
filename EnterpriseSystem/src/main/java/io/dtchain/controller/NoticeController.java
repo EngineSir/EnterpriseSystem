@@ -5,8 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -65,5 +68,25 @@ public class NoticeController {
 	@ResponseBody
 	public Result<Object> queryNoticeCount(){
 		return noticeService.queryNoticeCount();
+	}
+	
+	@ApiOperation(value = "删除公告")
+	@DeleteMapping(value = "/delNotice.io")
+	@ResponseBody
+	public Result<Object> delNotice(@ApiParam(value = "公告id", required = true) @RequestBody String id){
+		return noticeService.delNotice(id);
+	}
+	
+	@ApiOperation(value = "修改公告详情")
+	@PutMapping(value = "/updateNotice.io")
+	@ResponseBody
+	public Result<Object> updateNotice(@ApiParam(value = "公告id", required = true) @RequestParam(value = "id") String id,
+									   @ApiParam(value = "公告标题", required = true) @RequestParam(value = "title") String title,
+									   @ApiParam(value = "公告内容", required = true) @RequestParam(value = "content") String content){
+		Notice notice=new Notice();
+		notice.setContent(content);
+		notice.setId(id);
+		notice.setTitle(title);
+		return noticeService.updateNotice(notice);
 	}
 }

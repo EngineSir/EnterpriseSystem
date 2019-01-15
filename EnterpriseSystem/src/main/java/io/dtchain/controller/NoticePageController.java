@@ -16,7 +16,13 @@ public class NoticePageController {
 	
 	@ApiOperation(value = "显示公告详情页面")
 	@GetMapping(value="/notice.io")
-	public String blogPage(@ApiParam(value = "公告id", required = true) @RequestParam(value="id") String id){
+	public String blogPage(@ApiParam(value = "公告id", required = true) @RequestParam(value = "id") String id){
 		return "noticePage";
+	}
+	
+	@ApiOperation(value = "显示修改公告页面")
+	@GetMapping(value = "/updateNotice.io")
+	public String updateNotice(@ApiParam(value = "公告id",required = true) @RequestParam(value = "id") String id) {
+		return "upNotice";
 	}
 }

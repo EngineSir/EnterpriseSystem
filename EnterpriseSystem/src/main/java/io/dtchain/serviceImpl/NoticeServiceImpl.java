@@ -120,4 +120,32 @@ public class NoticeServiceImpl implements NoticeService {
 		return result;
 	}
 
+	@Override
+	public Result<Object> delNotice(String id) {
+		Result<Object> result=new Result<Object>();
+		int n=noticeDao.delNotice(id.substring(id.indexOf("=")+1));
+		if(n>0) {
+			result.setMsg("请求删除成功");
+			result.setState(1);
+		}else {
+			result.setMsg("请求删除失败");
+			result.setState(0);
+		}
+		return result;
+	}
+
+	@Override
+	public Result<Object> updateNotice(Notice notice) {
+		Result<Object> result=new Result<Object>();
+		int n=noticeDao.updataNotice(notice);
+		if(n>0) {
+			result.setMsg("请求修改公告详情成功");
+			result.setState(1);
+		}else {
+			result.setMsg("请求修改公告详情失败");
+			result.setState(0);
+		}
+		return result;
+	}
+
 }

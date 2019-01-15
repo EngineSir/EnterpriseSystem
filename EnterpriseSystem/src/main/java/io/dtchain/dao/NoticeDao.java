@@ -36,4 +36,20 @@ public interface NoticeDao {
 	 * @return
 	 */
 	public int queryNoticeCount();
+	
+	/**
+	 * 删除公告
+	 * 
+	 * @param id			公告id
+	 * @return
+	 */
+	public int delNotice(String id);
+	
+	/**
+	 * 修改公告详情
+	 * 
+	 * @param notice		公告详情
+	 * @return
+	 */
+	public int updataNotice(Notice notice);
 }
