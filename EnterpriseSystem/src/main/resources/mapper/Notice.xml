@@ -19,4 +19,10 @@
 	<select id="queryNoticeCount" resultType="int">
 		select count(*) from noticeContet
 	</select>
+	<delete id="delNotice" parameterType="string">
+		delete from noticeContet where id=#{id}
+	</delete>
+	<update id="updataNotice" parameterType="io.dtchain.entity.Notice">
+		update noticeContet set title=#{title},content=#{content} where id=#{id}
+	</update>
 </mapper>
