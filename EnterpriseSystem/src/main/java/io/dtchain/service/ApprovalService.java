@@ -35,4 +35,33 @@ public interface ApprovalService {
 	 * @return
 	 */
 	public Result<List<LeaveTable>> getPendingApproval(int page,int approverStatue);
+	
+	/**
+	 * 已审批总数
+	 * @return
+	 */
+	public Result<Object> queryApprovalCount();
+	
+	/**
+	 * 获取已审批记录
+	 * @param page				当前页数
+	 * @return
+	 */
+	public Result<List<LeaveTable>> getApproval(int page);
+	
+	/**
+	 * 审批操作
+	 * @param id				请假记录id
+	 * @param approverStatue	审批状态
+	 * @return
+	 */
+	public Result<Object> operation(String id,int approverStatue);
+	
+	
+	/**
+	 * 删除待审批记录
+	 * @param id				请假记录id
+	 * @return
+	 */
+	public Result<Object> delApproval(String id);
 }

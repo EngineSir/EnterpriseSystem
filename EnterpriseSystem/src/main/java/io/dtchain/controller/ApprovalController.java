@@ -5,8 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import io.dtchain.entity.EmpInfo;
 import io.dtchain.entity.LeaveTable;
 import io.dtchain.service.ApprovalService;
+import io.dtchain.service.AuthorityService;
 import io.dtchain.service.MangageService;
 import io.dtchain.utils.Result;
 import io.swagger.annotations.Api;
@@ -30,6 +34,8 @@ public class ApprovalController {
 	private MangageService mangageService;
 	@Autowired
 	private ApprovalService approvalService;
+	@Autowired
+	private AuthorityService authorityService;
 
 	@ApiOperation(value = "查询审批人")
 	@GetMapping(value = "/approval.io")
@@ -58,7 +64,7 @@ public class ApprovalController {
 	@GetMapping(value = "/queryCount.io")
 	@ResponseBody
 	public Result<Object> queryCount(
-			@ApiParam(value = "审批状态  0:拒绝 1:同意 2:待审批") @RequestParam(value = "approverStatue") int approverStatue) {
+			@ApiParam(value = "审批状态  0:拒绝 1:同意 2:待审批", required = true) @RequestParam(value = "approverStatue") int approverStatue) {
 		return approvalService.queryCount(approverStatue);
 	}
 
@@ -70,5 +76,40 @@ public class ApprovalController {
 			@ApiParam(value = "审批状态  0:拒绝 1:同意 2:待审批  ", required = true) @RequestParam(value = "approverStatue") int approverStatue) {
 		return approvalService.getPendingApproval(page, approverStatue);
 	}
+	
+	@ApiOperation(value = "已审批总数")
+	@GetMapping(value = "/queryApprovalCount.io")
+	@ResponseBody
+	public Result<Object> queryApprovalCount(){
+		return approvalService.queryApprovalCount();
+	}
 
+	@ApiOperation(value = "获取已审批记录")
+	@GetMapping(value = "/getApproval.io")
+	@ResponseBody
+	public Result<List<LeaveTable>> getApproval(@ApiParam(value = "当前页数", required = true) @RequestParam(value = "page") int page){
+		return approvalService.getApproval(page);
+	}
+	
+	@ApiOperation(value = "审批操作")
+	@PutMapping(value = "/operation.io")
+	@ResponseBody
+	public Result<Object> operation(@ApiParam(value = "请假记录id", required = true) @RequestParam(value = "id") String id,
+									@ApiParam(value = "审批状态  0：拒绝 1：同意", required = true) @RequestParam(value = "approverStatue") int approverStatue){
+		return approvalService.operation(id, approverStatue);
+	}
+	
+	@ApiOperation(value = "查询是否拥有权限")
+	@GetMapping(value = "/queryAuthority.io")
+	@ResponseBody
+	public Result<Object> queryAuthority(@ApiParam(value = "权限url", required = true) @RequestParam(value = "url") String url){
+		return authorityService.authorityUrl(url);
+	}
+	
+	@ApiOperation(value = "删除待审批记录")
+	@DeleteMapping(value = "/delApproval.io")
+	@ResponseBody
+	public Result<Object> delApproval(@ApiParam(value = "请假记录id", required = true) @RequestBody String id ){
+		return approvalService.delApproval(id);
+	}
 }

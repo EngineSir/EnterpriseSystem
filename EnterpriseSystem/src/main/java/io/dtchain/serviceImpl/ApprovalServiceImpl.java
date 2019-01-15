@@ -55,12 +55,7 @@ public class ApprovalServiceImpl implements ApprovalService{
 		map.put("applicant", applicant);
 		map.put("approverStatue", approverStatue);
 		Result<Object> result=new Result<Object>();
-		int count=0;
-		if(applicant.equals("admin")) {
-			count=approvalDao.queryAdminCount(map);
-		}else {
-			count=approvalDao.queryCount(map);
-		}
+		int count=approvalDao.queryCount(map);
 		result.setCount(count);
 		result.setMsg("请求成功");
 		result.setState(1);
@@ -74,13 +69,53 @@ public class ApprovalServiceImpl implements ApprovalService{
 		Map<String,Object> map=new HashMap<String,Object>();
 		map.put("page", page);
 		map.put("approverStatue", approverStatue);
-		if(((String)SecurityUtils.getSubject().getPrincipal()).equals("admin")) {
-			list=approvalDao.getAdminPendingApproval(map);
-		}else {
-			list=approvalDao.getPendingApproval(map);
-		}
+		map.put("applicant", (String)SecurityUtils.getSubject().getPrincipal());
+		list=approvalDao.getPendingApproval(map);
 		result.setData(list);
 		result.setMsg("请求成功");
+		result.setState(1);
+		return result;
+	}
+	@Override
+	public Result<Object> queryApprovalCount() {
+		String applicant=(String)SecurityUtils.getSubject().getPrincipal();
+		Result<Object> result=new Result<Object>();
+		int count=approvalDao.queryApprovalCount(applicant);
+		result.setCount(count);
+		result.setMsg("请求成功");
+		result.setState(1);
+		return result;
+	}
+	@Override
+	public Result<List<LeaveTable>> getApproval(int page) {
+		Result<List<LeaveTable>> result=new Result<List<LeaveTable>>();
+		List<LeaveTable> list=new ArrayList<LeaveTable>();
+		page=page<1?0:(page-1)*10;
+		Map<String,Object> map=new HashMap<String,Object>();
+		map.put("page", page);
+		map.put("applicant", (String)SecurityUtils.getSubject().getPrincipal());
+		list=approvalDao.getApproval(map);
+		result.setData(list);
+		result.setMsg("请求成功");
+		result.setState(1);
+		return result;
+	}
+	@Override
+	public Result<Object> operation(String id, int approverStatue) {
+		Result<Object> result=new Result<Object>();
+		Map<String,Object> map=new HashMap<String,Object>();
+		map.put("id", id);
+		map.put("approverStatue", approverStatue);
+		approvalDao.operation(map);
+		result.setMsg("请求成功");
+		result.setState(1);
+		return result;
+	}
+	@Override
+	public Result<Object> delApproval(String id) {
+		Result<Object> result=new Result<Object>();
+		approvalDao.delApproval(id.substring(id.indexOf("=")+1));
+		result.setMsg("请求删除成功");
 		result.setState(1);
 		return result;
 	}

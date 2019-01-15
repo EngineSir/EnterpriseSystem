@@ -10,17 +10,44 @@
 				#{leaveRegard},#{approver},#{approverStatue},#{applicant})
 	</insert>
 	<select id="queryCount" parameterType="map" resultType="int">
-		select count(*) from leaveTable where (approver=#{applicant}  or applicant=#{applicant}) and approverStatue=#{approverStatue}
+		select count(*) from leaveTable where
+			<if test="applicant != 'admin'">
+				(approver=#{applicant}  or applicant=#{applicant}) and
+			</if>
+		  approverStatue=#{approverStatue}
 	</select>
-	<select id="queryAdminCount" parameterType="map" resultType="int">
-		select count(*) from leaveTable where approverStatue=#{approverStatue}
-	</select>
+	
 	<select id="getPendingApproval" parameterType="map" resultType="io.dtchain.entity.LeaveTable">
 		select id,leaveType,startTime,endTime,leaveNum,leaveRegard,approverStatue,applicant
-		 from leaveTable where (approver=#{applicant}  or applicant=#{applicant}) and approverStatue=#{approverStatue} limit #{page},10 
+		 from leaveTable where 
+		 	<if test="applicant != 'admin'">
+		 		(approver=#{applicant}  or applicant=#{applicant}) and
+		 	</if>
+		  approverStatue=#{approverStatue} ORDER BY createTime DESC limit #{page},10 
 	</select>
-	<select id="getAdminPendingApproval" parameterType="map" resultType="io.dtchain.entity.LeaveTable">
-		select id,leaveType,startTime,endTime,leaveNum,leaveRegard,approverStatue,applicant 
-			from leaveTable where approverStatue=#{approverStatue} limit #{page},10 
+	
+	
+	<select id="queryApprovalCount" parameterType="string" resultType="int">
+		select count(*) from leaveTable where 
+			<if test="applicant != 'admin'">
+				(approver=#{applicant}  or applicant=#{applicant}) and
+			</if>
+		 approverStatue<![CDATA[!= ]]>2
 	</select>
+	
+	<select id="getApproval" parameterType="map" resultType="io.dtchain.entity.LeaveTable">
+		select id,leaveType,startTime,endTime,leaveNum,leaveRegard,approverStatue,applicant
+		 from leaveTable where 
+		 	<if test="applicant != 'admin'">
+		 		(approver=#{applicant}  or applicant=#{applicant}) and
+		 	</if>
+		  approverStatue<![CDATA[!= ]]>2 ORDER BY createTime DESC limit #{page},10 
+	</select>
+	
+	<update id="operation" parameterType="map">
+		update leaveTable set approverStatue=#{approverStatue} where id=#{id}
+	</update>
+	<delete id="delApproval" parameterType="string">
+			delete from leaveTable where id=#{id}
+	</delete>
 </mapper>
