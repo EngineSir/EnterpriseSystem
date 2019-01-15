@@ -20,7 +20,7 @@ public class AuthorityServiceImpl implements AuthorityService {
 	private AuthorityDao authorityDao;
 	@Autowired
 	private ResourceDao resourcesDao;
-
+	
 	@Override
 	public Result<List<EmpInfo>> queryEmpInfo(Integer page) {
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -119,6 +119,19 @@ public class AuthorityServiceImpl implements AuthorityService {
 		List<Integer> listId = resourcesDao.queryId(empId);
 		Result<List<Integer>> result = new Result<List<Integer>>();
 		result.setData(listId);
+		return result;
+	}
+	@Override
+	public Result<Object> authorityUrl(String url) {
+		Result<Object> result = new Result<Object>();
+		String getAuthotity = (String) SecurityUtils.getSubject().getSession().getAttribute(url);
+		if (getAuthotity != null && getAuthotity.length() > 0) {
+			result.setMsg("拥有该权限");
+			result.setState(1);
+		} else {
+			result.setMsg("没有改权限");
+			result.setState(0);
+		}
 		return result;
 	}
 

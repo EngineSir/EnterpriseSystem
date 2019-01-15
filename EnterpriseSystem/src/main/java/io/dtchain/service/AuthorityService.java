@@ -37,5 +37,13 @@ public interface AuthorityService {
 	 * @return
 	 */
 	public Result<List<Integer>> queryAuthorityId(String empId);
+	
+	/**
+	 * 查询是否拥有该权限url
+	 * 
+	 * @param url			权限url
+	 * @return
+	 */
+	public Result<Object> authorityUrl(String url);
 
 }
