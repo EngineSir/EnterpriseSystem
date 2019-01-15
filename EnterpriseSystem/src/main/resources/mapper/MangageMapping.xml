@@ -9,19 +9,13 @@
 		(empId,empName,empDept,empSex,empPhone,empNum,empMail,empPass) values
 		(#{empId},#{empName},#{empDept},#{empSex},#{empPhone},#{empNum},#{empMail},#{empPass})
 	</insert>
-	<!-- HR账号登录校验Mapping 
-	<select id="login" parameterType="string"
-		resultType="io.dtchain.entity.EmpInfo">
-		select * from EmpTable where empName=#{adminName} and
-		empDept="人力资源部"
-	</select>-->
 
 	<!-- 查询部门所有员工 -->
 	<select id="queryDeptEmpInfo" parameterType="Map"
 		resultType="io.dtchain.entity.EmpInfo">
 		select empId,empName,empDept,empSex,empPhone,empNum,empMail
 		from EmpTable
-		where empDept=#{info} limit #{begin},6
+		where empDept=#{info} limit #{begin},8
 	</select>
 	<!-- 删除员工信息 -->
 	<delete id="delEmpInfo" parameterType="Map">
@@ -58,5 +52,9 @@
 	</select>
 	<select id="queryEmpCount" resultType="int">
 		SELECT COUNT(*) FROM EmpTable
+	</select>
+	
+	<select id="queryCount" parameterType="string" resultType="int">
+		select count(*) from EmpTable where empDept=#{deptName}
 	</select>
 </mapper>
