@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import io.dtchain.entity.DeptInfo;
+import io.dtchain.service.AuthorityService;
 import io.dtchain.service.DeptService;
 import io.dtchain.service.MangageService;
 import io.dtchain.utils.Result;
@@ -34,8 +35,7 @@ public class DeptController
 	@Resource
 	private DeptService deptService;
 	@Autowired
-	private MangageService mangageService;
-	
+	private AuthorityService authorityService;
 	@ApiOperation(value = "添加部门")
 	@PostMapping(value="/addDept.io")
 	@ResponseBody
@@ -73,6 +73,6 @@ public class DeptController
 	@GetMapping(value="/authorityUrl.io")
 	@ResponseBody
 	public Result<Object> authorityUrl(@ApiParam(value = "部门资源url",required=true)  @RequestParam(value="url") String url){
-		return mangageService.authorityUrl(url);
+		return authorityService.authorityUrl(url);
 	}
 }
