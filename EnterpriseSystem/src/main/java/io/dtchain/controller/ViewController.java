@@ -109,4 +109,16 @@ public class ViewController {
 	public String notAuthority() {
 		return "404";
 	}
+	
+	@ApiOperation(value = "公告详情页面")
+	@GetMapping(value = "/noticeOperation")
+	public String noticeOperation() {
+		return "noticeOperation";
+	}
+	
+	@ApiOperation(value = "修改公告页面")
+	@GetMapping(value = "/upNotice")
+	public String upNotice() {
+		return "upNotice";
+	}
 }

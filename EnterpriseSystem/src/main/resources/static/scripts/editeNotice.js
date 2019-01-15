@@ -28,6 +28,7 @@ $(document).ready(function() {
 			height : 325
 		}); //建立编辑器
 		layedit.sync(index);
+		
 		//点击保存
 		$("#save").click(save);
 	});
