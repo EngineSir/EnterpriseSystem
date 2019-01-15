@@ -21,6 +21,7 @@ public class MyExceptionHandler {
 		model.addObject("code", statueCode.value());
 		model.addObject("msg", "服务器出现异常，请联系管理员");
 		model.setViewName("error");
+		System.out.println(ex.getMessage());
 		return model;
 	}
 	/*
