@@ -3,6 +3,8 @@ package io.dtchain.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
+
 import io.dtchain.entity.LeaveTable;
 
 public interface ApprovalDao {
@@ -16,7 +18,7 @@ public interface ApprovalDao {
 	public int leaveApplication(LeaveTable leave);
 	
 	/**
-	 * 获取待审批总数(非管理员)
+	 * 获取待审批总数
 	 * 
 	 * @param map			待审批参数
 	 * @return
@@ -24,15 +26,7 @@ public interface ApprovalDao {
 	public int queryCount(Map<String,Object> map);
 	
 	/**
-	 * 获取待审批总数(管理员)
-	 * 
-	 * @param map			待审批参数
-	 * @return
-	 */
-	public int queryAdminCount(Map<String,Object> map);	
-	
-	/**
-	 * 获取待审批记录(非管理员)
+	 * 获取待审批记录
 	 * 
 	 * @param map			待审批参数
 	 * @return
@@ -40,10 +34,30 @@ public interface ApprovalDao {
 	public List<LeaveTable> getPendingApproval(Map<String,Object>map);
 	
 	/**
-	 * 获取待审批记录(管理员)
-	 * 
-	 * @param map			待审批参数
+	 * 已审批总数
+	 * @param applicant
 	 * @return
 	 */
-	public List<LeaveTable> getAdminPendingApproval(Map<String,Object>map);
+	public int queryApprovalCount(@Param(value = "applicant")String applicant);
+	
+	/**
+	 * 获取已审批记录
+	 * @param map
+	 * @return
+	 */
+	public List<LeaveTable> getApproval(Map<String,Object> map);
+	
+	/**
+	 * 审批操作
+	 * @param map
+	 * @return
+	 */
+	public int operation(Map<String,Object> map);
+	
+	/**
+	 * 删除待审批记录
+	 * @param id	
+	 * @return
+	 */
+	public int delApproval(String id);
 }
