@@ -1,4 +1,3 @@
-var page = 1;
 var Gvalue = "";
 var form;
 $(document).ready(function() {
@@ -7,8 +6,6 @@ $(document).ready(function() {
 	});
 	// 加载公共页面
 	$(".com").load("com.html");
-	$("#up").attr('disabled', true);
-	$("#down").attr('disabled', true);
 	// 点击添加
 	$('#add').click(clickAdd);
 	// 点击取消
@@ -23,12 +20,12 @@ $(document).ready(function() {
 	$("#up_sure").click(upSure);
 	// 确认删除
 	$(".del_sure").click(delSure);
-	// 下一页
-	$("#down").click(downPage);
-	// 上一页
-	$("#up").click(upPage);
 	queryDept();
 })
+
+
+
+
 
 // 删除信息
 function deleteInfo() {
@@ -43,10 +40,46 @@ function deleteInfo() {
 }
 // 点击搜索
 function doSearch(value, name) {
-	page = 1;
-	delTr();
-	searAjax(value, page);
-	Gvalue = value;
+	var count=0;
+	//searAjax(value, page);
+	$.ajax({
+		url:"mangage/queryCount.io",
+		type:"get",
+		dataType:"json",
+		data:{"deptName":value},
+		async:false,
+		success:function(result){
+			console.log(result);
+			count=result.count;
+		},
+		error:function(){
+			alert("查询出错");
+		}
+	});
+	
+	layui.use('laypage', function() {
+		var laypage = layui.laypage;
+		if(count>0){
+			laypage.render({
+				elem : 'page',
+				count : count,
+				theme : '#FFB800',
+				groups : 4,
+				jump : function(obj, first) {
+					var str = "第"
+							+ ((obj.curr - 1) * 8 + 1)
+							+ "条到第"
+							+ (obj.curr * 8 > obj.count ? obj.count
+									: obj.curr * 8) + "条，共" + (obj.count) + "条";
+					$("#countRed").text(str);
+					delTr();
+					searAjax(value, obj.curr);
+
+				}
+			});
+		}
+	});
+
 }
 // 搜索的ajax
 function searAjax(deptName, page) {
@@ -65,24 +98,13 @@ function searAjax(deptName, page) {
 						data[i].empDept, data[i].empNum, data[i].empPhone,
 						data[i].empPhone, data[i].empMail)
 			}
-			if (data.length < 6) {
-				$("#down").attr('disabled', true);
-			} else {
-				$("#down").attr('disabled', false);
-			}
 		},
 		error : function() {
 			alert("查询错误");
 		}
 	});
 }
-// 下一页
-function downPage() {
-	delTr();
-	$("#up").attr('disabled', false);
-	page += 1;
-	searAjax(Gvalue, page);
-}
+
 // 删除表格行
 function delTr() {
 	// 获取元表格数据，逐行删除
@@ -91,16 +113,7 @@ function delTr() {
 		data[i].remove();
 	}
 }
-// 上一页
-function upPage() {
-	$("#down").attr('disabled', false);
-	delTr();
-	page -= 1;
-	searAjax(Gvalue, page);
-	if (page == 1) {
-		$("#up").attr('disabled', true);
-	}
-}
+
 // 修改信息
 function updateInfo() {
 
@@ -234,8 +247,8 @@ function createTr(empId, empName, empSex, empDept, empNum, empPhone, empPhone,
 	str += "<td>" + empPhone + "</td>";
 	str += "<td>" + empMail + "</td>";
 	if (state == 1) {
-		str += "<td><button type='button' shiro:hasPermission='/empManageAuthority' class='layui-btn layui-btn-normal delete'>删除</button></td>";
-		str += "<td><button type='button' shiro:hasPermission='/empManageAuthority' class='layui-btn layui-btn-normal update'>修改</button></td>";
+		str += "<td><button type='button' class='layui-btn layui-btn-normal delete'>删除</button></td>";
+		str += "<td><button type='button' class='layui-btn layui-btn-normal update'>修改</button></td>";
 	}
 	str += "</tr>";
 	var $str = $(str);

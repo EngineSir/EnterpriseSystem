@@ -1,6 +1,4 @@
-﻿$(document)
-		.ready(
-				function() {
+﻿$(document).ready(function() {
 					$(".com").load("com");
 					// 检索信息
 					$("#search_info").click(searchInfo);

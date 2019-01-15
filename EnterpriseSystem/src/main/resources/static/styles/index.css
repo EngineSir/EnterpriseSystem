@@ -36,3 +36,6 @@
 	top:1100px;
 	left:40%;
 }
+#link1,#link2{
+	cursor:pointer;
+}

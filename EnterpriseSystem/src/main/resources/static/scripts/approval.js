@@ -1,7 +1,5 @@
-$(document)
-		.ready(
-				function() {
-					$(".com").load("com.html");
+$(document).ready(function() {
+					$(".com").load("com");
 					$('#add').click(approver);
 					layui
 							.use(
@@ -18,7 +16,7 @@ $(document)
 										});
 										table.render({
 											elem : '#tt',
-											url : '/approval/approval.io',
+											url : 'approval/approval.io',
 											height:410,
 											response : {
 												statusName : 'state' // 规定数据状态的字段名称，默认：code

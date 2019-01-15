@@ -115,7 +115,6 @@ input[type=text],input[type=password]{
 	cursor:pointer;
 	font-size:16px;
 	color:#13A89E;
-	margin-left:120px;
 	transition:all 0.4s;
 }
 #login:hover{
@@ -151,7 +150,8 @@ input[type=text],input[type=password]{
 	z-index:1;
 }
 #login{
-	margin-left:120px;
+	margin-left:105px;
+	
 }
 #count_span,#password_span{
 	color:red;

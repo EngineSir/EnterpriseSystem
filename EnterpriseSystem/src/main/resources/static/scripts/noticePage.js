@@ -1,7 +1,7 @@
 $(document).ready(function() {
 	$(".com").load("com");
 	showNotice();
-}
+})
 function showNotice() {
 	var url = location.href;
 	var start = url.indexOf("=");

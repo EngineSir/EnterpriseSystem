@@ -75,22 +75,24 @@ function queryCount() {
 
 		var laypage = layui.laypage, layer = layui.layer;
 		// 自定义排版
-		laypage.render({
-			elem : 'pagination',
-			count : count,
-			theme : '#FFB800',
-			groups : 4,
-			jump : function(obj, first) {
-				var str = "第"
-						+ ((obj.curr - 1) * 10 + 1)
-						+ "条到第"
-						+ (obj.curr * 10 > obj.count ? obj.count
-								: obj.curr * 10) + "条，共" + (obj.count) + "条";
-				$("#countRed").text(str);
-				paging(name, dept, start, end, obj.curr);
+		if(count>0){
+			laypage.render({
+				elem : 'pagination',
+				count : count,
+				theme : '#FFB800',
+				groups : 4,
+				jump : function(obj, first) {
+					var str = "第"
+							+ ((obj.curr - 1) * 10 + 1)
+							+ "条到第"
+							+ (obj.curr * 10 > obj.count ? obj.count
+									: obj.curr * 10) + "条，共" + (obj.count) + "条";
+					$("#countRed").text(str);
+					paging(name, dept, start, end, obj.curr);
 
-			}
-		});
+				}
+			});
+		}
 	});
 
 }

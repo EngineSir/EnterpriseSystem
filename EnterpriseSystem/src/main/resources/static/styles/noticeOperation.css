@@ -1,0 +1,18 @@
+.tabBody{
+	position:absolute;
+	width:80%;
+	height:100%;
+	left: 15%;
+	top: 8%;
+}
+.layui-table th,td{
+	text-align:center;
+}
+#demo1{
+	position:absolute;
+	left:50%;
+	top:80%;
+}
+.del{
+	cursor:pointer;
+}

@@ -1,5 +1,6 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
+<meta name="viewport" content="width = device-width, initial-scale = 1.0, maximum-scale = 1.0, user-scalable = 0"/>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <title>员工信息表</title>
 <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
@@ -122,10 +123,10 @@
 		</div>
 	</div>
 
-	<div class="page">
-		<button type="button" id="up" class="layui-btn layui-btn-normal">上一页</button>
-		<button type="button" id="down" class="layui-btn layui-btn-normal">下一页</button>
-	</div>
+	<div id="page"></div>
+	<div class="showCount">
+			<span id="countRed"></span>
+		</div>
 	<!-- 背景模态化 -->
 	<div class="opacity_bg" style='display: none'></div>
 	<!-- 隐藏的确认删除框 -->

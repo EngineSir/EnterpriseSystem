@@ -1,44 +1,17 @@
-$(document)
-		.ready(
-				function() {
+var form = "", layer = "", laydate = "", laypage = "";
+$(document).ready(function() {
 					$(".com").load("com.html");
-					$(".adopt").click(
-							function() {
-								// $("#appStatus").text("通过");
-								$(this).parent().parent().find("#appStatus")
-										.text("通过");
-							});
-					$(".refuse").click(
-							function() {
-								// $("#appStatus").text("拒绝");
-								$(this).parent().parent().find("#appStatus")
-										.text("拒绝");
-							});
-					$(".del").click(function() {
-						$(this).parent().parent().remove();
-					});
-					var count = 0;
-					$.ajax({
-						url : "approval/queryCount.io",
-						type : "get",
-						dataType : "json",
-						data : {
-							"approverStatue" : 2
-						},
-						async : false,
-						success : function(result) {
-							count = result.count;
-						},
-						error : function() {
-							alert("查询失败");
-						}
-					});
+					$(".table_info").on("click",".adopt",agree)
+					$(".table_info").on("click",".refuse",refuse);
+					
+					
+					$(".table_info").on("click",".del",delApproval);
+					
+					
 
-					layui
-							.use(
-									[ 'form', 'laydate', 'laypage' ],
+					layui.use(['form', 'laydate', 'laypage' ],
 									function() {
-										var form = layui.form, layer = layui.layer, laydate = layui.laydate, laypage = layui.laypage;
+										form = layui.form, layer = layui.layer, laydate = layui.laydate, laypage = layui.laypage;
 										laydate.render({
 											elem : '#start',
 											calendar : true
@@ -55,45 +28,96 @@ $(document)
 											elem : '#end1',
 											calendar : true
 										});
-										laypage
-												.render({
-													elem : 'paging',
-													count : count,// 数据总数,
-													groups : 4,
-													jump : function(obj) {
-														var str = "第"
-																+ ((obj.curr - 1) * 10 + 1)
-																+ "条到第"
-																+ (obj.curr * 10 > obj.count ? obj.count
-																		: obj.curr * 10)
-																+ "条，共"
-																+ (obj.count)
-																+ "条";
-														$("#countRed")
-																.text(str);
-													}
-												});
-										laypage
-												.render({
-													elem : 'paging1',
-													count : 708,// 数据总数,
-													groups : 4,
-													jump : function(obj) {
-														var str = "第"
-																+ ((obj.curr - 1) * 10 + 1)
-																+ "条到第"
-																+ (obj.curr * 10 > obj.count ? obj.count
-																		: obj.curr * 10)
-																+ "条，共"
-																+ (obj.count)
-																+ "条";
-														$("#countRed1").text(
-																str);
-														paging(obj.curr,2);
-													}
-												});
+										//待审批
+										pendingApproval();
+										//已审批
+										$("#approved").click(approval);
+									
 									});
 				})
+//已审批
+function approval(){
+	var countNum = 0;
+	$.ajax({
+		url : "approval/queryApprovalCount.io",
+		type : "get",
+		async : false,
+		success : function(result) {
+			countNum = result.count;
+		},
+		error : function() {
+			alert("查询失败");
+		}
+	});
+	if(countNum>0){
+		laypage.render({
+			elem : 'paging1',
+			count : countNum,// 数据总数,
+			groups : 4,
+			jump : function(obj) {
+				var str = "第"
+						+ ((obj.curr - 1) * 10 + 1)
+						+ "条到第"
+						+ (obj.curr * 10 > obj.count ? obj.count
+								: obj.curr * 10)
+						+ "条，共"
+						+ (obj.count)
+						+ "条";
+				
+					$("#countRed1").text(str);
+				
+				delTr("#approval");
+				approvalPaging(obj.curr);
+			}
+		});
+	}
+	
+}
+				
+				
+				
+//待审批
+function pendingApproval(){
+	var count = 0;
+	$.ajax({
+		url : "approval/queryCount.io",
+		type : "get",
+		dataType : "json",
+		data : {
+			"approverStatue" : 2
+		},
+		async : false,
+		success : function(result) {
+			count = result.count;
+		},
+		error : function() {
+			alert("查询失败");
+		}
+	});
+	if(count>0){
+		laypage.render({
+			elem : 'paging',
+			count : count,// 数据总数,
+			groups : 4,
+			jump : function(obj) {
+				var str = "第"
+						+ ((obj.curr - 1) * 10 + 1)
+						+ "条到第"
+						+ (obj.curr * 10 > obj.count ? obj.count
+								: obj.curr * 10)
+						+ "条，共"
+						+ (obj.count)
+						+ "条";
+				$("#countRed")
+						.text(str);
+				delTr("#pendingApproval");
+				paging(obj.curr,2);
+				
+			}
+		});
+	}
+}
+//
 function paging(page,approverStatue){
 	$.ajax({
 		url:"approval/getPendingApproval.io",
@@ -102,9 +126,10 @@ function paging(page,approverStatue){
 		data:{"page":page,"approverStatue":approverStatue},
 		success:function(result){
 			if(result.state==1){
+				var n=authorityUrl();
 				var data=result.data;
 				for(var i=0;i<data.length;i++){
-					createTr(data[i]);
+					createTr(data[i],"#pendingApproval",n);
 				}
 			}
 		},
@@ -113,9 +138,68 @@ function paging(page,approverStatue){
 		}
 	});
 }
+//删除某条待审批记录
+function delApproval() {
+	var $tr=$(this).parent().parent();
+	var id=$tr.data("id");
+	
+	if(id!=""){
+		$.ajax({
+			url:"approval/delApproval.io",
+			type:"delete",
+			dataType:"json",
+			data:{"id":id},
+			success:function(result){
+				if(result.state==1){
+					pendingApproval();
+				}
+			},
+			error:function(){
+				alert("删除失败");
+			}
+		});
+	}
+}
+//已审批
+function approvalPaging(page){
+	$.ajax({
+		url:"approval/getApproval.io",
+		type:"get",
+		dataType:"json",
+		data:{"page":page},
+		success:function(result){
+			if(result.state==1){
+				var n=authorityUrl();
+				var data=result.data;
+				for(var i=0;i<data.length;i++){
+					createTr(data[i],"#approval",n);
+				}
+			}
+		},
+		error:function(){
+			alert("请求数据失败");
+		}
+	});
+}
+function authorityUrl(){
+	var n=0;
+	$.ajax({
+		url:"approval/queryAuthority.io",
+		type:"get",
+		dataType:"json",
+		data:{"url":"approvalauthority"},
+		async : false,
+		success:function(result){
+			n=result.state;
+		},
+		error:function(){
+			alert("查询权限失败");
+		}
+	});
+	return n;
+}
+function createTr(data,id,n) {
 
-function createTr(data) {
-	console.log(data);
 	var state="";
 	if(data.approverStatue==0){
 		state="拒绝";
@@ -135,15 +219,66 @@ function createTr(data) {
 	tr += '<th style="width: 289px;"><textarea class="layui-textarea">'+data.leaveRegard+'</textarea>';
 	tr += '</th>';
 	tr += '<th style="width: 250px;">';
-	tr += '<button class="layui-btn layui-btn-primary layui-btn-s adopt">';
-	tr += '	<i class="layui-icon" style="font-size: 15px">&#xe672;</i>';
-	tr += '</button>通过';
-	tr += '<button class="layui-btn layui-btn-primary layui-btn-s refuse">';
-	tr += '	<i class="layui-icon" style="font-size: 15px">&#x1006;</i>';
-	tr += '</button>拒绝';
+	if(n==1){
+		tr += '<button class="layui-btn layui-btn-primary layui-btn-s adopt">';
+		tr += '	<i class="layui-icon" style="font-size: 15px">&#xe672;</i>';
+		tr += '</button>同意';
+		tr += '<button class="layui-btn layui-btn-primary layui-btn-s refuse">';
+		tr += '	<i class="layui-icon" style="font-size: 15px">&#x1006;</i>';
+		tr += '</button>拒绝';
+	}else if(id=="#approval"){	//已审批的不允许删除
+		tr +='无';
+	}else{
+		tr += '<button class="layui-btn layui-btn-primary layui-btn-s del">';
+		tr += '<i class="layui-icon" style="font-size: 20px">&#xe640;</i>';
+		tr += '</button>删除';
+	}
 	tr += '</th>';
 	tr += '</tr>';
 	var $tr=$(tr);
+	
 	$tr.data("id",data.id);
-	$("#pendingApproval").append($tr);
+	
+	$(""+id).append($tr);
+}
+
+//删除
+function delTr(str){
+	var data = $(""+str).find("tr");
+	for (var i = 1; i < data.length; i++) {
+		data[i].remove();
+	}
+}
+//同意
+function agree(){
+	var $tr=$(this).parent().parent();
+	var id=$tr.data("id");
+	$tr.find("#appStatus").text("通过");
+	if(id!=""){
+		operation(id,1);
+	}
+}
+//拒绝
+function refuse(){
+	var $tr=$(this).parent().parent();
+	var id=$tr.data("id");
+	$tr.find("#appStatus").text("拒绝");
+	if(id!=""){
+		operation(id,0);
+	}
+}
+//操作
+function operation(id,approverStatue){
+	$.ajax({
+		url:"approval/operation.io",
+		type:"put",
+		dataType:"json",
+		data:{"id":id,"approverStatue":approverStatue},
+		success:function(result){
+			console.log(result);
+		},
+		error:function(){
+			alert("操作失败");
+		}
+	});
 }

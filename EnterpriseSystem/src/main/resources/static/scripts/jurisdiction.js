@@ -24,18 +24,20 @@ function queryEmp() {
 	layui.use([ 'laypage', 'layer' ], function() {
 		var laypage = layui.laypage, layer = layui.layer;
 		// 总页数大于页码总数
-		laypage.render({
-			elem : 'demo1',
-			count : count,// 数据总数,
-			groups : 4,
-			jump : function(obj) {
-				var str = "第" + ((obj.curr - 1) * 8 + 1) + "条到第"
-						+ (obj.curr * 8 > obj.count ? obj.count : obj.curr * 8)
-						+ "条，共" + (obj.count) + "条";
-				$("#countRed").text(str);
-				paging(obj.curr);
-			}
-		});
+		if(count>0){
+			laypage.render({
+				elem : 'demo1',
+				count : count,// 数据总数,
+				groups : 4,
+				jump : function(obj) {
+					var str = "第" + ((obj.curr - 1) * 8 + 1) + "条到第"
+							+ (obj.curr * 8 > obj.count ? obj.count : obj.curr * 8)
+							+ "条，共" + (obj.count) + "条";
+					$("#countRed").text(str);
+					paging(obj.curr);
+				}
+			});
+		}
 	});
 }
 function paging(page) {

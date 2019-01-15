@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
+<meta name="viewport" content="width = device-width, initial-scale = 1.0, maximum-scale = 1.0, user-scalable = 0"/>
 <meta charset="UTF-8"/>
 <title>我的审批</title>
 <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
@@ -18,7 +19,7 @@
 		<div class="layui-tab">
 			<ul class="layui-tab-title">
 				<li class="layui-this">待审批</li>
-				<li>已审批</li>
+				<li id="approved">已审批</li>
 			</ul>
 			<div class="layui-tab-content">
 				<div class="layui-tab-item layui-show">
@@ -83,12 +84,7 @@
 									<th style="width: 250px;">操作</th>
 								</tr>
 							</table>
-							<div class="pageing" id="paging">
-								<fieldset class="layui-elem-field layui-field-title"
-									style="margin-top: 30px;">
-									<legend>总页数大于页码总数</legend>
-								</fieldset>
-							</div>
+							<div class="pageing" id="paging"></div>
 							<div class="showCount">
 								<span id="countRed"></span>
 							</div>
@@ -149,7 +145,7 @@
 								</div>
 							</div>
 							<div class="tableList">
-								<table class="layui-table table_info" border="1" cellspacing="0">
+								<table class="layui-table table_info" border="1" cellspacing="0" id="approval">
 									<tr>
 										<th style="width: 100px">申请人</th>
 										<th style="width: 100px">审批类型</th>
@@ -159,163 +155,8 @@
 										<th style="width: 289px">请假事由</th>
 										<th style="width: 250px">操作</th>
 									</tr>
-									<tr>
-										<th style="width: 100px">吕冠森</th>
-										<th style="width: 100px">事假</th>
-										<th style="width: 100px" id="appStatus">通过</th>
-										<th style="width: 150px">2018-12-21 12:32:24 至 2019-01-02
-											17:20:20</th>
-										<th style="width: 100px">12天</th>
-										<th style="width: 289px"><textarea class="layui-textarea"></textarea>
-										</th>
-										<th style="width: 250px">
-											<button class="layui-btn layui-btn-primary layui-btn-s del">
-												<i class="layui-icon" style="font-size: 20px">&#xe640;</i>
-											</button>删除
-										</th>
-									</tr>
-									<tr>
-										<th style="width: 100px">吕冠森</th>
-										<th style="width: 100px">事假</th>
-										<th style="width: 100px" id="appStatus">通过</th>
-										<th style="width: 150px">2018-12-21 12:32:24 至 2019-01-02
-											17:20:20</th>
-										<th style="width: 100px">12天</th>
-										<th style="width: 289px"><textarea class="layui-textarea"></textarea>
-										</th>
-										<th style="width: 250px">
-											<button class="layui-btn layui-btn-primary layui-btn-s del">
-												<i class="layui-icon" style="font-size: 20px">&#xe640;</i>
-											</button>删除
-										</th>
-									</tr>
-									<tr>
-										<th style="width: 100px">吕冠森</th>
-										<th style="width: 100px">事假</th>
-										<th style="width: 100px" id="appStatus">通过</th>
-										<th style="width: 150px">2018-12-21 12:32:24 至 2019-01-02
-											17:20:20</th>
-										<th style="width: 100px">12天</th>
-										<th style="width: 289px"><textarea class="layui-textarea"></textarea>
-										</th>
-										<th style="width: 250px">
-											<button class="layui-btn layui-btn-primary layui-btn-s del">
-												<i class="layui-icon" style="font-size: 20px">&#xe640;</i>
-											</button>删除
-										</th>
-									</tr>
-									<tr>
-										<th style="width: 100px">吕冠森</th>
-										<th style="width: 100px">事假</th>
-										<th style="width: 100px" id="appStatus">通过</th>
-										<th style="width: 150px">2018-12-21 12:32:24 至 2019-01-02
-											17:20:20</th>
-										<th style="width: 100px">12天</th>
-										<th style="width: 289px"><textarea class="layui-textarea"></textarea>
-										</th>
-										<th style="width: 250px">
-											<button class="layui-btn layui-btn-primary layui-btn-s del">
-												<i class="layui-icon" style="font-size: 20px">&#xe640;</i>
-											</button>删除
-										</th>
-									</tr>
-									<tr>
-										<th style="width: 100px">吕冠森</th>
-										<th style="width: 100px">事假</th>
-										<th style="width: 100px" id="appStatus">通过</th>
-										<th style="width: 150px">2018-12-21 12:32:24 至 2019-01-02
-											17:20:20</th>
-										<th style="width: 100px">12天</th>
-										<th style="width: 289px"><textarea class="layui-textarea"></textarea>
-										</th>
-										<th style="width: 250px">
-											<button class="layui-btn layui-btn-primary layui-btn-s del">
-												<i class="layui-icon" style="font-size: 20px">&#xe640;</i>
-											</button>删除
-										</th>
-									</tr>
-									<tr>
-										<th style="width: 100px">吕冠森</th>
-										<th style="width: 100px">事假</th>
-										<th style="width: 100px" id="appStatus">通过</th>
-										<th style="width: 150px">2018-12-21 12:32:24 至 2019-01-02
-											17:20:20</th>
-										<th style="width: 100px">12天</th>
-										<th style="width: 289px"><textarea class="layui-textarea"></textarea>
-										</th>
-										<th style="width: 250px">
-											<button class="layui-btn layui-btn-primary layui-btn-s del">
-												<i class="layui-icon" style="font-size: 20px">&#xe640;</i>
-											</button>删除
-										</th>
-									</tr>
-									<tr>
-										<th style="width: 100px">吕冠森</th>
-										<th style="width: 100px">事假</th>
-										<th style="width: 100px" id="appStatus">通过</th>
-										<th style="width: 150px">2018-12-21 12:32:24 至 2019-01-02
-											17:20:20</th>
-										<th style="width: 100px">12天</th>
-										<th style="width: 289px"><textarea class="layui-textarea"></textarea>
-										</th>
-										<th style="width: 250px">
-											<button class="layui-btn layui-btn-primary layui-btn-s del">
-												<i class="layui-icon" style="font-size: 20px">&#xe640;</i>
-											</button>删除
-										</th>
-									</tr>
-									<tr>
-										<th style="width: 100px">吕冠森</th>
-										<th style="width: 100px">事假</th>
-										<th style="width: 100px" id="appStatus">通过</th>
-										<th style="width: 150px">2018-12-21 12:32:24 至 2019-01-02
-											17:20:20</th>
-										<th style="width: 100px">12天</th>
-										<th style="width: 289px"><textarea class="layui-textarea"></textarea>
-										</th>
-										<th style="width: 250px">
-											<button class="layui-btn layui-btn-primary layui-btn-s del">
-												<i class="layui-icon" style="font-size: 20px">&#xe640;</i>
-											</button>删除
-										</th>
-									</tr>
-									<tr>
-										<th style="width: 100px">吕冠森</th>
-										<th style="width: 100px">事假</th>
-										<th style="width: 100px" id="appStatus">通过</th>
-										<th style="width: 150px">2018-12-21 12:32:24 至 2019-01-02
-											17:20:20</th>
-										<th style="width: 100px">12天</th>
-										<th style="width: 289px"><textarea class="layui-textarea"></textarea>
-										</th>
-										<th style="width: 250px">
-											<button class="layui-btn layui-btn-primary layui-btn-s del">
-												<i class="layui-icon" style="font-size: 20px">&#xe640;</i>
-											</button>删除
-										</th>
-									</tr>
-									<tr>
-										<th style="width: 100px">吕冠森</th>
-										<th style="width: 100px">事假</th>
-										<th style="width: 100px" id="appStatus">通过</th>
-										<th style="width: 150px">2018-12-21 12:32:24 至 2019-01-02
-											17:20:20</th>
-										<th style="width: 100px">12天</th>
-										<th style="width: 289px"><textarea class="layui-textarea"></textarea>
-										</th>
-										<th style="width: 250px">
-											<button class="layui-btn layui-btn-primary layui-btn-s del">
-												<i class="layui-icon" style="font-size: 20px">&#xe640;</i>
-											</button>删除
-										</th>
-									</tr>
 								</table>
-								<div class="pageing" id="paging1">
-									<fieldset class="layui-elem-field layui-field-title"
-										style="margin-top: 30px;">
-										<legend>总页数大于页码总数</legend>
-									</fieldset>
-								</div>
+								<div class="pageing" id="paging1"></div>
 								<div class="showCount">
 									<span id="countRed1"></span>
 								</div>
