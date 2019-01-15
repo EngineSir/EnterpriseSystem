@@ -6,12 +6,14 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.ExcessiveAttemptsException;
+import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.LockedAccountException;
+import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Service;
 
@@ -47,7 +49,7 @@ public class MangageServiceImpl implements MangageService {
 		Result<List<EmpInfo>> result = new Result<List<EmpInfo>>();
 		List<EmpInfo> list = new ArrayList<EmpInfo>();
 		Map<String, Object> map = new HashMap<String, Object>();
-		int begin = (page - 1) * 6;
+		int begin = (page - 1) * 8;
 		map.put("begin", begin);
 		map.put("info", deptName);
 		list = mangageDao.queryDeptEmpInfo(map);
@@ -87,34 +89,42 @@ public class MangageServiceImpl implements MangageService {
 	}
 
 	@Override
-	public Result<Object> authorityUrl(String url) {
-		Result<Object> result = new Result<Object>();
-		String getAuthotity = (String) SecurityUtils.getSubject().getSession().getAttribute(url);
-		if (getAuthotity != null && getAuthotity.length() > 0) {
-			result.setMsg("拥有该权限");
-			result.setState(1);
-		} else {
-			result.setMsg("没有改权限");
-			result.setState(0);
-		}
-		return result;
-	}
-
-	@Override
-	public String login(String username, String pass) {
-		if(username==null||username.length()==0||pass==null||pass.length()==0) {
-			return "redirect:login";
-		}
+	public Result<Object> login(String username, String pass) {
+		
+		Result<Object> result=new Result<Object>();
 		Subject subject = SecurityUtils.getSubject();
 		 UsernamePasswordToken token=new UsernamePasswordToken(username,pass);
 		 try {
 	            subject.login(token);
-	        }catch (LockedAccountException lae) {
+	        } catch(UnknownAccountException ue) {
+	        	token.clear();
+	        	System.out.println("用户不存在");
+	        	result.setMsg("用户不存在");
+				result.setState(0);
+				return result;
+	        	
+	        } catch(IncorrectCredentialsException  ie) {
+	        	token.clear();
+	        	System.out.println("密码错误");
+	        	result.setMsg("密码错误");
+				result.setState(0);
+				return result;
+	        } catch (LockedAccountException lae) {
 	            token.clear();
-	        } catch (AuthenticationException e) {
+	            System.out.println("账号不可用");
+	            result.setMsg("账号不可用");
+				result.setState(0);
+				return result;
+	        } catch (ExcessiveAttemptsException  e) {
 	            token.clear();
+	            System.out.println("尝试次数超限");
+	            result.setMsg("尝试次数超限");
+				result.setState(0);
+				return result;
 	        }
-		return "redirect:../index";
+		 result.setState(1);
+		 result.setMsg("登陆请求成功");
+		return result;
 	}
 
 	@Override
@@ -131,6 +141,15 @@ public class MangageServiceImpl implements MangageService {
 		result.setData(list);
 		result.setState(1);
 		result.setCount(limit);
+		return result;
+	}
+
+	@Override
+	public Result<Object> queryCount(String deptName) {
+		Result<Object> result=new Result<Object>();
+		result.setCount(mangageDao.queryCount(deptName));
+		result.setMsg("请求数据成功");
+		result.setState(1);
 		return result;
 	}
 }

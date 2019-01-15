@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import io.dtchain.entity.EmpInfo;
+import io.dtchain.service.AuthorityService;
 import io.dtchain.service.MangageService;
 import io.dtchain.utils.Result;
 import io.swagger.annotations.Api;
@@ -29,10 +30,13 @@ public class MangageController {
 
 	@Autowired
 	private MangageService mangageService;
+	@Autowired
+	private AuthorityService authorityService;
 	
 	@ApiOperation(value = "登陆校验")
 	@PostMapping(value="/login.io")
-	public String login(@ApiParam(value = "用户名", required = true) @RequestParam(value = "username")String username,
+	@ResponseBody
+	public Result<Object> login(@ApiParam(value = "用户名", required = true) @RequestParam(value = "username")String username,
 					   @ApiParam(value = "密码", required = true) @RequestParam(value = "pass")String pass) {
 		return mangageService.login(username, pass);
 	}
@@ -66,7 +70,7 @@ public class MangageController {
 	}
 
 	@ApiOperation(value = "删除员工信息")
-	@DeleteMapping(value="/delEmpInfo.io")
+	@DeleteMapping(value = "/delEmpInfo.io")
 	@ResponseBody
 	public Result<Object> delEmpInfo(@ApiParam(value = "员工id", required = true)  @RequestBody String empId) {
 		return mangageService.delEmpInfo(empId);
@@ -99,6 +103,13 @@ public class MangageController {
 	@GetMapping(value="/authorityUrl.io")
 	@ResponseBody
 	public Result<Object> authorityUrl(@ApiParam(value = "员工管理资源url", required = true)  @RequestParam(value = "url") String url){
-		return mangageService.authorityUrl(url);
+		return authorityService.authorityUrl(url);
+	}
+	
+	@ApiOperation(value = "查询部门员工总数")
+	@GetMapping(value = "/queryCount.io")
+	@ResponseBody
+	public Result<Object> queryCount(@ApiParam(value = "部门名称", required = true) @RequestParam(value = "deptName") String deptName){
+		return mangageService.queryCount(deptName);
 	}
 }

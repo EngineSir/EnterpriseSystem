@@ -2,8 +2,7 @@ package io.dtchain.service;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import org.springframework.web.servlet.ModelAndView;
 
 import io.dtchain.entity.EmpInfo;
 import io.dtchain.utils.Result;
@@ -42,13 +41,7 @@ public interface MangageService {
 	 */
 	public Result<Object> upEmpInfo(EmpInfo emp);
 
-	/**
-	 * 查询是否拥有该权限url
-	 * 
-	 * @param url			权限url
-	 * @return
-	 */
-	public Result<Object> authorityUrl(String url);
+	
 	
 	/**
 	 * 登陆校验
@@ -57,7 +50,7 @@ public interface MangageService {
 	 * @param pass			密码
 	 * @return
 	 */
-	public String login(String username,String pass);
+	public Result<Object> login(String username,String pass);
 	
 	/**
 	 * 查询审批人
@@ -67,4 +60,12 @@ public interface MangageService {
 	 * @return
 	 */
 	public Result<List<EmpInfo>> queryApprovalInfo(int page,int limit);
+	
+	/**
+	 * 查询部门员工总数
+	 * 
+	 * @param deptName		部门名称
+	 * @return
+	 */
+	public Result<Object> queryCount(String deptName);
 }

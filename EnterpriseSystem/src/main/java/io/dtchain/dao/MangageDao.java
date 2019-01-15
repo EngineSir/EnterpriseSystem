@@ -15,9 +15,6 @@ public interface MangageDao {
 	 */
 	public int addEmp(EmpInfo emp);
 
-	
-	//public EmpInfo login(String adminName);
-
 	/**
 	 * 查询部门员工信息
 	 * 
@@ -79,4 +76,12 @@ public interface MangageDao {
 	 * @return
 	 */
 	public int queryEmpCount();
+	
+	/**
+	 * 查询部门员工总数
+	 * 
+	 * @param deptName
+	 * @return
+	 */
+	public int queryCount(String deptName);
 }
