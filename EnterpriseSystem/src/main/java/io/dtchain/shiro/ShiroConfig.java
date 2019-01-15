@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
+import org.apache.shiro.cache.CacheManager;
+import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
@@ -56,7 +58,6 @@ public class ShiroConfig {
 		shiroFilterFactoryBean.setSuccessUrl("/index");
 		// 未授权界面;
 		shiroFilterFactoryBean.setUnauthorizedUrl("/404");
-		System.out.println("拦截");
 		// 拦截器.
 		Map<String, String> filterChainDefinitionMap = new LinkedHashMap<String, String>();
 
@@ -70,9 +71,11 @@ public class ShiroConfig {
 		filterChainDefinitionMap.put("/swagger-resources/**", "anon");
 		filterChainDefinitionMap.put("/webjars/**", "anon");
 		
+		//静态资源以及登陆请求可以不验证身份访问
 		filterChainDefinitionMap.put("/mangage/login.io", "anon");
 		filterChainDefinitionMap.put("/easyui/**", "anon");
 		filterChainDefinitionMap.put("/images/**", "anon");
+		filterChainDefinitionMap.put("/layui/**", "anon");
 		filterChainDefinitionMap.put("/scripts/**", "anon");
 		filterChainDefinitionMap.put("/styles/**", "anon");
 		// <!-- 过滤链定义，从上向下顺序执行，一般将 /**放在最为下边 -->:这是一个坑呢，一不小心代码就不好使了;
@@ -98,7 +101,7 @@ public class ShiroConfig {
 		// 设置realm.
 		securityManager.setRealm(myShiroRealm());
 		// 自定义缓存实现 使用redis
-
+	
 		return securityManager;
 	}
 
@@ -124,6 +127,11 @@ public class ShiroConfig {
 
 		return hashedCredentialsMatcher;
 	}
+	
+	
+	
+
+
 
 	/**
 	 * 开启shiro aop注解支持. 使用代理方式;所以需要开启代码支持;

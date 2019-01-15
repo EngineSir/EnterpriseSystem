@@ -55,7 +55,7 @@ public class ShiroRealm extends AuthorizingRealm {
 		// 权限信息对象info,用来存放查出的用户的所有的角色（role）及权限（permission）
 		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
 		Session session = SecurityUtils.getSubject().getSession();
-		boolean flog = true, flog1 = true;
+		boolean flog = true, flog1 = true,flog2=true;
 		for (Resource resources : resourcesList) {
 			info.addStringPermission(resources.getResUrl());
 			if ("/empManageAuthority".equals(resources.getResUrl())) {
@@ -67,6 +67,10 @@ public class ShiroRealm extends AuthorizingRealm {
 				session.setAttribute("deptauthority", "/deptauthority");
 				flog1 = false;
 			}
+			if ("/approvalauthority".equals(resources.getResUrl())) {
+				session.setAttribute("approvalauthority", "/approvalauthority");
+				flog2 = false;
+			}
 
 		}
 		if (flog) {
@@ -74,6 +78,9 @@ public class ShiroRealm extends AuthorizingRealm {
 		}
 		if (flog1) {
 			session.removeAttribute("deptauthority");
+		}
+		if(flog2) {
+			session.removeAttribute("approvalauthority");
 		}
 
 		return info;
