@@ -121,4 +121,10 @@ public class ViewController {
 	public String upNotice() {
 		return "upNotice";
 	}
+	
+	@ApiOperation(value = "添加部门")
+	@GetMapping(value = "/addDept")
+	public String addDept() {
+		return "addDept";
+	}
 }
