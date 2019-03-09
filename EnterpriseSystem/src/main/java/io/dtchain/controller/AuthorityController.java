@@ -31,15 +31,18 @@ public class AuthorityController {
 	@ApiOperation(value = "查询员工信息")
 	@GetMapping(value="/empInfo.io")
 	@ResponseBody
-	public Result<List<EmpInfo>> queryEmpInfo(@ApiParam(value = "当前页面", required = true) @RequestParam(value = "page") Integer page){
-		return authorityService.queryEmpInfo(page);
+	public Result<List<EmpInfo>> queryEmpInfo(@ApiParam(value = "当前页面", required = true) @RequestParam(value = "page") Integer page,
+											  @ApiParam(value = "搜索值", required = false) @RequestParam(value = "value") String value,
+											  @ApiParam(value = "是否搜索状态",required = true) @RequestParam(value = "statue") Integer statue){
+		return authorityService.queryEmpInfo(page,value,statue);
 	}
 	
 	@ApiOperation(value = "查询员工总数")
 	@GetMapping(value="/queryCount.io")
 	@ResponseBody
-	public Result<Object> queryCount(){
-		return authorityService.queryCount();
+	public Result<Object> queryCount(@ApiParam(value = "搜索值", required = false) @RequestParam(value = "value") String value,
+								     @ApiParam(value = "是否搜索状态",required = true) @RequestParam(value = "statue") Integer statue){
+		return authorityService.queryCount(value,statue);
 	}
 	
 	@ApiOperation(value = "添加权限")

@@ -3,6 +3,8 @@ package io.dtchain.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
+
 import io.dtchain.entity.EmpInfo;
 
 public interface AuthorityDao {
@@ -14,6 +16,13 @@ public interface AuthorityDao {
 	 * @return
 	 */
 	public List<EmpInfo> queryEmpInfo(Map<String, Object> map);
+	
+	/**
+	 * 搜索员工（部门或个人）
+	 * @param map
+	 * @return
+	 */
+	public List<EmpInfo> querySearchEmpInfo(Map<String,Object> map);
 
 	/**
 	 * 查询员工总数
@@ -22,6 +31,11 @@ public interface AuthorityDao {
 	 */
 	public int queryCount();
 
+	/**
+	 * 搜索员工数(部门或个人)
+	 * @return
+	 */
+	public int querySearchCount(@Param(value = "value") String value);
 	/**
 	 * 添加权限
 	 * 

@@ -11,15 +11,19 @@ public interface AuthorityService {
 	 * 查询员工信息
 	 * 
 	 * @param page			当前页面
+	 * @param value         搜索值
+	 * @param statue		搜索状态
 	 * @return
 	 */
-	public Result<List<EmpInfo>> queryEmpInfo(Integer page);
+	public Result<List<EmpInfo>> queryEmpInfo(Integer page,String value,Integer statue);
 
 	/**
 	 * 查询员工总数
+	 * @param value         搜索值
+	 * @param statue		搜索状态
 	 * @return
 	 */
-	public Result<Object> queryCount();
+	public Result<Object> queryCount(String value,Integer statue);
 
 	/**
 	 * 添加权限

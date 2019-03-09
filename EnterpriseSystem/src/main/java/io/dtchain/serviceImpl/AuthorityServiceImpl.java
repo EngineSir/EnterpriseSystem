@@ -1,5 +1,6 @@
 package io.dtchain.serviceImpl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,21 +23,32 @@ public class AuthorityServiceImpl implements AuthorityService {
 	private ResourceDao resourcesDao;
 	
 	@Override
-	public Result<List<EmpInfo>> queryEmpInfo(Integer page) {
+	public Result<List<EmpInfo>> queryEmpInfo(Integer page,String value,Integer statue) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		int n = (page <= 0 ? 1 : (page - 1) * 8);
 		map.put("page", n);
 		Result<List<EmpInfo>> result = new Result<List<EmpInfo>>();
-		List<EmpInfo> list = authorityDao.queryEmpInfo(map);
+		List<EmpInfo> list=new ArrayList<EmpInfo>();
+		if(statue==1) {
+			map.put("value", value);
+			list=authorityDao.querySearchEmpInfo(map);
+		}else {
+			list = authorityDao.queryEmpInfo(map);
+		}
 		result.setData(list);
 		result.setState(1);
 		return result;
 	}
 
 	@Override
-	public Result<Object> queryCount() {
+	public Result<Object> queryCount(String value,Integer statue) {
+		
 		Result<Object> result = new Result<Object>();
-		result.setData(authorityDao.queryCount());
+		if(statue==1) {
+			result.setData(authorityDao.querySearchCount(value));
+		}else {
+			result.setData(authorityDao.queryCount());
+		}
 		result.setState(1);
 		return result;
 	}
