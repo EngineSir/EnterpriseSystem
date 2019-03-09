@@ -39,40 +39,49 @@ public class DeptController
 	@ApiOperation(value = "添加部门")
 	@PostMapping(value="/addDept.io")
 	@ResponseBody
-	public Result<Object> addDept(@ApiParam(value = "部门名称", required = true) @RequestParam(value="deptName") String deptName){
-		return deptService.addDept(deptName);
+	public Result<Object> addDept(@ApiParam(value = "部门名称", required = true) @RequestParam(value = "deptName") String deptName,
+								  @ApiParam(value = "备注内容",required = true) @RequestParam(value = "remark") String remark){
+		return deptService.addDept(deptName,remark);
 	}
 	 
 	@ApiOperation(value = "删除部门")
 	@DeleteMapping(value="/delDept.io")
 	@ResponseBody
-	public Result<Object> delDept(@ApiParam(value = "部门id",required=true) @RequestBody String id){
+	public Result<Object> delDept(@ApiParam(value = "部门id",required = true) @RequestBody String id){
 		return deptService.delDept(id);
 	}
 	 
 	@ApiOperation(value = "查询部门")
 	@GetMapping(value="/queryDept.io")
 	@ResponseBody
-	public Result<List<DeptInfo>> queryDept(){
-		return deptService.queryDept();
+	public Result<List<DeptInfo>> queryDept(@ApiParam(value = "当前页数",required = true) @RequestParam(value = "page") int page){
+		return deptService.queryDept(page);
 	}
 	 
 	@ApiOperation(value = "更新部门信息")
 	@PutMapping(value="/upDept.io")
 	@ResponseBody
-	public Result<Object> upDept(@ApiParam(value = "部门id",required=true)  @RequestParam(value="id") String id,
-								 @ApiParam(value = "部门名称",required=true)  @RequestParam(value="deptName") String deptName){
-		System.out.println(deptName);
+	public Result<Object> upDept(@ApiParam(value = "部门id",required = true)  @RequestParam(value = "id") String id,
+								 @ApiParam(value = "部门名称",required = true)  @RequestParam(value = "deptName") String deptName,
+								 @ApiParam(value = "备注内容",required = true) @RequestParam(value = "remark") String remark){
 		 DeptInfo dept=new DeptInfo();
 		 dept.setDeptName(deptName);
 		 dept.setId(id);
+		 dept.setRemark(remark);
 		return deptService.upDept(dept);
 	}
 	 
 	@ApiOperation(value = "查询是否拥有部门权限")
 	@GetMapping(value="/authorityUrl.io")
 	@ResponseBody
-	public Result<Object> authorityUrl(@ApiParam(value = "部门资源url",required=true)  @RequestParam(value="url") String url){
+	public Result<Object> authorityUrl(@ApiParam(value = "部门资源url",required = true)  @RequestParam(value = "url") String url){
 		return authorityService.authorityUrl(url);
+	}
+	
+	@ApiOperation(value = "部门总数")
+	@GetMapping(value = "/queryCount.io")
+	@ResponseBody
+	public Result<Object> queryCount(){
+		return deptService.queryCount();
 	}
 }

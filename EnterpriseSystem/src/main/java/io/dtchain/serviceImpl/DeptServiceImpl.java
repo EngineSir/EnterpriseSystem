@@ -21,12 +21,13 @@ public class DeptServiceImpl implements DeptService {
 	@Resource
 	private DeptDao deptDao;
 
-	public Result<Object> addDept(String deptName) {
+	public Result<Object> addDept(String deptName,String remark) {
 		Result<Object> result = new Result<Object>();
 		Map<String, String> map = new HashMap<String, String>();
 		String id = Utils.createId();
 		map.put("id", id);
 		map.put("deptName", deptName);
+		map.put("remark", remark);
 		int n = deptDao.addDept(map);
 		if (n > 0) {
 			result.setData(id);
@@ -46,10 +47,13 @@ public class DeptServiceImpl implements DeptService {
 		return result;
 	}
 
-	public Result<List<DeptInfo>> queryDept() {
+	public Result<List<DeptInfo>> queryDept(int page) {
 		Result<List<DeptInfo>> result = new Result<List<DeptInfo>>();
 		List<DeptInfo> list = new ArrayList<DeptInfo>();
-		list = deptDao.queryDept();
+		Map<String, Object> map = new HashMap<String, Object>();
+		int begin = (page - 1) * 10;
+		map.put("begin", begin);
+		list = deptDao.queryDept(map);
 		if (!list.isEmpty()) {
 			result.setData(list);
 			result.setMsg("查询成功");
@@ -63,6 +67,14 @@ public class DeptServiceImpl implements DeptService {
 		deptDao.upDept(dept);
 		result.setMsg("修改成功");
 		result.setState(1);
+		return result;
+	}
+
+	@Override
+	public Result<Object> queryCount() {
+		Result<Object> result=new Result<Object>();
+		result.setCount(deptDao.queryCount());
+		result.setMsg("获取部门总数成功");
 		return result;
 	}
 

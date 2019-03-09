@@ -5,7 +5,7 @@
   <mapper namespace="io.dtchain.dao.DeptDao">
   <!-- 添加部门 -->
   	<insert id="addDept" parameterType="Map">
-  		insert into dept (id,deptName) values(#{id},#{deptName})
+  		insert ignore into dept (id,deptName,remark) values(#{id},#{deptName},#{remark})
   	</insert>
   	<!-- 删除部门 -->
   	<delete id="delDept" parameterType="string">
@@ -13,10 +13,14 @@
   	</delete>
   	<!-- 查询部门 -->
   	<select id="queryDept" resultType="io.dtchain.entity.DeptInfo">
-  		select id,deptName from dept
+  		select id,deptName,remark from dept  limit #{begin},10
   	</select>
-  	<!-- 修改部门名称部门表 -->
+  	<!-- 修改部门信息部门表 -->
   	<update id="upDept" parameterType="io.dtchain.entity.DeptInfo">
-  		update  dept set deptName=#{deptName} where id=#{id} 
+  		update  dept set deptName=#{deptName},remark=#{remark} where id=#{id} 
   	</update>
+  	
+  	<select id="queryCount" resultType="int">
+  		select count(*) from dept
+  	</select>
   </mapper>

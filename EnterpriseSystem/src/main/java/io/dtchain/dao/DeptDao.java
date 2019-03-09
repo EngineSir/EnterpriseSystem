@@ -28,7 +28,7 @@ public interface DeptDao {
 	 * 
 	 * @return
 	 */
-	public List<DeptInfo> queryDept();
+	public List<DeptInfo> queryDept(Map<String,Object> map);
 
 	/**
 	 * 修改部门信息
@@ -37,5 +37,11 @@ public interface DeptDao {
 	 * @return
 	 */
 	public int upDept(DeptInfo dept);
+	
+	/**
+	 * 部门总数
+	 * @return
+	 */
+	public int queryCount();
 
 }

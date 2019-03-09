@@ -11,9 +11,10 @@ public interface DeptService {
 	 * 添加部门
 	 * 
 	 * @param deptName		部门名称
+	 * @param remark		备注内容
 	 * @return
 	 */
-	public Result<Object> addDept(String deptName);
+	public Result<Object> addDept(String deptName,String remark);
 
 	/**
 	 * 删除部门 
@@ -24,9 +25,10 @@ public interface DeptService {
 
 	/**
 	 * 查询部门信息
+	 * @param  				当前页数
 	 * @return
 	 */
-	public Result<List<DeptInfo>> queryDept();
+	public Result<List<DeptInfo>> queryDept(int page);
 
 	/**
 	 * 修改部门信息
@@ -34,4 +36,10 @@ public interface DeptService {
 	 * @return
 	 */
 	public Result<Object> upDept(DeptInfo dept);
+	
+	/**
+	 * 部门总数
+	 * @return
+	 */
+	public Result<Object> queryCount();
 }

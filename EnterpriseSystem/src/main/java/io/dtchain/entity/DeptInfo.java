@@ -3,6 +3,16 @@ package io.dtchain.entity;
 public class DeptInfo {
 	private String id;
 	private String deptName;
+	private String remark;
+
+	
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
 
 	public String getId() {
 		return id;
@@ -22,6 +32,8 @@ public class DeptInfo {
 
 	@Override
 	public String toString() {
-		return "DeptInfo [id=" + id + ", deptName=" + deptName + "]";
+		return "DeptInfo [id=" + id + ", deptName=" + deptName + ", remark=" + remark + "]";
 	}
+
+
 }
