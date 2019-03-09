@@ -98,7 +98,9 @@ function submitBtn(){
 			dataType:"json",
 			data:{"leaveType":leaveType,"start":start,"end":end,"leaveNum":leaveNum,"leaveRegard":leaveRegard,"approver":approver},
 			success:function(result){
-				console.log(result);
+				if(result.state==1){
+					window.location.href="myApproval";
+				}
 			},
 			error:function(){
 				alert("提交失败");

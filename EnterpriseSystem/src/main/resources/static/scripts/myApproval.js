@@ -7,9 +7,9 @@ $(document).ready(function() {
 					
 					$(".table_info").on("click",".del",delApproval);
 					
-					
+					$("#approvedSearch").click(approvedSearch);
 
-					layui.use(['form', 'laydate', 'laypage' ],
+					layui.use(['form', 'laydate', 'laypage','layer' ],
 									function() {
 										form = layui.form, layer = layui.layer, laydate = layui.laydate, laypage = layui.laypage;
 										laydate.render({
@@ -31,16 +31,42 @@ $(document).ready(function() {
 										//待审批
 										pendingApproval();
 										//已审批
-										$("#approved").click(approval);
+										$("#approved").click(approval("","","",0,0));
 									
 									});
 				})
+				
+				
+//已审批搜索
+function approvedSearch(){
+	var applicant=$("#applicant").val().trim();
+	var createStartTime=$("#start1").val().trim();
+	var createEndTime=$("#end1").val().trim();
+	var approverName=$("select#approverStatue option:selected").text().trim()
+	var approverStatue=2;
+	if(approverName=="拒绝"){
+		approverStatue=0;
+	}
+
+	if(approverName=="通过"){
+		approverStatue=1;
+	}
+	
+
+	if(applicant!="" || createStartTime!="" || createEndTime!="" || approverName!="==请选择=="){
+		approval(applicant,createStartTime,createEndTime,approverStatue,1);
+	}else{
+		layer.msg("搜索条件不能为空");
+		
+	}
+}
 //已审批
-function approval(){
+function approval(applicant,createStartTime,createEndTime,approverStatue,statue){
 	var countNum = 0;
 	$.ajax({
 		url : "approval/queryApprovalCount.io",
 		type : "get",
+		data : {"applicant" : applicant,"createStartTime" : createStartTime,"createEndTime" : createEndTime,"approverStatue" : approverStatue,"statue" : statue},
 		async : false,
 		success : function(result) {
 			countNum = result.count;
@@ -67,9 +93,11 @@ function approval(){
 					$("#countRed1").text(str);
 				
 				delTr("#approval");
-				approvalPaging(obj.curr);
+				approvalPaging(obj.curr,applicant,createStartTime,createEndTime,approverStatue,statue);
 			}
 		});
+	}else{
+		layer.msg("没有该结果数据，请从新查询");
 	}
 	
 }
@@ -115,6 +143,9 @@ function pendingApproval(){
 				
 			}
 		});
+	}else{
+			delTr("#pendingApproval");
+			$("#countRed").text("");
 	}
 }
 //
@@ -152,6 +183,8 @@ function delApproval() {
 			success:function(result){
 				if(result.state==1){
 					pendingApproval();
+					layer.msg("删除成功");
+					$tr.remove();
 				}
 			},
 			error:function(){
@@ -161,12 +194,12 @@ function delApproval() {
 	}
 }
 //已审批
-function approvalPaging(page){
+function approvalPaging(page,applicant,createStartTime,createEndTime,approverStatue,statue){
 	$.ajax({
 		url:"approval/getApproval.io",
 		type:"get",
 		dataType:"json",
-		data:{"page":page},
+		data:{"page":page,"applicant" : applicant,"createStartTime" : createStartTime,"createEndTime" : createEndTime,"approverStatue" : approverStatue,"statue" : statue},
 		success:function(result){
 			if(result.state==1){
 				var n=authorityUrl();
@@ -216,7 +249,7 @@ function createTr(data,id,n) {
 	tr += '<th style="width: 100px;" id="appStatus">'+state+'</th>';
 	tr += '<th style="width: 150px;">'+data.startTime+' 至' +data.endTime+'</th>';
 	tr += '<th style="width: 100px;">'+data.leaveNum+'</th>';
-	tr += '<th style="width: 289px;"><textarea class="layui-textarea">'+data.leaveRegard+'</textarea>';
+	tr += '<th style="width: 289px;"><textarea readonly class="layui-textarea">'+data.leaveRegard+'</textarea>';
 	tr += '</th>';
 	tr += '<th style="width: 250px;">';
 	if(n==1){
@@ -257,6 +290,7 @@ function agree(){
 	if(id!=""){
 		operation(id,1);
 	}
+	pendingApproval();
 }
 //拒绝
 function refuse(){
@@ -266,6 +300,7 @@ function refuse(){
 	if(id!=""){
 		operation(id,0);
 	}
+	pendingApproval();
 }
 //操作
 function operation(id,approverStatue){

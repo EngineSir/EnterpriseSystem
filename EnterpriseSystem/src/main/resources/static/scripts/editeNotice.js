@@ -1,9 +1,12 @@
+var layer="";
+var layedit="";
+var index="";
 $(document).ready(function() {
 	$(".com").load("com");
-	var layedit;
-	var index;
-	layui.use('layedit', function() {
+	
+	layui.use(['layedit','layer'], function() {
 		layedit = layui.layedit;
+		layer=layui.layer;
 		layedit.set({
 			uploadImage : {
 				url : 'notice/image.io', //接口url
@@ -48,7 +51,7 @@ function save(){
 				  window.location.href="editeNotice";
 			  },
 			  error:function(){
-				  alert("保存失败");
+				  layer.msg("保存失败");
 			  }
 		  });
 	  }

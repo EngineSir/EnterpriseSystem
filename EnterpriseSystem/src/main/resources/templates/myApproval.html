@@ -8,7 +8,6 @@
 <link rel="stylesheet" href="layui/css/layui.css"/>
 <link rel="stylesheet" href="styles/myApproval.css"/>
 <script type="text/javascript" src="scripts/jquery.min.js"></script>
-<script type="text/javascript" src="scripts/cookie_util.js"></script>
 <script type="text/javascript" src="scripts/path.js"></script>
 <script src="layui/layui.js"></script>
 <script src="scripts/myApproval.js"></script>
@@ -24,7 +23,7 @@
 			<div class="layui-tab-content">
 				<div class="layui-tab-item layui-show">
 					<div class="layui-form">
-					<div shiro:hasPermission="/approvalauthority">
+					 <div shiro:hasPermission="/approvalauthority">
 						<div class="layui-form-item">
 							<label class="layui-form-label">关键字:</label>
 							<div class="layui-input-inline">
@@ -56,7 +55,6 @@
 								<div class="layui-input-inline">
 									<select name="quiz1" lay-verify="required">
 										<option value="全部">全部</option>
-										<option value="已审批">已审批</option>
 										<option value="通过">通过</option>
 										<option value="拒绝">拒绝</option>
 									</select>
@@ -96,12 +94,12 @@
 				<div class="layui-tab-item">
 					<div class="layui-tab-item layui-show">
 						<div class="layui-form">
-							<div shiro:hasPermission="/approvalauthority">
+						 	<div shiro:hasPermission="/approvalauthority">
 							<div class="layui-form-item">
 								<label class="layui-form-label">关键字:</label>
 								<div class="layui-input-inline">
 									<input type="text" name="username" lay-verify="required"
-										placeholder="申请人" autocomplete="off" class="layui-input"/>
+										placeholder="申请人" autocomplete="off" class="layui-input" id="applicant"/>
 								</div>
 							</div>
 							<div class="cale1">
@@ -126,9 +124,9 @@
 								<div class="layui-form-item">
 									<label class="layui-form-label">状态:</label>
 									<div class="layui-input-inline">
-										<select name="quiz1" lay-verify="required">
+										<select name="quiz1" lay-verify="required" id="approverStatue">
+											<option value="">==请选择==</option>
 											<option value="全部">全部</option>
-											<option value="已审批">已审批</option>
 											<option value="通过">通过</option>
 											<option value="拒绝">拒绝</option>
 										</select>
@@ -136,7 +134,7 @@
 								</div>
 							</div>
 							<div class="searchBtn">
-								<button class="layui-btn layui-btn-primary searchBtnHeight">搜索</button>
+								<button class="layui-btn layui-btn-primary searchBtnHeight" id="approvedSearch">搜索</button>
 							</div>
 							</div>
 							<div class="list">

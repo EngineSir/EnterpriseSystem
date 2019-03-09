@@ -44,10 +44,10 @@ a {
 			<ul class="layui-nav layui-nav-tree" lay-filter="test">
 				<li class="layui-nav-item" shiro:hasPermission="/dataImport"><a
 					class="" href="dataImport"><img src="images/excel.png">&nbsp;数据导入</a></li>
-				<li class="layui-nav-item"><a href="javascript:;" class="admin"><img src="images/auth_1.png">&nbsp;授权管理</a>
+				<li class="layui-nav-item"><a href="javascript:;" ><img src="images/auth_1.png">&nbsp;授权管理</a>
 					<dl class="layui-nav-child">
 						<dd>
-							<a href="dept"><img src="images/dept.png">&nbsp;部门信息</a> <a shiro:hasPermission="/jurisdiction"
+							 <a shiro:hasPermission="/jurisdiction"
 								href="jurisdiction"><img src="images/auth.png">&nbsp;权限管理</a>
 						</dd>
 					</dl></li>
@@ -62,6 +62,13 @@ a {
 						<dd>
 							<a href="editeNotice"><img src="images/edit.png">&nbsp;编辑公告</a>
 							<a href="noticeOperation"><img src="images/opera.png">&nbsp;公告详情</a>
+						</dd>
+					</dl></li>
+				<li class="layui-nav-item"><a href="javascript:;"><img src="images/notice.png">&nbsp;部门管理</a>
+					<dl class="layui-nav-child">
+						<dd>
+							<a href="dept"><img src="images/dept.png">&nbsp;部门信息</a>
+							<a shiro:hasPermission="/deptauthority" href="addDept"><img src="images/addDept.png">&nbsp;添加部门</a>
 						</dd>
 					</dl></li>
 			</ul>

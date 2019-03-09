@@ -41,7 +41,6 @@ function deleteInfo() {
 // 点击搜索
 function doSearch(value, name) {
 	var count=0;
-	//searAjax(value, page);
 	$.ajax({
 		url:"mangage/queryCount.io",
 		type:"get",
@@ -49,7 +48,6 @@ function doSearch(value, name) {
 		data:{"deptName":value},
 		async:false,
 		success:function(result){
-			console.log(result);
 			count=result.count;
 		},
 		error:function(){

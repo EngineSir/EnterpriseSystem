@@ -1,17 +1,25 @@
+var laypage="";
+var layer="";
 $(document).ready(function() {
+	var value="";
 	$(".com").load("com");
-	queryEmp();
+	queryEmp(value,0);
 	$(".table_info").on("click", "button", getAuthority);
 })
 function doSearch(value, name) {
-
+	if(value==""||value==null){
+		layer.msg("搜索值不能为空");
+	}else{
+		queryEmp(value,1);
+	}	
 }
 
-function queryEmp() {
+function queryEmp(value,statue) {
 	var count = 0;
 	$.ajax({
 		url : "authority/queryCount.io",
 		type : "get",
+		data : {"value" : value,"statue":statue},
 		async : false,
 		success : function(result) {
 			count = result.data;
@@ -22,7 +30,7 @@ function queryEmp() {
 	});
 
 	layui.use([ 'laypage', 'layer' ], function() {
-		var laypage = layui.laypage, layer = layui.layer;
+		laypage = layui.laypage, layer = layui.layer;
 		// 总页数大于页码总数
 		if(count>0){
 			laypage.render({
@@ -34,24 +42,28 @@ function queryEmp() {
 							+ (obj.curr * 8 > obj.count ? obj.count : obj.curr * 8)
 							+ "条，共" + (obj.count) + "条";
 					$("#countRed").text(str);
-					paging(obj.curr);
+					paging(obj.curr,value,statue);
 				}
 			});
 		}
+		
+		if(count==0){
+			layer.msg("没有该记录，请重新搜索");
+		}
 	});
 }
-function paging(page) {
+function paging(page,value,statue) {
 	$.ajax({
 		url : "authority/empInfo.io",
 		type : "get",
 		dataType : "json",
 		data : {
-			"page" : page
+			"page" : page,"value" : value,"statue" : statue
 		},
 		success : function(result) {
 			if (result.state == 1) {
 				var data = result.data;
-
+				console.log(result);
 				delTr();
 				for (var i = 0; i < data.length; i++) {
 					createTr(data[i].empName, data[i].empSex, data[i].empDept,
@@ -71,7 +83,7 @@ function createTr(empName, empSex, empDept, empId) {
 	str += "<th>" + empSex + "</th>";
 	str += "<th>" + empDept + "</th>";
 	str += "";
-	str += "<th style='width: 500px; height: 30px'><input type='checkbox' name='1' id='"
+	str += "<th style='width: 600px; height: 30px'><input type='checkbox' name='1' id='"
 			+ empId
 			+ "1'/>员工管理"
 			+ "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type='checkbox' name='2' id='"
@@ -82,7 +94,7 @@ function createTr(empName, empSex, empDept, empId) {
 			+ "3'/>权限管理 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type='checkbox' name='4' id='"
 			+ empId
 			+ "4'/>请假审批 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
-			+ "<input type='checkbox' name='5' id='" + empId + "5'/>数据录入</th>";
+			+ "<input type='checkbox' name='5' id='" + empId + "5'/>数据录入&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='checkbox' name='6' id='"+empId+"6'/>公告管理</th>";
 	str += "<th><button class='layui-btn layui-btn-primary layui-btn-sm'>分配权限</button></th>";
 	str += "</tr>";
 	var $str = $(str);
@@ -107,11 +119,10 @@ function createTr(empName, empSex, empDept, empId) {
 			}
 		},
 		error : function() {
-			alert("查询权限失败");
+			layer.msg("查询权限失败");
 		}
 	});
 
-	//	
 }
 // 删除表格行
 function delTr() {
@@ -147,13 +158,13 @@ function getAuthority() {
 				"resourceId" : resourceId
 			},
 			success : function(result) {
-				alert(result.msg);
+				layer.msg(result.msg);
 				if (result.state == -1) {
 					window.location.href = "index";
 				}
 			},
 			error : function() {
-				alert("添加权限失败");
+				layer.msg("添加权限失败");
 			}
 		});
 	}

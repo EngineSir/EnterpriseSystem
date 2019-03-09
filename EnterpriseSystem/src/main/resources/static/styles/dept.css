@@ -1,8 +1,8 @@
 .body_layer {
 	position: absolute;
 	top: 15%;
-	left: 35%;
-	width: 38%;
+	left: 15%;
+	width: 80%;
 	height: 89%;
 }
 
@@ -25,37 +25,62 @@
 	background: #000;
 	opacity: 0.6;
 	margin: auto;
-	z-index: 9999999;
+	z-index: 9;
 	display: none;
 }
 
 .show {
 	position: absolute;
-	top: 15%;
-	left: 15%;
+	top: 10%;
+	left: 20%;
 	width: 60%;
-	height: 30%;
+	height: 60%;
 	background: #fff;
-	z-index: 999999999;
+	z-index: 10;
+	
 }
 
 .deptN {
 	position: absolute;
-	top: 20%;
+	top: 10%;
+	left:15%;
+	width:80%;
+	height:70%;
+
 }
 
 #close {
 	position: absolute;
 	top: 60%;
-	left: 55%;
+	left: 57%;
 }
 
 #sureUP {
 	position: absolute;
 	top: 60%;
-	left: 25%;
+	left: 35%;
 }
 
 .layui-table th {
 	text-align: center;
+}
+span {
+	cursor:pointer;
+}
+.layui-input{
+	width:150%;
+}
+.layui-textarea{
+	width:60%;
+}
+#demo1{
+	position: absolute;
+	top:80%;
+	left:60%;
+}
+.showCount{
+	position: absolute;
+	top:83%;
+	left:3%;
+	
 }
