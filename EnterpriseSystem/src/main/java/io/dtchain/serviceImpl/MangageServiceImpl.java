@@ -152,4 +152,22 @@ public class MangageServiceImpl implements MangageService {
 		result.setState(1);
 		return result;
 	}
+
+	@Override
+	public Result<Object> updatePass(String oriPass, String newPass) {
+		Result<Object> result=new Result<Object>();
+		Map<String,Object> map=new HashMap<String,Object>();
+		EmpInfo user=(EmpInfo)SecurityUtils.getSubject().getSession().getAttribute("userSession");
+		map.put("empId",user.getEmpId());
+		map.put("empPass", Utils.Md5(user.getEmpName(), newPass));
+		if(!user.getEmpPass().equals(Utils.Md5(user.getEmpName(), oriPass))) {
+			result.setMsg("原密码错误");
+			result.setState(0);
+		}else {
+			mangageDao.updatePass(map);
+			result.setMsg("密码修改成功");
+			result.setState(1);
+		}
+		return result;
+	}
 }

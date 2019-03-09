@@ -68,4 +68,13 @@ public interface MangageService {
 	 * @return
 	 */
 	public Result<Object> queryCount(String deptName);
+	
+	/**
+	 * 修改密码
+	 * 
+	 * @param oriPass		原密码
+	 * @param newPass		新密码
+	 * @return
+	 */
+	public Result<Object> updatePass(String oriPass,String newPass);
 }

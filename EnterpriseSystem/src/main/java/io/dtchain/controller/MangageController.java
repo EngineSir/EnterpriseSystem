@@ -112,4 +112,12 @@ public class MangageController {
 	public Result<Object> queryCount(@ApiParam(value = "部门名称", required = true) @RequestParam(value = "deptName") String deptName){
 		return mangageService.queryCount(deptName);
 	}
+	
+	@ApiOperation(value = "修改密码")
+	@PutMapping(value = "/updatePass.io")
+	@ResponseBody
+	public Result<Object> updatePass(@ApiParam(value = "原密码", required = true) @RequestParam(value = "oriPass") String oriPass,
+									 @ApiParam(value = "新密码", required = true) @RequestParam(value = "newPass") String newPass){
+		return mangageService.updatePass(oriPass, newPass);
+	}
 }

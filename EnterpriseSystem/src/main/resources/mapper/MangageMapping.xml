@@ -57,4 +57,8 @@
 	<select id="queryCount" parameterType="string" resultType="int">
 		select count(*) from EmpTable where empDept=#{deptName}
 	</select>
+	
+	<update id="updatePass" parameterType="map">
+		update EmpTable set empPass=#{empPass} where empId=#{empId}
+	</update>
 </mapper>

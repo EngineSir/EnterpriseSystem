@@ -84,4 +84,12 @@ public interface MangageDao {
 	 * @return
 	 */
 	public int queryCount(String deptName);
+	
+	/**
+	 * 修改密码
+	 * 
+	 * @param map
+	 * @return
+	 */
+	public int updatePass(Map<String,Object> map);
 }
