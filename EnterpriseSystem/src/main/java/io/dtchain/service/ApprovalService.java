@@ -40,14 +40,14 @@ public interface ApprovalService {
 	 * 已审批总数
 	 * @return
 	 */
-	public Result<Object> queryApprovalCount();
+	public Result<Object> queryApprovalCount(String applicant,String createStartTime,String createEndTime,int approverStatue,int statue);
 	
 	/**
 	 * 获取已审批记录
 	 * @param page				当前页数
 	 * @return
 	 */
-	public Result<List<LeaveTable>> getApproval(int page);
+	public Result<List<LeaveTable>> getApproval(int page,String applicant,String createStartTime,String createEndTime,int approverStatue,int statue);
 	
 	/**
 	 * 审批操作

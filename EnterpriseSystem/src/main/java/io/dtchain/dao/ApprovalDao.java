@@ -41,11 +41,25 @@ public interface ApprovalDao {
 	public int queryApprovalCount(@Param(value = "applicant")String applicant);
 	
 	/**
+	 * 根据搜索条件查询总数(已审批)
+	 * @param map
+	 * @return
+	 */
+	public int querySearchApprovalCount(Map<String,Object> map);
+	
+	/**
 	 * 获取已审批记录
 	 * @param map
 	 * @return
 	 */
 	public List<LeaveTable> getApproval(Map<String,Object> map);
+	
+	/**
+	 * 根据搜索条件查询审批记录
+	 * @param map
+	 * @return
+	 */
+	public List<LeaveTable> getSearchApproval(Map<String,Object> map);
 	
 	/**
 	 * 审批操作

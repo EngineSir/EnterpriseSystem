@@ -35,6 +35,32 @@
 		 approverStatue<![CDATA[!= ]]>2
 	</select>
 	
+	<select id="querySearchApprovalCount" parameterType="map" resultType="int">
+		select count(*) from leaveTable
+			<where>
+				<if test="app != 'admin'">
+				(approver=#{applicant}  or applicant=#{applicant}) and
+				</if>
+				<if test="applicant !=''">
+					applicant=#{applicant} and
+				</if>
+				<if test="createStartTime !=''">
+					createTime<![CDATA[>=]]> #{createStartTime} and 
+				</if>
+				<if test="createEndTime !=''">
+					createTime<![CDATA[<=]]> #{createEndTime}  and
+				</if>
+				<if test="approverStatue!=2">
+					  approverStatue=#{approverStatue}
+				</if>
+				<if test="approverStatue==2">
+					 approverStatue!=2
+				</if>
+			</where>
+		
+	</select>
+	
+	
 	<select id="getApproval" parameterType="map" resultType="io.dtchain.entity.LeaveTable">
 		select id,leaveType,startTime,endTime,leaveNum,leaveRegard,approverStatue,applicant
 		 from leaveTable where 
@@ -43,6 +69,36 @@
 		 	</if>
 		  approverStatue<![CDATA[!= ]]>2 ORDER BY createTime DESC limit #{page},10 
 	</select>
+	
+	<select id="getSearchApproval" parameterType="map" resultType="io.dtchain.entity.LeaveTable">
+		select id,leaveType,startTime,endTime,leaveNum,leaveRegard,approverStatue,applicant
+		 from leaveTable 
+		 	<where>
+		 		<if test="applicant != 'admin'">
+		 			(approver=#{applicant}  or applicant=#{applicant}) and
+		 		</if>
+		 		<if test="app !=''">
+		 			applicant=#{app} and
+		 		</if>
+		 		<if test="createStartTime !=''">
+					createTime<![CDATA[>=]]> #{createStartTime} and 
+				</if>
+				<if test="createEndTime !=''">
+					createTime<![CDATA[<=]]> #{createEndTime} and 
+				</if>
+				<if test="approverStatue!=2">
+					  approverStatue=#{approverStatue}
+				</if>
+				<if test="approverStatue==2">
+					 approverStatue!=2
+				</if>
+		 	</where>
+		 	 ORDER BY createTime DESC limit #{page},10 
+	</select>
+	
+	
+	
+	
 	
 	<update id="operation" parameterType="map">
 		update leaveTable set approverStatue=#{approverStatue} where id=#{id}

@@ -77,24 +77,49 @@ public class ApprovalServiceImpl implements ApprovalService{
 		return result;
 	}
 	@Override
-	public Result<Object> queryApprovalCount() {
-		String applicant=(String)SecurityUtils.getSubject().getPrincipal();
+	public Result<Object> queryApprovalCount(String applicant,String createStartTime,String createEndTime,int approverStatue,int statue) {
+		String app=(String)SecurityUtils.getSubject().getPrincipal();
+		Map<String,Object> map=new HashMap<String,Object>();
 		Result<Object> result=new Result<Object>();
-		int count=approvalDao.queryApprovalCount(applicant);
+		int count=0;
+		
+		if(statue==0) {
+			count=approvalDao.queryApprovalCount(app);
+		}
+		//搜索
+		if(statue==1) {
+			map.put("app", app);
+			map.put("applicant", applicant);
+			map.put("createStartTime", createStartTime);
+			map.put("createEndTime", createEndTime);
+			map.put("approverStatue", approverStatue);
+			count=approvalDao.querySearchApprovalCount(map);
+		}
+		
 		result.setCount(count);
 		result.setMsg("请求成功");
 		result.setState(1);
 		return result;
 	}
 	@Override
-	public Result<List<LeaveTable>> getApproval(int page) {
+	public Result<List<LeaveTable>> getApproval(int page,String applicant,String createStartTime,String createEndTime,int approverStatue,int statue) {
 		Result<List<LeaveTable>> result=new Result<List<LeaveTable>>();
 		List<LeaveTable> list=new ArrayList<LeaveTable>();
 		page=page<1?0:(page-1)*10;
 		Map<String,Object> map=new HashMap<String,Object>();
 		map.put("page", page);
 		map.put("applicant", (String)SecurityUtils.getSubject().getPrincipal());
-		list=approvalDao.getApproval(map);
+		if(statue==0) {
+			list=approvalDao.getApproval(map);
+		}
+		if(statue==1) {
+			map.put("app", applicant);
+			map.put("createStartTime",createStartTime );
+			map.put("createEndTime", createEndTime);
+			map.put("approverStatue", approverStatue);
+			list=approvalDao.getSearchApproval(map);
+		}
+		
 		result.setData(list);
 		result.setMsg("请求成功");
 		result.setState(1);

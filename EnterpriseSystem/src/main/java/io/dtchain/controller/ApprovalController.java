@@ -80,15 +80,24 @@ public class ApprovalController {
 	@ApiOperation(value = "已审批总数")
 	@GetMapping(value = "/queryApprovalCount.io")
 	@ResponseBody
-	public Result<Object> queryApprovalCount(){
-		return approvalService.queryApprovalCount();
+	public Result<Object> queryApprovalCount(@ApiParam(value = "申请人",required = false) @RequestParam(value = "applicant") String applicant,
+											 @ApiParam(value = "开始创建时间",required = false) @RequestParam(value = "createStartTime") String createStartTime,
+											 @ApiParam(value = "截至创建时间",required = false) @RequestParam(value = "createEndTime") String createEndTime,
+											 @ApiParam(value = "审批状态",required = false) @RequestParam(value = "approverStatue") int approverStatue,
+											 @ApiParam(value = "初始化状态  0:初始化   1:搜索",required = false) @RequestParam(value = "statue") int statue){
+		return approvalService.queryApprovalCount(applicant,createStartTime,createEndTime,approverStatue,statue);
 	}
 
 	@ApiOperation(value = "获取已审批记录")
 	@GetMapping(value = "/getApproval.io")
 	@ResponseBody
-	public Result<List<LeaveTable>> getApproval(@ApiParam(value = "当前页数", required = true) @RequestParam(value = "page") int page){
-		return approvalService.getApproval(page);
+	public Result<List<LeaveTable>> getApproval(@ApiParam(value = "当前页数", required = true) @RequestParam(value = "page") int page,
+												@ApiParam(value = "申请人",required = false) @RequestParam(value = "applicant") String applicant,
+												@ApiParam(value = "开始创建时间",required = false) @RequestParam(value = "createStartTime") String createStartTime,
+												@ApiParam(value = "截至创建时间",required = false) @RequestParam(value = "createEndTime") String createEndTime,
+												@ApiParam(value = "审批状态",required = false) @RequestParam(value = "approverStatue") int approverStatue,
+												@ApiParam(value = "初始化状态  0:初始化   1:搜索",required = false) @RequestParam(value = "statue") int statue){
+		return approvalService.getApproval(page,applicant,createStartTime,createEndTime,approverStatue,statue);
 	}
 	
 	@ApiOperation(value = "审批操作")
