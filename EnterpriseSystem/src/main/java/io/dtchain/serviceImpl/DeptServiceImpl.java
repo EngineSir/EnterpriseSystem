@@ -78,4 +78,20 @@ public class DeptServiceImpl implements DeptService {
 		return result;
 	}
 
+	@Override
+	public Result<List<DeptInfo>> queryDeptInfo() {
+		Result<List<DeptInfo>> result=new Result<List<DeptInfo>>();
+		List<DeptInfo> list=new ArrayList<DeptInfo>();
+		list=deptDao.queryDeptInfo();
+		if(list!=null&&list.size()>0) {
+			result.setData(list);
+			result.setState(1);
+			result.setMsg("获取部门信息成功");
+		}else {
+			result.setState(0);
+			result.setMsg("获取部门信息失败");
+		}
+		return result;
+	}
+
 }

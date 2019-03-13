@@ -23,4 +23,8 @@
   	<select id="queryCount" resultType="int">
   		select count(*) from dept
   	</select>
+  	
+  	<select id="queryDeptInfo" resultType="io.dtchain.entity.DeptInfo">
+  		select id,deptName from dept
+  	</select>
   </mapper>

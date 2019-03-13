@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import io.dtchain.entity.DeptInfo;
+import io.dtchain.utils.Result;
 
 public interface DeptDao {
 	
@@ -43,5 +44,11 @@ public interface DeptDao {
 	 * @return
 	 */
 	public int queryCount();
+	
+	/**
+	 * 部门信息
+	 * @return
+	 */
+	public List<DeptInfo> queryDeptInfo();
 
 }

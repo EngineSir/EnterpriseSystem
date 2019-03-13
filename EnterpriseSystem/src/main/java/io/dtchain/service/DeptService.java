@@ -42,4 +42,10 @@ public interface DeptService {
 	 * @return
 	 */
 	public Result<Object> queryCount();
+	
+	/**
+	 * 部门信息
+	 * @return
+	 */
+	public Result<List<DeptInfo>> queryDeptInfo();
 }

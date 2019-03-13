@@ -84,4 +84,11 @@ public class DeptController
 	public Result<Object> queryCount(){
 		return deptService.queryCount();
 	}
+	
+	@ApiOperation(value = "部门信息")
+	@GetMapping(value = "/queryDeptInfo.io")
+	@ResponseBody
+	public Result<List<DeptInfo>> queryDeptInfo(){
+		return deptService.queryDeptInfo();
+	}
 }

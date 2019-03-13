@@ -3,7 +3,7 @@
 */
 function queryDept(){
 	$.ajax({
-		url:"dept/queryDept.io",
+		url:"dept/queryDeptInfo.io",
 		success:function(result){
 			if(result.state==1){
 				var da = [];
