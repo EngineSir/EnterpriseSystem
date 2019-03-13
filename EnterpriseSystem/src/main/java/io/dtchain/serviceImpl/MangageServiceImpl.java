@@ -13,7 +13,6 @@ import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Service;
 
@@ -45,13 +44,13 @@ public class MangageServiceImpl implements MangageService {
 		return result;
 	}
 
-	public Result<List<EmpInfo>> queryDeptEmpInfo(String deptName, int page) {
+	public Result<List<EmpInfo>> queryDeptEmpInfo(String searchValue, int page) {
 		Result<List<EmpInfo>> result = new Result<List<EmpInfo>>();
 		List<EmpInfo> list = new ArrayList<EmpInfo>();
 		Map<String, Object> map = new HashMap<String, Object>();
-		int begin = (page - 1) * 8;
+		int begin = (page - 1) * 10;
 		map.put("begin", begin);
-		map.put("info", deptName);
+		map.put("info", searchValue);
 		list = mangageDao.queryDeptEmpInfo(map);
 
 		result.setData(list);
@@ -145,9 +144,9 @@ public class MangageServiceImpl implements MangageService {
 	}
 
 	@Override
-	public Result<Object> queryCount(String deptName) {
+	public Result<Object> queryCount(String searchValue) {
 		Result<Object> result=new Result<Object>();
-		result.setCount(mangageDao.queryCount(deptName));
+		result.setCount(mangageDao.queryCount(searchValue));
 		result.setMsg("请求数据成功");
 		result.setState(1);
 		return result;
@@ -167,6 +166,42 @@ public class MangageServiceImpl implements MangageService {
 			mangageDao.updatePass(map);
 			result.setMsg("密码修改成功");
 			result.setState(1);
+		}
+		return result;
+	}
+
+	@Override
+	public Result<Object> getInitInfoCount() {
+		Result<Object> result=new Result<Object>();
+		result.setCount(mangageDao.getInitInfoCount());
+		return result;
+	}
+
+	@Override
+	public Result<List<EmpInfo>> getInitInfo(int page) {
+		Result<List<EmpInfo>> result=new Result<List<EmpInfo>>();
+		Map<String,Object> map=new HashMap<String,Object>();
+		map.put("begin", (page-1)*10);
+		List<EmpInfo> list=new ArrayList<EmpInfo>();
+		list=mangageDao.getInitInfo(map);
+		result.setData(list);
+		return result;
+	}
+
+	@Override
+	public Result<Object> passwordReset(String empId) {
+		Map<String,Object> map=new HashMap<String,Object>();
+		Result<Object> result=new Result<Object>();
+		EmpInfo empInfo=mangageDao.getNum(empId);
+		map.put("empId", empId);
+		map.put("empPass", Utils.Md5(empInfo.getEmpName(), empInfo.getEmpNum()));
+		int n=mangageDao.passwordReset(map);
+		if(n>0) {
+			result.setMsg("密码重置成功");
+			result.setState(1);
+		}else {
+			result.setMsg("密码重置失败");
+			result.setState(0);
 		}
 		return result;
 	}

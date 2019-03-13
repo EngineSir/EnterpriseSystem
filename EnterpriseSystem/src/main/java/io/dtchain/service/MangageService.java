@@ -17,13 +17,13 @@ public interface MangageService {
 	public Result<Object> addEmp(EmpInfo emp);
 
 	/**
-	 * 查询员工信息
+	 * 搜索员工信息
 	 * 
-	 * @param deptName		部门名称	
-	 * @param page			当前页数
+	 * @param searchValue		部门名称	或者员工名字
+	 * @param page				当前页数
 	 * @return
 	 */
-	public Result<List<EmpInfo>> queryDeptEmpInfo(String deptName, int page);
+	public Result<List<EmpInfo>> queryDeptEmpInfo(String searchValue, int page);
 
 	/**
 	 * 删除员工信息
@@ -62,12 +62,12 @@ public interface MangageService {
 	public Result<List<EmpInfo>> queryApprovalInfo(int page,int limit);
 	
 	/**
-	 * 查询部门员工总数
+	 * 搜索员工总数
 	 * 
-	 * @param deptName		部门名称
+	 * @param searchValue	部门名称或者员工名字
 	 * @return
 	 */
-	public Result<Object> queryCount(String deptName);
+	public Result<Object> queryCount(String searchValue);
 	
 	/**
 	 * 修改密码
@@ -77,4 +77,24 @@ public interface MangageService {
 	 * @return
 	 */
 	public Result<Object> updatePass(String oriPass,String newPass);
+	
+	/**
+	 * 获取初始化员工信息总数
+	 * @return
+	 */
+	public Result<Object> getInitInfoCount();
+	
+	/**
+	 * 初始化员工信息记录
+	 * @param				当前页数
+	 * @return
+	 */
+	public Result<List<EmpInfo>> getInitInfo(int page);
+	
+	/**
+	 * 密码重置
+	 * @param empId			员工id
+	 * @return
+	 */
+	public Result<Object> passwordReset(String empId);
 }

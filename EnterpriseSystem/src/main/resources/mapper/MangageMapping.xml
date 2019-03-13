@@ -10,12 +10,12 @@
 		(#{empId},#{empName},#{empDept},#{empSex},#{empPhone},#{empNum},#{empMail},#{empPass})
 	</insert>
 
-	<!-- 查询部门所有员工 -->
+	<!-- 获取搜索员工信息 -->
 	<select id="queryDeptEmpInfo" parameterType="Map"
 		resultType="io.dtchain.entity.EmpInfo">
 		select empId,empName,empDept,empSex,empPhone,empNum,empMail
 		from EmpTable
-		where empDept=#{info} limit #{begin},8
+		where empDept=#{info} or empName=#{info} limit #{begin},10
 	</select>
 	<!-- 删除员工信息 -->
 	<delete id="delEmpInfo" parameterType="Map">
@@ -55,10 +55,27 @@
 	</select>
 	
 	<select id="queryCount" parameterType="string" resultType="int">
-		select count(*) from EmpTable where empDept=#{deptName}
+		select count(*) from EmpTable where empDept=#{searchValue} or empName=#{searchValue}
 	</select>
 	
 	<update id="updatePass" parameterType="map">
 		update EmpTable set empPass=#{empPass} where empId=#{empId}
 	</update>
+	
+	<select id="getInitInfo" resultType="io.dtchain.entity.EmpInfo">
+		select empId,empName,empDept,empSex,empPhone,empNum,empMail
+		from EmpTable where empName!="admin" limit #{begin},10
+	</select>
+	
+	<select id="getInitInfoCount" resultType="int">
+		SELECT COUNT(*) FROM EmpTable where empName!="admin"
+	</select>
+	
+	<update id="passwordReset" parameterType="map">
+		update EmpTable set empPass=#{empPass} where empId=#{empId}
+	</update>
+	
+	<select id="getNum" parameterType="string" resultType="io.dtchain.entity.EmpInfo">
+		select empName,empNum from EmpTable where empId=#{empId}
+	</select>
 </mapper>

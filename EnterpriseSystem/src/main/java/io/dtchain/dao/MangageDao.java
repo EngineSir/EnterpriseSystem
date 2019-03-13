@@ -16,7 +16,7 @@ public interface MangageDao {
 	public int addEmp(EmpInfo emp);
 
 	/**
-	 * 查询部门员工信息
+	 * 搜索员工信息
 	 * 
 	 * @param map			部门名称,limit开始的数据标号
 	 * @return
@@ -71,19 +71,19 @@ public interface MangageDao {
 	public List<EmpInfo> queryApprovalInfo(Map<String,Object> map);
 	
 	/**
-	 * 查询员工总数
+	 * 查询员工总数(查询审批人  含admin账号)
 	 * 
 	 * @return
 	 */
 	public int queryEmpCount();
 	
 	/**
-	 * 查询部门员工总数
+	 * 搜索员工总数
 	 * 
-	 * @param deptName
+	 * @param searchValue    部门名称或员工名字
 	 * @return
 	 */
-	public int queryCount(String deptName);
+	public int queryCount(String searchValue);
 	
 	/**
 	 * 修改密码
@@ -92,4 +92,29 @@ public interface MangageDao {
 	 * @return
 	 */
 	public int updatePass(Map<String,Object> map);
+	
+	/**
+	 * 获取初始化员工记录
+	 * @return
+	 */
+	public List<EmpInfo> getInitInfo(Map<String,Object> map);
+	
+	/**
+	 * 初始化员工总数
+	 * @return
+	 */
+	public int getInitInfoCount();
+	
+	/**
+	 * 密码重置
+	 * @return
+	 */
+	public int passwordReset(Map<String,Object> map);
+	
+	/**
+	 * 获取工号
+	 * @param empId		员工id
+	 * @return
+	 */
+	public EmpInfo getNum(String empId);
 }

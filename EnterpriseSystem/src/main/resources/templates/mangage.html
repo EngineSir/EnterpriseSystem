@@ -1,49 +1,49 @@
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
-<meta name="viewport" content="width = device-width, initial-scale = 1.0, maximum-scale = 1.0, user-scalable = 0"/>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="viewport"
+	content="width = device-width, initial-scale = 1.0, maximum-scale = 1.0, user-scalable = 0" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>员工信息表</title>
 <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
 <link rel="stylesheet" type="text/css"
-	href="easyui/themes/default/easyui.css"/>
-<link rel="stylesheet" type="text/css" href="easyui/themes/icon.css"/>
-<link rel="stylesheet" type="text/css" href="easyui/demo/demo.css"/>
-<link rel="stylesheet" href="layui/css/layui.css"/>
+	href="easyui/themes/default/easyui.css" />
+<link rel="stylesheet" type="text/css" href="easyui/themes/icon.css" />
+<link rel="stylesheet" type="text/css" href="easyui/demo/demo.css" />
+<link rel="stylesheet" href="layui/css/layui.css" />
 <script type="text/javascript"
 	src="http://code.jquery.com/jquery-1.6.1.min.js"></script>
 <script type="text/javascript" src="scripts/mangage.js"></script>
-<script type="text/javascript" src="scripts/path.js"></script>
 <script type="text/javascript" src="scripts/jquery.min.js"></script>
-<script type="text/javascript"
-	src="easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="easyui/jquery.easyui.min.js"></script>
 <script src="layui/layui.js"></script>
 <script type="text/javascript" src="scripts/queryDeptInfo.js"></script>
-<link rel="stylesheet" href="styles/mangage.css"/>
+<link rel="stylesheet" href="styles/mangage.css" />
 </head>
 <body>
 
 	<div class="com"></div>
-	
+
 	<div class="body_content">
 		<div class="body_cude">
 			<div class="body_opcation">
 				<input class="easyui-searchbox"
-					data-options="prompt:'输入部门名称',menu:'#mm',searcher:doSearch"
+					data-options="prompt:'部门或员工',menu:'#mm',searcher:doSearch"
 					style="height: 30px; width: 300px" id="search"></input>
 				<div id="mm">
-					<div data-options="name:'部门',iconCls:'icon-ok'">部门</div>
+					<div data-options="name:'部门',iconCls:'icon-ok'">搜索</div>
 				</div>
-				<button type="button" shiro:hasPermission="/empManageAuthority" id="add" class="layui-btn layui-btn-normal">添加</button>
+				<button type="button" shiro:hasPermission="/empManageAuthority"
+					id="add" class="layui-btn layui-btn-normal">添加</button>
 			</div>
-			<!--隐藏的信息框-->
+			<!--隐藏的信息框    添加页面-->
 			<div class="show layui-form" hidden="hidden">
-				<input type="text" id="name" class="easyui-textbox inpuWH"/>
-				<span>姓名</span>
+				<input type="text" id="name" class="easyui-textbox inpuWH"  /> <span>姓名</span>
 				<div class="layui-form-item">
 					<div class="sear_query layui-input-block">
 						<input type="radio" name="sex" value="男" title="男"
-							lay-filter="rad"/> <input type="radio" name="sex"
-							value="女" title="女" lay-filter="rad"/>
+							lay-filter="rad" /> <input type="radio" name="sex" value="女"
+							title="女" lay-filter="rad" />
 					</div>
 				</div>
 				<div class="selectstyle">
@@ -55,16 +55,13 @@
 					<span>部门</span>
 				</div>
 				<div class="styleWH">
-					<input type="text" id="num" class="easyui-textbox inpuWH"/>
-					<span>编号</span>
+					<input type="text" id="num" class="easyui-textbox inpuWH" /> <span>编号</span>
 				</div>
 				<div class="styleWH">
-					<input type="text" id="tele" class="easyui-textbox inpuWH"/>
-					<span>号码</span>
+					<input type="text" id="tele" class="easyui-textbox inpuWH" /> <span>号码</span>
 				</div>
 				<div class="styleWH">
-					<input type="email" id="email" class="easyui-textbox inpuWH"/>
-					<span>邮箱</span>
+					<input type="email" id="email" class="easyui-textbox inpuWH" /> <span>邮箱</span>
 				</div>
 				<button type="button" class="layui-btn layui-btn-normal btn close"
 					id="close">取消</button>
@@ -72,13 +69,12 @@
 			</div>
 			<!-- 修改员工信息界面 -->
 			<div class="up_show layui-form" hidden="hidden">
-				<input type="text" id="up_name" class="easyui-textbox inpuWH"/>
-				<span>姓名</span>
+				<input type="text" id="up_name" class="easyui-textbox inpuWH" /> <span>姓名</span>
 				<div class="layui-form-item">
 					<div class="sear_query layui-input-block">
 						<input type="radio" name="Sex" value="男" id="men" title="男"
-							lay-filter="rad"/> <input type="radio" name="Sex"
-							value="女" id="women" title="女" lay-filter="rad"/>
+							lay-filter="rad" /> <input type="radio" name="Sex" value="女"
+							id="women" title="女" lay-filter="rad" />
 					</div>
 				</div>
 				<div class="selectstyle">
@@ -90,15 +86,13 @@
 					<span>部门</span>
 				</div>
 				<div class="styleWH">
-					<input type="text" id="up_num" class="easyui-textbox inpuWH"/>
-					<span>编号</span>
+					<input type="text" id="up_num" class="easyui-textbox inpuWH" /> <span>编号</span>
 				</div>
 				<div class="styleWH">
-					<input type="text" id="up_tele" class="easyui-textbox inpuWH"/>
-					<span>号码</span>
+					<input type="text" id="up_tele" class="easyui-textbox inpuWH" /> <span>号码</span>
 				</div>
 				<div class="styleWH">
-					<input type="email" id="up_email" class="easyui-textbox inpuWH"/>
+					<input type="email" id="up_email" class="easyui-textbox inpuWH" />
 					<span>邮箱</span>
 				</div>
 				<button type="button" class="layui-btn layui-btn-normal btn close"
@@ -109,14 +103,14 @@
 			<!-- 显示表格信息 -->
 			<table class="layui-table table_info" border="1" cellspacing="0">
 				<tr>
-					<th>姓名</th>
-					<th>性别</th>
-					<th>部门</th>
-					<th>编号</th>
-					<th>号码</th>
-					<th>邮箱</th>
-					<th shiro:hasPermission="/empManageAuthority"></th>
-					<th shiro:hasPermission="/empManageAuthority"></th>
+					<th >序号</th>
+					<th >姓名</th>
+					<th >性别</th>
+					<th >部门</th>
+					<th >编号</th>
+					<th >号码</th>
+					<th >邮箱</th>
+					<th shiro:hasPermission="/empManageAuthority" >操作</th>
 				</tr>
 			</table>
 		</div>
@@ -124,8 +118,8 @@
 
 	<div id="page"></div>
 	<div class="showCount">
-			<span id="countRed"></span>
-		</div>
+		<span id="countRed"></span>
+	</div>
 	<!-- 背景模态化 -->
 	<div class="opacity_bg" style='display: none'></div>
 	<!-- 隐藏的确认删除框 -->

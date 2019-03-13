@@ -37,7 +37,7 @@ public class MangageController {
 	@PostMapping(value="/login.io")
 	@ResponseBody
 	public Result<Object> login(@ApiParam(value = "用户名", required = true) @RequestParam(value = "username")String username,
-					   @ApiParam(value = "密码", required = true) @RequestParam(value = "pass")String pass) {
+					   			@ApiParam(value = "密码", required = true) @RequestParam(value = "pass")String pass) {
 		return mangageService.login(username, pass);
 	}
 	 
@@ -64,9 +64,9 @@ public class MangageController {
 	@ApiOperation(value = "查询部门员工信息")
 	@GetMapping(value="/allSearch.io")
 	@ResponseBody
-	public Result<List<EmpInfo>> queryDeptEmpInfo(@ApiParam(value = "部门名称", required = true) @RequestParam(value = "deptName") String deptName,
+	public Result<List<EmpInfo>> queryDeptEmpInfo(@ApiParam(value = "部门名称", required = true) @RequestParam(value = "searchValue") String searchValue,
 											      @ApiParam(value = "当前页数", required = true) @RequestParam(value = "page") int page) {
-		return mangageService.queryDeptEmpInfo( deptName, page);
+		return mangageService.queryDeptEmpInfo( searchValue, page);
 	}
 
 	@ApiOperation(value = "删除员工信息")
@@ -106,10 +106,10 @@ public class MangageController {
 		return authorityService.authorityUrl(url);
 	}
 	
-	@ApiOperation(value = "查询部门员工总数")
+	@ApiOperation(value = "搜索员工总数")
 	@GetMapping(value = "/queryCount.io")
 	@ResponseBody
-	public Result<Object> queryCount(@ApiParam(value = "部门名称", required = true) @RequestParam(value = "deptName") String deptName){
+	public Result<Object> queryCount(@ApiParam(value = "部门名称", required = true) @RequestParam(value = "searchValue") String deptName){
 		return mangageService.queryCount(deptName);
 	}
 	
@@ -119,5 +119,26 @@ public class MangageController {
 	public Result<Object> updatePass(@ApiParam(value = "原密码", required = true) @RequestParam(value = "oriPass") String oriPass,
 									 @ApiParam(value = "新密码", required = true) @RequestParam(value = "newPass") String newPass){
 		return mangageService.updatePass(oriPass, newPass);
+	}
+	
+	@ApiOperation(value = "初始化员工信息总数")
+	@GetMapping(value = "/getInitInfoCount.io")
+	@ResponseBody
+	public Result<Object> getInitInfoCount(){
+		return mangageService.getInitInfoCount();
+	}
+	
+	@ApiOperation(value = "初始化员工信息记录")
+	@GetMapping(value = "/getInitInfo.io")
+	@ResponseBody
+	public Result<List<EmpInfo>> getInitInfo(@ApiParam(value = "当前页数",required = true) @RequestParam(value = "page") int page){
+		return mangageService.getInitInfo(page);
+	}
+	
+	@ApiOperation(value = "密码重置")
+	@PostMapping(value = "/passwordReset.io")
+	@ResponseBody
+	public Result<Object> passwordReset(@ApiParam(value = "员工id",required = true) @RequestParam(value = "empId") String empId){
+		return mangageService.passwordReset(empId);
 	}
 }
