@@ -10,7 +10,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
 @Controller
-@Api(description = "公告页面显示接口")
+@Api(description = "内容详情接口")
 @CrossOrigin
 public class NoticePageController {
 	
@@ -24,5 +24,11 @@ public class NoticePageController {
 	@GetMapping(value = "/updateNotice.io")
 	public String updateNotice(@ApiParam(value = "公告id",required = true) @RequestParam(value = "id") String id) {
 		return "upNotice";
+	}
+	
+	@ApiOperation(value = "显示文档详情")
+	@GetMapping(value = "/docKnowledge.io")
+	public String docKnowledge(@ApiParam(value = "文档id",required = true) @RequestParam(value = "id") String id) {
+		return "docKnowledge";
 	}
 }

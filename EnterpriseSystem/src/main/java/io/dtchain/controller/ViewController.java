@@ -127,4 +127,22 @@ public class ViewController {
 	public String addDept() {
 		return "addDept";
 	}
+	
+	@ApiOperation(value = "资料文件上传")
+	@GetMapping(value = "/dataUpload")
+	public String dataUpload() {
+		return "dataUpload";
+	}
+	
+	@ApiOperation(value = "资料详情")
+	@GetMapping(value = "/dataDetails")
+	public String dataDetails() {
+		return "dataDetails";
+	}
+	
+	@ApiOperation(value = "文档管理")
+	@GetMapping(value = "/docMangage")
+	public String docMangage() {
+		return "docMangage";
+	}
 }
