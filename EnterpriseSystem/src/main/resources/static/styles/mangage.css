@@ -87,7 +87,7 @@ body {
 	/*border:1px solid red;*/
 	color: #000000;
 	background: #ffffff;
-	z-index: 11;
+	z-index: 10009;
 	font-size: 5px;
 }
 
@@ -100,7 +100,7 @@ body {
 	background: #000;
 	opacity: 0.6;
 	margin: auto;
-	z-index: 9;
+	z-index: 9999;
 	display: none;
 }
 
@@ -135,7 +135,7 @@ input {
 	width: 350px;
 	height: 150px;
 	background: #ffffff;
-	z-index: 10;
+	z-index: 10009;
 }
 
 .del_close {
@@ -203,4 +203,7 @@ input {
 }
 .layui-table td{
 	text-align:center;
+}
+.update:hover,.delete:hover,.reset:hover{
+	color:red;
 }

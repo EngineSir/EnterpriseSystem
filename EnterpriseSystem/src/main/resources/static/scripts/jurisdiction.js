@@ -1,10 +1,10 @@
 var laypage="";
 var layer="";
 $(document).ready(function() {
-	var value="";
 	$(".com").load("com");
-	queryEmp(value,0);
+	queryEmp("",0);
 	$(".table_info").on("click", "button", getAuthority);
+	$('.resetBtn').click(reload);
 })
 function doSearch(value, name) {
 	if(value==""||value==null){
@@ -168,4 +168,7 @@ function getAuthority() {
 			}
 		});
 	}
+}
+function reload(){
+	queryEmp("",0);
 }

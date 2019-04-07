@@ -12,12 +12,15 @@
 }
 .notice_list{
 	position:absolute;
-	top:20%;
+	top:15%;
 	left:15%;
-	width:80%;
+	width:60%;
 }
+
 .layui-table td{
-	border-width:0;
+	border-style:dashed;
+	border-left:0px;
+	border-right:0px;
 }
 .paging{
 	position:absolute;
@@ -30,4 +33,7 @@ a{
 }
 .notice_list a:hover{
 	color:#ff8080;
+}
+.headStyle{
+	font-weight:bold;
 }

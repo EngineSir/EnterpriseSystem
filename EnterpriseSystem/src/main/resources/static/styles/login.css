@@ -1,11 +1,11 @@
-ï»¿*{
+*{
 	padding:0;
 	margin:0;
 }
 body{
 	background:#232332;
 	overflow:hidden;
-	font-family:'å¾®è½¯é›…é»‘';
+	font-family:'Î¢ÈíÑÅºÚ';
 }
 .global{
 	width:1px;
@@ -94,7 +94,7 @@ dt{
 }
 h3{
 	line-height:55px;
-	font-family:'å®‹ä½“';
+	font-family:'ËÎÌå';
 	font-size:25px;
 	font-weight:400;
 	text-indent:1.5em;
@@ -125,6 +125,11 @@ input[type=text],input[type=password]{
 	color:#13A89E;
 	text-indent:4em;
 	position:relative;
+}
+.rebPass{
+	color:#13A89E;
+	position:relative;
+	left:64px;
 }
 .password{
 	text-indent:2em;
@@ -164,4 +169,7 @@ input[type=text],input[type=password]{
 #password{
 	text-indent: 30px;
 	background:#fff url(../images/pass.png) no-repeat 7px 5px;
+}
+.layui-form-checkbox i{
+	left:80px;
 }

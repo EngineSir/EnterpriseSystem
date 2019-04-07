@@ -4,10 +4,11 @@ $(document).ready(function(){
 	$(".notice_list").on("click",".del",delNotice);
 });
 
-function createTr(title, time, id) {
+function createTr(num,title, time, id) {
 	var times = new Date();
 	times.setTime(time);
 	var tr = "<tr>";
+	tr += "<td>"+num+"</td>";
 	tr += "<td>" + title +"</td>";
 	tr += "<td>" + times.toLocaleString() + "</td>"
 	tr += "<td><a href='updateNotice.io?id=" + id + "'>编辑</a></td>";

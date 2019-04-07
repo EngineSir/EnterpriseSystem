@@ -8,6 +8,7 @@ $(document).ready(function() {
 					$(".table_info").on("click",".del",delApproval);
 					
 					$("#approvedSearch").click(approvedSearch);
+					$(".resetBtn").click(reload);
 
 					layui.use(['form', 'laydate', 'laypage','layer' ],
 									function() {
@@ -35,6 +36,10 @@ $(document).ready(function() {
 									
 									});
 				})
+				
+function reload(){
+	approval("","","",0,0);
+}
 				
 				
 //已审批搜索

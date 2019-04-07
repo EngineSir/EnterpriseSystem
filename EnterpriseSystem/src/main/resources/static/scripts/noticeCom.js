@@ -43,7 +43,7 @@ function queryNoticeTitle(page) {
 				var data = result.data;
 				delTr();
 				for (var i = 0; i < data.length; i++) {
-					createTr(data[i].title, data[i].time, data[i].id);
+					createTr((i+1),data[i].title, data[i].time, data[i].id);
 				}
 			}
 		},

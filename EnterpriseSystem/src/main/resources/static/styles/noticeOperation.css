@@ -7,6 +7,7 @@
 }
 .layui-table th,td{
 	text-align:center;
+	
 }
 #demo1{
 	position:absolute;
@@ -15,4 +16,12 @@
 }
 .del{
 	cursor:pointer;
+}
+.headStyle{
+	font-weight:bold;
+}
+.layui-table td{
+	border-style:dashed;
+	border-left:0px;
+	border-right:0px;
 }

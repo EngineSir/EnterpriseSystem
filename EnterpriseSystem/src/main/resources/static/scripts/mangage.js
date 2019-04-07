@@ -31,9 +31,13 @@ $(document).ready(function() {
 	queryDept();
 	//初始化员工数据
 	getInitInfo();
+	
+	$('.resetBtn').click(reload);
 })
 
-
+function reload(){
+	getInitInfo();
+}
 // 删除信息
 function deleteInfo() {
 	$(".opacity_bg").show();
@@ -269,6 +273,10 @@ function clickSure() {
 
 	// 获取参数
 	var empName = $('#name').val();
+	if(empName=="" || empName==null){
+		layer.msg("名字不能为空");
+		return true;
+	}
 	// var empDept=$('#dept').val();
 	var empDept = $("select#chooseDept option:selected").text().trim();
 	var empNum = $('#num').val().trim();
@@ -277,7 +285,6 @@ function clickSure() {
 	
 	var empSex = $('input:radio:checked').val();
 	var empMail = $('#email').val().trim();
-	console.log(empSex);
 	if(!regformat(empSex,empNum,empPhone,empMail)){
 		return false;
 	}
