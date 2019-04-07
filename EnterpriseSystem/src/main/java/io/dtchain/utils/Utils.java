@@ -20,6 +20,12 @@ public class Utils {
 		return id.replace("-", "");
 	}
 	
+	/**
+	 * shiro密码加密
+	 * @param userName		员工名字
+	 * @param num			编号
+	 * @return
+	 */
 	public static String Md5(String userName,String num) {
 		return new SimpleHash("MD5", num,  ByteSource.Util.bytes(userName), 2).toHex();
 	}
