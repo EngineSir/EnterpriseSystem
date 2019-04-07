@@ -1,0 +1,12 @@
+.sub_btn {
+	position:absolute;
+	height:100%;
+	top: 300%;
+}
+
+
+#uploadFile{
+	position:absolute;
+	top:40%;
+	left:20%;
+}
