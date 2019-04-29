@@ -21,16 +21,12 @@ public class DeptServiceImpl implements DeptService {
 	@Resource
 	private DeptDao deptDao;
 
-	public Result<Object> addDept(String deptName,String remark) {
+	public Result<Object> addDept(DeptInfo dept) {
 		Result<Object> result = new Result<Object>();
-		Map<String, String> map = new HashMap<String, String>();
-		String id = Utils.createId();
-		map.put("id", id);
-		map.put("deptName", deptName);
-		map.put("remark", remark);
-		int n = deptDao.addDept(map);
+		dept.setId(Utils.createId());
+		int n = deptDao.addDept(dept);
 		if (n > 0) {
-			result.setData(id);
+			result.setData(dept.getId());
 			result.setMsg("添加部门成功");
 			result.setState(1);
 		}
@@ -85,6 +81,21 @@ public class DeptServiceImpl implements DeptService {
 		list=deptDao.queryDeptInfo();
 		if(list!=null&&list.size()>0) {
 			result.setData(list);
+			result.setState(1);
+			result.setMsg("获取部门信息成功");
+		}else {
+			result.setState(0);
+			result.setMsg("获取部门信息失败");
+		}
+		return result;
+	}
+
+	@Override
+	public Result<DeptInfo> getDeptInfoById(String id) {
+		DeptInfo dept=deptDao.getDeptInfoById(id);
+		Result<DeptInfo> result=new Result<DeptInfo>();
+		if(dept!=null) {
+			result.setData(dept);
 			result.setState(1);
 			result.setMsg("获取部门信息成功");
 		}else {

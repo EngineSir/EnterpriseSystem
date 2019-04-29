@@ -4,8 +4,35 @@ public class DeptInfo {
 	private String id;
 	private String deptName;
 	private String remark;
-
+	private String director;
+	private String address;
+	private String phone;
 	
+	
+	public String getDirector() {
+		return director;
+	}
+
+	public void setDirector(String director) {
+		this.director = director;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
 	public String getRemark() {
 		return remark;
 	}
@@ -32,7 +59,8 @@ public class DeptInfo {
 
 	@Override
 	public String toString() {
-		return "DeptInfo [id=" + id + ", deptName=" + deptName + ", remark=" + remark + "]";
+		return "DeptInfo [id=" + id + ", deptName=" + deptName + ", remark=" + remark + ", director=" + director
+				+ ", address=" + address + ", phone=" + phone + "]";
 	}
 
 

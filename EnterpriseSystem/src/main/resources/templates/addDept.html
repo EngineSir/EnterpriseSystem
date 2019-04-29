@@ -17,7 +17,41 @@
 	<div class="com"></div>
 	<div class="body_layer">
 		<form class="layui-form form_content">
-			<label class="layui-form-label">部门名称</label>
+
+			<table class="layui-table">
+				<tr>
+					<td style="width: 100px">部门名称</td>
+					<td><input type="text" name="title" required
+						lay-verify="required" autocomplete="off" class="layui-input deptName"></td>
+					<td style="width: 100px">部门主管</td>
+					<td><input type="text" name="title" required
+						lay-verify="required" autocomplete="off" class="layui-input director"></td>
+				</tr>
+				<tr>
+					<td style="width: 100px">部门地址</td>
+					<td><input type="text" name="title" required
+						lay-verify="required" autocomplete="off" class="layui-input address"></td>
+					<td style="width: 100px">部门电话</td>
+					<td><input type="text" name="title" required
+						lay-verify="required" autocomplete="off" class="layui-input phone"></td>
+				</tr>
+				<tr>
+					<td>部门备注</td>
+					<td colspan="3">
+						<div class="layui-form-item layui-form-text">
+							<div class="layui-input-block">
+								<textarea class="layui-textarea remark" lay-verify="required" required></textarea>
+							</div>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="4">
+						<button class="layui-btn layui-btn-normal sub_btn" lay-submit="" lay-filter="demo1">立即提交</button>
+					</td>
+				</tr>
+			</table>
+			<!-- <label class="layui-form-label">部门名称</label>
 			<div class="layui-input-inline">
 				<input type="text" name="deptName" lay-verify="required"
 					placeholder="请输入" autocomplete="off" class="layui-input deptName" />
@@ -35,7 +69,7 @@
 				<div class="layui-input-block">
 					<button class="layui-btn sub_btn" lay-submit="" lay-filter="demo1">立即提交</button>
 				</div>
-			</div>
+			</div> -->
 		</form>
 	</div>
 

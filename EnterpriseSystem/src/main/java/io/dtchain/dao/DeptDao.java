@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import io.dtchain.entity.DeptInfo;
-import io.dtchain.utils.Result;
 
 public interface DeptDao {
 	
@@ -14,7 +13,7 @@ public interface DeptDao {
 	 * @param map		部门信息
 	 * @return
 	 */
-	public int addDept(Map<String, String> map);
+	public int addDept(DeptInfo dept);
 
 	/**
 	 * 删除部门
@@ -50,5 +49,7 @@ public interface DeptDao {
 	 * @return
 	 */
 	public List<DeptInfo> queryDeptInfo();
+	
+	public DeptInfo getDeptInfoById(String id);
 
 }

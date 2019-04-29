@@ -14,7 +14,7 @@ public interface DeptService {
 	 * @param remark		备注内容
 	 * @return
 	 */
-	public Result<Object> addDept(String deptName,String remark);
+	public Result<Object> addDept(DeptInfo dept);
 
 	/**
 	 * 删除部门 
@@ -48,4 +48,11 @@ public interface DeptService {
 	 * @return
 	 */
 	public Result<List<DeptInfo>> queryDeptInfo();
+	
+	/**
+	 * 获取需要修改的部门信息
+	 * @param id
+	 * @return
+	 */
+	public Result<DeptInfo> getDeptInfoById(String id);
 }

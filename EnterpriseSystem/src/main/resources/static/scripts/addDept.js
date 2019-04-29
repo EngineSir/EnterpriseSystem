@@ -9,36 +9,22 @@ $(document).ready(function() {
 })
 
 function addDept(){
-	var flog=true;
 	var deptName=$(".deptName").val().trim();
 	var remark=$(".remark").val().trim();
-	if(deptName==""||deptName==null){
-		layer.msg("部门名称不能为空");
-		flog=false;
-		return false;
-	}
-	if(deptName.length<2){
-		layer.msg("部门名称不能小于2");
-		flog=false;
-		return false;
-	}
-	if(remark==""||remark==null){
-		layer.msg("备注内容不能为空");
-		flog=false;
-		return false;
-	}
-	if(flog){
+	var director=$(".director").val().trim();
+	var address=$(".address").val().trim();
+	var phone=$(".phone").val().trim();
 		$.ajax({
 			url:"dept/addDept.io",
 			type:"post",
 			dataType:"json",
-			data:{"deptName":deptName,"remark":remark},
+			data:{"deptName":deptName,"remark":remark,"director":director,"address":address,"phone":phone},
 			success:function(result){
 				
 				if(result.state==1){
 					layer.msg("添加部门成功");
-					$(".deptName").val("");
-					$(".remark").val("");
+					//$(".deptName").val("");
+					//$(".remark").val("");
 				}else{
 					layer.msg("重复添加部门");
 				}
@@ -47,6 +33,5 @@ function addDept(){
 				alert("添加部门失败");
 			}
 		});
-	}
 	return false;
 }

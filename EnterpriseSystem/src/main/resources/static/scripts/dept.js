@@ -105,7 +105,7 @@ function paging(page){
 				delTr();
 				var data = result.data;
 				for (var i = 0; i < data.length; i++) {
-					createTr(i, data[i].id, data[i].deptName, data[i].remark);
+					createTr(i, data[i]);
 				}
 			}
 		},
@@ -119,14 +119,16 @@ function paging(page){
  * 修改部门
  */
 function updateDept() {
-	var $tr = $(this).parent().parent();
-	var deptName = $tr.find("th").eq(1).text().trim();
-	var remark = $tr.find("th").eq(2).text().trim();
-	$("#upDept").val(deptName);
-	$(".remark").val(remark);
-	$(".show").show();
-	$(".opacity_bg").show();
-	$("#sureUP").data("tr", $tr);
+	 var id=$(this).parent().parent().data("id");
+	if(id!=""&&id!=null) window.location.href="updateDept.io?id="+id;
+//	var $tr = $(this).parent().parent();
+//	var deptName = $tr.find("th").eq(1).text().trim();
+//	var remark = $tr.find("th").eq(2).text().trim();
+//	$("#upDept").val(deptName);
+//	$(".remark").val(remark);
+//	$(".show").show();
+//	$(".opacity_bg").show();
+//	$("#sureUP").data("tr", $tr);
 }
 /*
  * 修改确定
@@ -177,7 +179,7 @@ function sureUp() {
 /*
  * 动态创建tr
  */
-function createTr(num, id, deptName, remark) {
+function createTr(num, data) {
 	var state = 0;
 	$.ajax({
 		url : "dept/authorityUrl.io",
@@ -196,8 +198,11 @@ function createTr(num, id, deptName, remark) {
 	});
 	var str = "<tr>";
 	str += "<th style='width:200px;'>" + (num + 1) + "</th>";
-	str += "<th style='width:600px;'>" + deptName + "</th>";
-	str += "<th style='width:600px;'>" + remark + "</th>";
+	str += "<th style='width:200px;'>" + data.deptName + "</th>";
+	str += "<th style='width:200px;'>" + data.director + "</th>";
+	str += "<th style='width:200px;'>" + data.address + "</th>";
+	str += "<th style='width:200px;'>" + data.phone + "</th>";
+	str += "<th style='width:700px;'>" + data.remark + "</th>";
 	if (state == 1) {
 		/*
 		 * str+="<th style='width:200px;'><button type='button'
@@ -209,7 +214,7 @@ function createTr(num, id, deptName, remark) {
 	}
 	str += "</tr>";
 	var $str = $(str);
-	$str.data("id", id);
+	$str.data("id", data.id);
 	$('#tab').append($str);
 }
 // 删除表格行

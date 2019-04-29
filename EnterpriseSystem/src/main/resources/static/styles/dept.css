@@ -1,8 +1,11 @@
+html body{
+	background-image:url(../images/bg.jpg);
+}
 .body_layer {
 	position: absolute;
 	top: 15%;
-	left: 15%;
-	width: 80%;
+	left: 13%;
+	width: 85%;
 	height: 89%;
 }
 
@@ -83,4 +86,9 @@ span {
 	top:83%;
 	left:3%;
 	
+}
+.layui-table tbody tr:hover {background-color: #0080c0}
+.layui-table{
+	background-color:rgba(0,0,0,0.5);
+	color:#ffffff;
 }

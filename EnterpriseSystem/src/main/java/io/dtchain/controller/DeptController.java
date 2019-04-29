@@ -39,9 +39,8 @@ public class DeptController
 	@ApiOperation(value = "添加部门")
 	@PostMapping(value="/addDept.io")
 	@ResponseBody
-	public Result<Object> addDept(@ApiParam(value = "部门名称", required = true) @RequestParam(value = "deptName") String deptName,
-								  @ApiParam(value = "备注内容",required = true) @RequestParam(value = "remark") String remark){
-		return deptService.addDept(deptName,remark);
+	public Result<Object> addDept(DeptInfo dept){
+		return deptService.addDept(dept);
 	}
 	 
 	@ApiOperation(value = "删除部门")
@@ -61,13 +60,7 @@ public class DeptController
 	@ApiOperation(value = "更新部门信息")
 	@PutMapping(value="/upDept.io")
 	@ResponseBody
-	public Result<Object> upDept(@ApiParam(value = "部门id",required = true)  @RequestParam(value = "id") String id,
-								 @ApiParam(value = "部门名称",required = true)  @RequestParam(value = "deptName") String deptName,
-								 @ApiParam(value = "备注内容",required = true) @RequestParam(value = "remark") String remark){
-		 DeptInfo dept=new DeptInfo();
-		 dept.setDeptName(deptName);
-		 dept.setId(id);
-		 dept.setRemark(remark);
+	public Result<Object> upDept(DeptInfo dept){
 		return deptService.upDept(dept);
 	}
 	 
@@ -90,5 +83,12 @@ public class DeptController
 	@ResponseBody
 	public Result<List<DeptInfo>> queryDeptInfo(){
 		return deptService.queryDeptInfo();
+	}
+	
+	@ApiOperation(value = "/根据获取需要更改的部门信息")
+	@GetMapping(value ="/getDeptInfoById.io")
+	@ResponseBody
+	public Result<DeptInfo> getDeptInfoById(@ApiParam(value = "部门id",required = true) @RequestParam(value = "id") String id){
+		return deptService.getDeptInfoById(id);
 	}
 }
