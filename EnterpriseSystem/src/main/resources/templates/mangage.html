@@ -10,12 +10,16 @@
 	href="easyui/themes/default/easyui.css" />
 <link rel="stylesheet" type="text/css" href="easyui/themes/icon.css" />
 <link rel="stylesheet" type="text/css" href="easyui/demo/demo.css" />
+<link rel="stylesheet" href="styles/jquery.mCustomScrollbar.css" />
+<link rel="stylesheet" href="styles/jquery.mCustomScrollbar.min.css" />
 <link rel="stylesheet" href="layui/css/layui.css" />
 <script type="text/javascript"
 	src="http://code.jquery.com/jquery-1.6.1.min.js"></script>
 <script type="text/javascript" src="scripts/mangage.js"></script>
 <script type="text/javascript" src="scripts/jquery.min.js"></script>
 <script type="text/javascript" src="easyui/jquery.easyui.min.js"></script>
+<script src="scripts/jquery.mCustomScrollbar.concat.min.js"></script>
+<script src="scripts/jquery.mCustomScrollbar.js"></script>
 <script src="layui/layui.js"></script>
 <script type="text/javascript" src="scripts/queryDeptInfo.js"></script>
 <link rel="stylesheet" href="styles/mangage.css" />
@@ -23,97 +27,50 @@
 <body>
 
 	<div class="com"></div>
-
+	<div class="body_opcation">
+		<input class="easyui-searchbox"
+			data-options="prompt:'部门或员工',menu:'#mm',searcher:doSearch"
+			style="height: 30px; width: 300px" id="search"></input>
+		<div id="mm">
+			<div data-options="name:'部门',iconCls:'icon-ok'">搜索</div>
+		</div>
+		<button type="button" shiro:hasPermission="/empManageAuthority"
+			id="add" class="layui-btn layui-btn-normal">添加</button>
+		<button class="layui-btn layui-btn-sm resetBtn">
+			<i class="layui-icon">&#xe9aa;</i>
+		</button>
+	</div>
 	<div class="body_content">
 		<div class="body_cude">
-			<div class="body_opcation">
-				<input class="easyui-searchbox"
-					data-options="prompt:'部门或员工',menu:'#mm',searcher:doSearch"
-					style="height: 30px; width: 300px" id="search"></input>
-				<div id="mm">
-					<div data-options="name:'部门',iconCls:'icon-ok'">搜索</div>
-				</div>
-				<button type="button" shiro:hasPermission="/empManageAuthority"
-					id="add" class="layui-btn layui-btn-normal">添加</button>
-					<button class="layui-btn layui-btn-sm resetBtn"><i class="layui-icon">&#xe9aa;</i></button>
-			</div>
-			<!--隐藏的信息框    添加页面-->
-			<div class="show layui-form" hidden="hidden">
-				<input type="text" id="name" class="easyui-textbox inpuWH"  /> <span>姓名</span>
-				<div class="layui-form-item">
-					<div class="sear_query layui-input-block">
-						<input type="radio" name="sex" value="男" title="男"
-							lay-filter="rad" /> <input type="radio" name="sex" value="女"
-							title="女" lay-filter="rad" />
-					</div>
-				</div>
-				<div class="selectstyle">
-					<div class="layui-input-inline ">
-						<select name="quiz2" class="chooseDept" id="chooseDept">
 
-						</select>
-					</div>
-					<span>部门</span>
-				</div>
-				<div class="styleWH">
-					<input type="text" id="num" class="easyui-textbox inpuWH" /> <span>编号</span>
-				</div>
-				<div class="styleWH">
-					<input type="text" id="tele" class="easyui-textbox inpuWH" /> <span>号码</span>
-				</div>
-				<div class="styleWH">
-					<input type="email" id="email" class="easyui-textbox inpuWH" /> <span>邮箱</span>
-				</div>
-				<button type="button" class="layui-btn layui-btn-normal btn close"
-					id="close">取消</button>
-				<button type="button" class="layui-btn layui-btn-normal" id="sure">确定</button>
-			</div>
-			<!-- 修改员工信息界面 -->
-			<div class="up_show layui-form" hidden="hidden">
-				<input type="text" id="up_name" class="easyui-textbox inpuWH" /> <span>姓名</span>
-				<div class="layui-form-item">
-					<div class="sear_query layui-input-block">
-						<input type="radio" name="Sex" value="男" id="men" title="男"
-							lay-filter="rad" /> <input type="radio" name="Sex" value="女"
-							id="women" title="女" lay-filter="rad" />
-					</div>
-				</div>
-				<div class="selectstyle">
-					<div class="layui-input-inline ">
-						<select name="quiz2" class="chooseDept" id="seledept">
 
-						</select>
-					</div>
-					<span>部门</span>
-				</div>
-				<div class="styleWH">
-					<input type="text" id="up_num" class="easyui-textbox inpuWH" /> <span>编号</span>
-				</div>
-				<div class="styleWH">
-					<input type="text" id="up_tele" class="easyui-textbox inpuWH" /> <span>号码</span>
-				</div>
-				<div class="styleWH">
-					<input type="email" id="up_email" class="easyui-textbox inpuWH" />
-					<span>邮箱</span>
-				</div>
-				<button type="button" class="layui-btn layui-btn-normal btn close"
-					id="close">取消</button>
-				<button type="button" class="layui-btn layui-btn-normal btn"
-					id="up_sure">确定</button>
-			</div>
 			<!-- 显示表格信息 -->
-			<table class="layui-table table_info" border="1" cellspacing="0">
-				<tr>
-					<th >序号</th>
-					<th >姓名</th>
-					<th >性别</th>
-					<th >部门</th>
-					<th >编号</th>
-					<th >号码</th>
-					<th >邮箱</th>
-					<th shiro:hasPermission="/empManageAuthority" >操作</th>
-				</tr>
-			</table>
+			<div class="showTab">
+				<table class="layui-table table_info" border="1" cellspacing="0">
+					<tr>
+						<th>序号</th>
+						<th>姓名</th>
+						<th>性别</th>
+						<th>部门</th>
+						<th>编号</th>
+						<th>手机号码</th>
+						<th>邮箱</th>
+						<th>民族</th>
+						<th>出生日期</th>
+						<th>婚姻状况</th>
+						<th>政治面貌</th>
+						<th>身份证号</th>
+						<th>年龄</th>
+						<th>学历</th>
+						<th>专业</th>
+						<th>毕业院校</th>
+						<th>职位</th>
+						<th>现住地址</th>
+						<th>薪资</th>
+						<th shiro:hasPermission="/empManageAuthority">操作</th>
+					</tr>
+				</table>
+			</div>
 		</div>
 	</div>
 

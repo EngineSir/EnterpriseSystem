@@ -31,4 +31,15 @@ public class NoticePageController {
 	public String docKnowledge(@ApiParam(value = "文档id",required = true) @RequestParam(value = "id") String id) {
 		return "docKnowledge";
 	}
+	
+	@ApiOperation(value = "显示修改页面详情")
+	@GetMapping(value = "/updateEmp.io")
+	public String updateEmp(@ApiParam(value = "员工id",required = true) @RequestParam(value = "empId") String empId) {
+		return "updateEmp";
+	}
+	@ApiOperation(value = "显示修改部门页面详情")
+	@GetMapping(value = "/updateDept.io")
+	public String updateDept(@ApiParam(value = "部门id",required = true) @RequestParam(value = "id") String id) {
+		return "updateDept";
+	}
 }

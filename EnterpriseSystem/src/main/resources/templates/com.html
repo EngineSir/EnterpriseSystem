@@ -47,11 +47,10 @@ a {
 		<div class="layui-side-scroll">
 			<!-- 左侧导航区域（可配合layui已有的垂直导航） -->
 			<ul class="layui-nav layui-nav-tree" lay-filter="test">
-				<li class="layui-nav-item"><a href="javascript:;" ><img src="images/auth_1.png">&nbsp;授权管理</a>
+				<li class="layui-nav-item"><a href="javascript:;" shiro:hasPermission="/jurisdiction"><img src="images/auth_1.png">&nbsp;授权管理</a>
 					<dl class="layui-nav-child">
 						<dd>
-							 <a shiro:hasPermission="/jurisdiction"
-								href="jurisdiction"><img src="images/auth.png">&nbsp;权限管理</a>
+							 <a href="jurisdiction"><img src="images/auth.png">&nbsp;权限管理</a>
 						</dd>
 					</dl></li>
 				<li class="layui-nav-item"><a href="javascript:;"><img src="images/app.png">&nbsp;审批管理</a>
@@ -75,7 +74,7 @@ a {
 						</dd>
 					</dl></li>
 					
-					<li class="layui-nav-item"><a href="javascript:;"><img src="images/data.png">&nbsp;数据中心</a>
+					<li class="layui-nav-item"><a href="javascript:;"><img src="images/data.png">&nbsp;数据管理</a>
 					<dl class="layui-nav-child">
 						<dd>
 							<a class="" href="dataImport" shiro:hasPermission="/dataImport"><img src="images/excel.png">&nbsp;数据导入</a>

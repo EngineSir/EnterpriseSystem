@@ -29,15 +29,24 @@
 .dates {
 	left: -5%;
 }
+.panel-htop{
+	position: absolute;
+	top:140%;
+left:23%;
+}
+.excel{
+	position: absolute;
+	top:100%;
+left:23%;
+	}
 </style>
 <body class="layui-layout-body">
 	<div class="com"></div>
-	<div style="margin: 20px 0;"></div>
+
 
 	 <form action="File/upload.io" method="post"
 		enctype="multipart/form-data" class="content"> 
 
-		<span>需要导入数据的日期</span>
 
 
 		<div class="layui-form">
@@ -57,7 +66,9 @@
 			</div>
 
 		</div>
-		<span>文件仅支持后缀为.xlsx或者.xltx</span>
+		<br>
+		<span class="excel">文件仅支持后缀为.xlsx或者.xltx</span>
+		<br>
 		<div class="easyui-panel" title="上传文件"
 			style="width: 400px; padding: 30px 100px 50px 70px">
 			<div style="margin-bottom: 20px">

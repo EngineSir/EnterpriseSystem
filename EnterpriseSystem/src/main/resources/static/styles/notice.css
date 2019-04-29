@@ -1,3 +1,6 @@
+html body{
+	background-image:url(../images/noticList.jpg);
+}
 .body_content{
 	position:absolute;
 	width:100%;
@@ -9,12 +12,13 @@
 #span_title{
 	position:absolute;
 	left:35%;
+	color:#fff;
 }
 .notice_list{
 	position:absolute;
 	top:15%;
-	left:15%;
-	width:60%;
+	left:3%;
+	width:80%;
 }
 
 .layui-table td{
@@ -29,11 +33,16 @@
 	width:80%;
 }
 a{
-	color:#009;
+	color:#ffffff;
 }
 .notice_list a:hover{
 	color:#ff8080;
 }
 .headStyle{
 	font-weight:bold;
+}
+.layui-table tbody tr:hover {background-color: #0080c0}
+.layui-table{
+	background-color:rgba(0,0,0,0.5);
+	color:#ffffff;
 }

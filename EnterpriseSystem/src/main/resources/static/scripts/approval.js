@@ -34,7 +34,7 @@ $(document).ready(function() {
 												width : 180,
 												title : '部门'
 											},{
-												field : 'empPos',
+												field : 'empPosition',
 												width : 180,
 												title : '职位'
 											} ] ]

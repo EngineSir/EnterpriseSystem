@@ -2,6 +2,9 @@ package io.dtchain.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -22,10 +25,10 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
+@CrossOrigin
 @Controller
 @RequestMapping(value="/mangage")
 @Api(value = "/mangage", description = "员工管理相关接口")
-@CrossOrigin
 public class MangageController {
 
 	@Autowired
@@ -37,7 +40,9 @@ public class MangageController {
 	@PostMapping(value="/login.io")
 	@ResponseBody
 	public Result<Object> login(@ApiParam(value = "用户名", required = true) @RequestParam(value = "username")String username,
-					   			@ApiParam(value = "密码", required = true) @RequestParam(value = "pass")String pass) {
+					   			@ApiParam(value = "密码", required = true) @RequestParam(value = "pass")String pass,
+					   			HttpServletRequest req,HttpServletResponse res) {
+		res.setHeader("Access-Control-Allow-Origin", "*");
 		return mangageService.login(username, pass);
 	}
 	 
@@ -45,19 +50,8 @@ public class MangageController {
 	@ApiOperation(value = "添加员工")
 	@PostMapping(value="/addEmp.io")
 	@ResponseBody
-	public Result<Object> addEmp(@ApiParam(value = "名字", required = true) @RequestParam(value = "empName") String empName,
-			 					 @ApiParam(value = "部门", required = true) @RequestParam(value = "empDept") String empDept,
-			 					 @ApiParam(value = "工号", required = true) @RequestParam(value = "empNum") String empNum,
-			 					 @ApiParam(value = "手机号码", required = true) @RequestParam(value = "empPhone") String empPhone,
-			 					 @ApiParam(value = "性别", required = true) @RequestParam(value = "empSex") String empSex,
-			 					 @ApiParam(value = "邮箱", required = true) @RequestParam(value = "empMail") String empMail) {
-		EmpInfo emp=new EmpInfo();
-		emp.setEmpDept(empDept);
-		emp.setEmpMail(empMail);
-		emp.setEmpName(empName);
-		emp.setEmpNum(empNum);
-		emp.setEmpPhone(empPhone);
-		emp.setEmpSex(empSex);
+	public Result<Object> addEmp(EmpInfo emp) {
+		System.out.println(emp);
 		return mangageService.addEmp(emp);
 	}
 
@@ -79,23 +73,7 @@ public class MangageController {
 	@ApiOperation(value = "修改员工信息")
 	@PutMapping(value="/upEmpInfo.io")
 	@ResponseBody
-	public Result<Object> upEmpInfo(@ApiParam(value = "名字", required = false) @RequestParam(value = "empName") String empName,
-									@ApiParam(value = "部门", required = false) @RequestParam(value = "empDept") String empDept,
-									@ApiParam(value = "手机号码", required = false) @RequestParam(value = "empPhone") String empPhone,
-									@ApiParam(value = "性别", required = false) @RequestParam(value = "empSex") String empSex,
-									@ApiParam(value = "工号", required = false) @RequestParam(value = "empNum") String empNum,
-									@ApiParam(value = "邮箱", required = false) @RequestParam(value = "empMail") String empMail,
-									@ApiParam(value = "员工id", required = true) @RequestParam(value = "empId") String empId) {
-		
-		
-		EmpInfo emp=new EmpInfo();
-		emp.setEmpDept(empDept);
-		emp.setEmpMail(empMail);
-		emp.setEmpName(empName);
-		emp.setEmpNum(empNum);
-		emp.setEmpId(empId);
-		emp.setEmpPhone(empPhone);
-		emp.setEmpSex(empSex);
+	public Result<Object> upEmpInfo(EmpInfo emp) {
 		return  mangageService.upEmpInfo(emp);
 	}
 	
@@ -140,5 +118,12 @@ public class MangageController {
 	@ResponseBody
 	public Result<Object> passwordReset(@ApiParam(value = "员工id",required = true) @RequestParam(value = "empId") String empId){
 		return mangageService.passwordReset(empId);
+	}
+	
+	@ApiOperation(value = "根据id获取需要更改的员工信息")
+	@GetMapping(value = "/getEmpInfoById.io")
+	@ResponseBody
+	public Result<EmpInfo> getEmpInfoById(@ApiParam(value = "员工id",required = true) @RequestParam(value = "empId") String empId){
+		return mangageService.getEmpInfoById(empId);
 	}
 }

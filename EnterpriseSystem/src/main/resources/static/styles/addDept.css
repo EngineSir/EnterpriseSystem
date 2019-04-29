@@ -1,3 +1,6 @@
+html body{
+	background-image:url(../images/bg.jpg);
+}
 .body_layer{
 	position:absolute;
 	left:13%;
@@ -7,20 +10,27 @@
 }
 .form_content{
 	position:absolute;
-	left:30%;
+	left:5%;
 	width:90%;
 	height:100%;
 	
 }
+.remark{
+	color:#fff;
+}
+
+.layui-table{
+	background-color:rgba(0,0,0,0.5);
+	color:#ffffff;
+}
 .layui-input{
-	width:200%;
+	background-color:rgba(0,0,0,0.5);
+	color:#fff;
 }
-.layui-textarea{
-	width:35%;
+.remark{
+	background-color:rgba(0,0,0,0.5);
 }
-.sub_btn{
-	position:absolute;
-	left:8%;
-	top:30%;
-	width:200px;
+.layui-table tbody tr:hover {background-color: #0080c0}
+.layui-table td{
+	text-align:center;
 }

@@ -121,6 +121,7 @@ public class MangageServiceImpl implements MangageService {
 				result.setState(0);
 				return result;
 	        }
+		 token.setRememberMe(true);
 		 result.setState(1);
 		 result.setMsg("登陆请求成功");
 		return result;
@@ -201,6 +202,21 @@ public class MangageServiceImpl implements MangageService {
 			result.setState(1);
 		}else {
 			result.setMsg("密码重置失败");
+			result.setState(0);
+		}
+		return result;
+	}
+
+	@Override
+	public Result<EmpInfo> getEmpInfoById(String empId) {
+		EmpInfo emp=mangageDao.getEmpInfoById(empId);
+		Result<EmpInfo> result=new Result<EmpInfo>();
+		if(emp!=null) {
+			result.setData(emp);
+			result.setMsg("获取更改信息成功");
+			result.setState(1);
+		}else {
+			result.setMsg("获取更改信息失败");
 			result.setState(0);
 		}
 		return result;

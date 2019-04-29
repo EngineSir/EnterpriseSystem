@@ -24,11 +24,11 @@ public class FtpUtil {
     public boolean uploadFile(String originFileName, InputStream input) {
         boolean success = false;
         FTPClient ftp = new FTPClient();
-        ftp.setControlEncoding("GBK");
+        ftp.setControlEncoding("utf-8");
         try {
             int reply;
             ftp.connect(FTP_ADDRESS, FTP_PORT);// 连接FTP服务器
-            ftp.login(FTP_USERNAME, FTP_PASSWORD);// 登录
+            ftp.login("anonymous", null);// 登录
             reply = ftp.getReplyCode();
             if (!FTPReply.isPositiveCompletion(reply)) {
                 ftp.disconnect();

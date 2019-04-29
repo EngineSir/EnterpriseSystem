@@ -2,10 +2,12 @@ package io.dtchain.service;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import io.dtchain.entity.EmpInfo;
 import io.dtchain.utils.Result;
+import io.swagger.annotations.ApiParam;
 
 public interface MangageService {
 	/**
@@ -97,4 +99,11 @@ public interface MangageService {
 	 * @return
 	 */
 	public Result<Object> passwordReset(String empId);
+	
+	/**
+	 * 根据id获取需要更改员工信息
+	 * @param empId
+	 * @return
+	 */
+	public Result<EmpInfo> getEmpInfoById( String empId);
 }

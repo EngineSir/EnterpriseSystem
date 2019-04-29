@@ -40,6 +40,7 @@ public class DataShareServiceImpl implements DataShareService {
     private FtpUtil ftpUtil;
 	@Override
 	public Result<Object> uploadDataFile(MultipartFile file, String docTitle, String docContent) throws Exception {
+		
 		Result<Object> result=new Result<Object>();
 		String fileName = file.getOriginalFilename();
 		

@@ -3,8 +3,6 @@ package io.dtchain.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -144,5 +142,10 @@ public class ViewController {
 	@GetMapping(value = "/docMangage")
 	public String docMangage() {
 		return "docMangage";
+	}
+	@ApiOperation(value = "添加员工")
+	@GetMapping(value = "/addEmp")
+	public String addEmp() {
+		return "addEmp";
 	}
 }

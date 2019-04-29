@@ -1,3 +1,6 @@
+html body{
+	background-image:url(../images/noticList.jpg);
+}
 .contentBody{
 	position:absolute;
 	top:9%;
@@ -15,7 +18,7 @@
 	position: absolute;
 	top:93%;
 	left:3%;
-	
+	color:#fff;
 }
 .layui-table td{
 	text-align:center;
@@ -64,4 +67,9 @@
 	position: absolute;
 	left: 25%;
 	top: 60%;
+}
+.layui-table tbody tr:hover {background-color: #0080c0}
+.layui-table{
+	background-color:rgba(0,0,0,0.5);
+	color:#ffffff;
 }

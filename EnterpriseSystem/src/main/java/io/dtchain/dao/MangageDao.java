@@ -117,4 +117,11 @@ public interface MangageDao {
 	 * @return
 	 */
 	public EmpInfo getNum(String empId);
+	
+	/**
+	 * 根据id获取需要更改的员工信息
+	 * @param empId
+	 * @return
+	 */
+	public EmpInfo getEmpInfoById(String empId);
 }
