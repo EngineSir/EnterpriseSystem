@@ -24,7 +24,7 @@ $(document).ready(function() {
 												statusCode : 1 // 规定成功的状态码，默认：0
 											},
 											cols : [ [ {
-												type : 'checkbox'
+												type : 'radio'
 											}, {
 												field : 'empName',
 												width : 180,
