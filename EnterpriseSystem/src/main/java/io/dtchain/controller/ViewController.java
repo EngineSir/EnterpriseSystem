@@ -148,4 +148,10 @@ public class ViewController {
 	public String addEmp() {
 		return "addEmp";
 	}
+	
+	@ApiOperation(value = "报销流程")
+	@GetMapping(value = "/reim")
+	public String reim() {
+		return "reim";
+	}
 }

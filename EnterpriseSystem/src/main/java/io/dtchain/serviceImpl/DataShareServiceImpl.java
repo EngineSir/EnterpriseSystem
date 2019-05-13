@@ -40,13 +40,13 @@ public class DataShareServiceImpl implements DataShareService {
     private FtpUtil ftpUtil;
 	@Override
 	public Result<Object> uploadDataFile(MultipartFile file, String docTitle, String docContent) throws Exception {
-		
+		String id=Utils.createId();
 		Result<Object> result=new Result<Object>();
 		String fileName = file.getOriginalFilename();
-		
+		String name=fileName.substring(fileName.lastIndexOf("."));
 		InputStream inputStream = file.getInputStream();
 		String filePath = null;
-        Boolean flag = ftpUtil.uploadFile(fileName, inputStream);
+        Boolean flag = ftpUtil.uploadFile(id+name, inputStream);
         if (flag == true) {
             
             filePath = ftpUtil.FTP_BASEPATH + fileName;
@@ -61,17 +61,17 @@ public class DataShareServiceImpl implements DataShareService {
 		
 		DataShare ds=new DataShare();
 		ds.setUserId((String)SecurityUtils.getSubject().getSession().getAttribute("userSessionId"));
-		ds.setId(Utils.createId());
+		ds.setId(id);
 		ds.setDocTitle(fileName);
 		ds.setRamark(docContent);
 		Timestamp time=new Timestamp(System.currentTimeMillis());
 		ds.setCreateTime(time);
 		ds.setTitle(docTitle);
-		
+		ds.setSuffix(fileName.substring(fileName.lastIndexOf(".")));
 		dataShareDao.uploadDataFile(ds);
 		result.setState(1);
 		result.setMsg("上传文档资料成功");
-		pdfPreview(fileName);
+		pdfPreview(id+name);
 		return result;
 
 	}
@@ -207,6 +207,8 @@ public class DataShareServiceImpl implements DataShareService {
 	public Result<Object> delDoc(String id) {
 		Result<Object> result = new Result<Object>();
 		Map<String, Object> map = new HashMap<String, Object>();
+		String suffix=dataShareDao.getSuffixById(id.substring(id.indexOf("=")+1));
+		ftpUtil.deleteFile(id.substring(id.indexOf("=")+1),suffix);
 		map.put("id", id.substring(id.indexOf("=")+1));
 		int n = dataShareDao.delDoc(map);
 		if (n > 0) {

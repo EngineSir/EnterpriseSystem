@@ -13,7 +13,14 @@ public class DataShare {
 	private int stamp;
 	private String empName;
 	private String empDept;
+	private String suffix;
 
+	public String getSuffix() {
+		return suffix;
+	}
+	public void setSuffix(String suffix) {
+		this.suffix = suffix;
+	}
 	public String getEmpName() {
 		return empName;
 	}
@@ -78,7 +85,7 @@ public class DataShare {
 	public String toString() {
 		return "DataShare [id=" + id + ", userId=" + userId + ", title=" + title + ", ramark=" + ramark + ", docTitle="
 				+ docTitle + ", createTime=" + createTime + ", fabulous=" + fabulous + ", stamp=" + stamp + ", empName="
-				+ empName + ", empDept=" + empDept + "]";
+				+ empName + ", empDept=" + empDept + ", suffix=" + suffix + "]";
 	}
 	
 }

@@ -4,9 +4,9 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="io.dtchain.dao.DataShareDao">
 	<insert id="uploadDataFile" parameterType="io.dtchain.entity.DataShare">
-		insert into documentData (id,userId,title,ramark,docTitle,createTime)
+		insert into documentData (id,userId,title,ramark,docTitle,createTime,suffix)
 		values
-		(#{id},#{userId},#{title},#{ramark},#{docTitle},#{createTime})
+		(#{id},#{userId},#{title},#{ramark},#{docTitle},#{createTime},#{suffix})
 	</insert>
 	<select id="getDocumentNameById" parameterType="string" resultType="string">
 		select docTitle from documentData where id=#{id}
@@ -31,7 +31,7 @@
 	</select>
 	
 	<select id="getDocumentContent" parameterType="string" resultType="io.dtchain.entity.DataShare">
-		select id,title,createTime,empName,empDept,ramark,docTitle,fabulous,stamp FROM documentData dd INNER JOIN EmpTable et ON dd.userId=et.empId AND id=#{id}
+		select id,title,createTime,empName,empDept,ramark,docTitle,fabulous,stamp,suffix FROM documentData dd INNER JOIN EmpTable et ON dd.userId=et.empId AND id=#{id}
 	</select>
 	
 	<select id="getAllDocumentCount" resultType="int">
@@ -56,4 +56,7 @@
 	<delete id="delDoc" parameterType="map">
 		delete from documentData where id=#{id}
 	</delete>
+	<select id="getSuffixById" parameterType="string" resultType="string">
+		select suffix from documentData where id=#{id}
+	</select>
 </mapper>

@@ -3,7 +3,7 @@ $(document).ready(function() {
 	$(".com").load("com");
 	layui.use([ 'form', 'laydate', 'table' ],function(){
 		layer = layui.layer;
-	}),
+	});
 	$(".sub_btn").click(addDept);
 	
 })
@@ -14,6 +14,9 @@ function addDept(){
 	var director=$(".director").val().trim();
 	var address=$(".address").val().trim();
 	var phone=$(".phone").val().trim();
+	if(!paraJude(deptName,remark,director,address,phone)){
+		return true;
+	}
 		$.ajax({
 			url:"dept/addDept.io",
 			type:"post",
@@ -34,4 +37,27 @@ function addDept(){
 			}
 		});
 	return false;
+}
+function paraJude(deptName,remark,director,address,phone){
+	if(deptName==""||deptName==null){
+		//layer.msg("部门名称不能为空");
+		return false;
+	}
+	if(remark==""||remark==null){
+		//layer.msg("备注不能为空");
+		return false;
+	}
+	if(director==""||director==null){
+		//layer.msg("主管不能为空");
+		return false;
+	}
+	if(address==""||address==null){
+		//layer.msg("地址不能为空");
+		return false;
+	}
+	if(phone==""||phone==null){
+		//layer.msg("电话不能为空");
+		return false;
+	}
+	return true;
 }

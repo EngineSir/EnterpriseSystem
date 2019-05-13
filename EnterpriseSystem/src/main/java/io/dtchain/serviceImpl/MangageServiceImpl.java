@@ -121,7 +121,6 @@ public class MangageServiceImpl implements MangageService {
 				result.setState(0);
 				return result;
 	        }
-		 token.setRememberMe(true);
 		 result.setState(1);
 		 result.setMsg("登陆请求成功");
 		return result;

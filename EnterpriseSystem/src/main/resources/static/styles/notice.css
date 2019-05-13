@@ -1,6 +1,4 @@
-html body{
-	background-image:url(../images/noticList.jpg);
-}
+
 .body_content{
 	position:absolute;
 	width:100%;
@@ -12,7 +10,7 @@ html body{
 #span_title{
 	position:absolute;
 	left:35%;
-	color:#fff;
+	color:#000000;
 }
 .notice_list{
 	position:absolute;
@@ -33,7 +31,7 @@ html body{
 	width:80%;
 }
 a{
-	color:#ffffff;
+	color:#000;
 }
 .notice_list a:hover{
 	color:#ff8080;
@@ -43,6 +41,6 @@ a{
 }
 .layui-table tbody tr:hover {background-color: #0080c0}
 .layui-table{
-	background-color:rgba(0,0,0,0.5);
-	color:#ffffff;
+	
+	color:#000;
 }

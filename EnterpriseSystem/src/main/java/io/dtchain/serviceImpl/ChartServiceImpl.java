@@ -1,5 +1,6 @@
 package io.dtchain.serviceImpl;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,13 +19,15 @@ public class ChartServiceImpl implements ChartService{
 	private ChartDao chartDao;
 	@Override
 	public Result<Object> getChartData() {
+		//String year=LocalDateTime.now().toLocalDate().getYear()+"";
+		String year=2018+"";
 		int[] late=new int[12];
 		int[] earlyRetr=new int[12];
 		int[] overTime=new int[12];
 		int[] days=new int[12];
 		List<int[]> data=new ArrayList<int[]>();
 		String empName=(String)SecurityUtils.getSubject().getPrincipal();
-		List<ChartData> list=chartDao.getChartData(empName);
+		List<ChartData> list=chartDao.getChartData(empName,year);
 
 		for(ChartData cd:list) {
 			late[cd.getMonth()-1]=cd.getLate();

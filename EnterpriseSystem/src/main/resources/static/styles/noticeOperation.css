@@ -1,6 +1,4 @@
-html body{
-	background-image:url(../images/notice.jpg);
-}
+
 .tabBody{
 	position:absolute;
 	width:80%;
@@ -29,10 +27,9 @@ html body{
 	border-right:0px;
 }
 .layui-table{
-	background-color:rgba(0,0,0,0.5);
-	color:#ffffff;
+	color:#000;
 }
 .layui-table tbody tr:hover {background-color: #0080c0}
 a{
-	color:#fff;
+	color:#000;
 }

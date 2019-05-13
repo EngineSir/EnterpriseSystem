@@ -51,7 +51,6 @@ public class MangageController {
 	@PostMapping(value="/addEmp.io")
 	@ResponseBody
 	public Result<Object> addEmp(EmpInfo emp) {
-		System.out.println(emp);
 		return mangageService.addEmp(emp);
 	}
 

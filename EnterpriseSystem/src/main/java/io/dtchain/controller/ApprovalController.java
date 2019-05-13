@@ -104,7 +104,7 @@ public class ApprovalController {
 	@PutMapping(value = "/operation.io")
 	@ResponseBody
 	public Result<Object> operation(@ApiParam(value = "请假记录id", required = true) @RequestParam(value = "id") String id,
-									@ApiParam(value = "审批状态  0：拒绝 1：同意", required = true) @RequestParam(value = "approverStatue") int approverStatue){
+									@ApiParam(value = "审批状态  0：拒绝 1：同意 2:待审批", required = true) @RequestParam(value = "approverStatue") int approverStatue){
 		return approvalService.operation(id, approverStatue);
 	}
 	

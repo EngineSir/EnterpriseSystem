@@ -1,6 +1,4 @@
-html body{
-	background-image:url(../images/dataUpload.jpg);
-}
+
 .body_layer{
 	position:absolute;
 	left:13%;
@@ -13,23 +11,19 @@ html body{
 	left:5%;
 	width:90%;
 	height:100%;
-	color:#fff;
+	color:#000;
 }
 .remark{
-	color:#fff;
+	color:#000;
 }
 
 .layui-table{
-	background-color:rgba(0,0,0,0.5);
-	color:#ffffff;
+	color:#000;
 }
 .layui-input{
-	background-color:rgba(0,0,0,0.5);
-	color:#fff;
+	color:#000;
 }
-.remark{
-	background-color:rgba(0,0,0,0.5);
-}
+
 
 .sub_btn {
 	position:absolute;

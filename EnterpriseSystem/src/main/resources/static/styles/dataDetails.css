@@ -1,6 +1,4 @@
-html body{
-	background-image:url(../images/noticList.jpg);
-}
+
 .contentBody{
 	position:absolute;
 	top:9%;
@@ -45,13 +43,13 @@ html body{
 	left:8%;
 }
 a{
-	color:#fff;
+	color:#000;
 }
 a:hover{
 	color:red;
 }
 .layui-table tbody tr:hover {background-color: #0080c0}
 .layui-table{
-	background-color:rgba(0,0,0,0.5);
-	color:#ffffff;
+	/*background-color:rgba(0,0,0,0.5);*/
+	color:#000000;
 }

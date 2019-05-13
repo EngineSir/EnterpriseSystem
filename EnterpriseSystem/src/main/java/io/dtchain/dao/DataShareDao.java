@@ -75,4 +75,11 @@ public interface DataShareDao {
 	 * @return
 	 */
 	public int delDoc(Map<String,Object> map);
+	
+	/**
+	 * 通过id查询后缀
+	 * @param id
+	 * @return
+	 */
+	public String getSuffixById(String id);
 }

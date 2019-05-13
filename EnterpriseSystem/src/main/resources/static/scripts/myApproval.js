@@ -122,6 +122,7 @@ function pendingApproval(){
 		async : false,
 		success : function(result) {
 			count = result.count;
+			console.log("总数:"+count);
 		},
 		error : function() {
 			alert("查询失败");
@@ -151,6 +152,8 @@ function pendingApproval(){
 	}else{
 			delTr("#pendingApproval");
 			$("#countRed").text("");
+			console.log("记录为0");
+			layer.msg("对不起，没有该记录");
 	}
 }
 //
@@ -237,7 +240,6 @@ function authorityUrl(){
 	return n;
 }
 function createTr(data,id,n) {
-
 	var state="";
 	if(data.approverStatue==0){
 		state="拒绝";
@@ -257,7 +259,7 @@ function createTr(data,id,n) {
 	tr += '<th style="width: 289px;"><textarea readonly class="layui-textarea">'+data.leaveRegard+'</textarea>';
 	tr += '</th>';
 	tr += '<th style="width: 250px;">';
-	if(n==1){
+	if(n==1 && data.applicant!=$(".admin").text()){
 		tr += '<button class="layui-btn layui-btn-primary layui-btn-s adopt">';
 		tr += '	<i class="layui-icon" style="font-size: 15px">&#xe672;</i>';
 		tr += '</button>同意';
@@ -313,6 +315,7 @@ function operation(id,approverStatue){
 		url:"approval/operation.io",
 		type:"put",
 		dataType:"json",
+		async : false,
 		data:{"id":id,"approverStatue":approverStatue},
 		success:function(result){
 			console.log(result);

@@ -28,13 +28,13 @@ function queryEmp(value,statue) {
 			alert("查询总数出错");
 		}
 	});
-
 	layui.use([ 'laypage', 'layer' ], function() {
 		laypage = layui.laypage, layer = layui.layer;
 		// 总页数大于页码总数
 		if(count>0){
 			laypage.render({
 				elem : 'demo1',
+				limit : 8,
 				count : count,// 数据总数,
 				groups : 4,
 				jump : function(obj) {
