@@ -102,7 +102,7 @@ function approval(applicant,createStartTime,createEndTime,approverStatue,statue)
 			}
 		});
 	}else{
-		layer.msg("没有该结果数据，请从新查询");
+		//layer.msg("没有该结果数据，请从新查询");
 	}
 	
 }
