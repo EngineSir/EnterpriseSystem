@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Param;
 
 import io.dtchain.entity.EmpInfo;
+import io.dtchain.entity.UserResoure;
 
 public interface AuthorityDao {
 	
@@ -51,4 +52,12 @@ public interface AuthorityDao {
 	 * @return
 	 */
 	public int delAuthority(Map<String, Object> map);
+	
+	/**
+	 * 获取用户资源id
+	 * @param userId
+	 * @param resourceId
+	 * @return
+	 */
+	public UserResoure getUserResoure(@Param(value = "userId") String userId,@Param(value = "resourceId") String resourceId);
 }

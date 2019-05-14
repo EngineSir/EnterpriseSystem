@@ -1,6 +1,4 @@
-html body{
-	background-image:url(../images/bg.jpg);
-}
+
 .body_layer{
 	position:absolute;
 	left:13%;
@@ -20,17 +18,16 @@ html body{
 }
 
 .layui-table{
-	background-color:rgba(0,0,0,0.5);
-	color:#ffffff;
+	
+	color:#000;
 }
 .layui-input{
-	background-color:rgba(0,0,0,0.5);
-	color:#fff;
+	color:#000;
 }
 .remark{
-	background-color:rgba(0,0,0,0.5);
+	color:#000;
 }
-.layui-table tbody tr:hover {background-color: #0080c0}
+.layui-table tbody tr:hover {background-color: #95ddff}
 .layui-table td{
 	text-align:center;
 }

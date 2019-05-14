@@ -90,7 +90,11 @@ function submitBtn(){
 	var leaveNum=$("#leaveNum").val();
 	var leaveRegard=$("#leaveRegard").val();
 	var approver=$(".ulList").find("li").text();
-
+	var numReg=/^[0-9]*$/;
+	if(!numReg.test(leaveNum)){
+		alert("请假天数只能是数字");
+		return true;
+	}
 	if(leaveType!="" && approver!="" && start!="" && end!="" && leaveNum!="" && leaveRegard!=""){
 		$.ajax({
 			url:"approval/leaveApplication.io",
@@ -106,5 +110,7 @@ function submitBtn(){
 				alert("提交失败");
 			}
 		});
+	}else{
+		alert("审批人不能为空");
 	}
 }

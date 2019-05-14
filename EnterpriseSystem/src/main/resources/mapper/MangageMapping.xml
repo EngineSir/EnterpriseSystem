@@ -49,7 +49,8 @@
 	</select>
 	<!-- 查询审批人信息 -->
 	<select id="queryApprovalInfo" parameterType="map" resultType="io.dtchain.entity.EmpInfo">
-		select empName,empDept,empPosition from EmpTable limit #{page},#{limit}
+		<!-- select empName,empDept,empPosition from EmpTable limit #{page},#{limit} -->
+		select distinct  empName,empDept,empPosition from EmpTable as et join user_resource as ur on et.empId=ur.userId
 	</select>
 	<select id="queryEmpCount" resultType="int">
 		SELECT COUNT(*) FROM EmpTable

@@ -6,6 +6,7 @@ $(document).ready(function(){
 		    elem: '#uploadFile'
 		    ,url: '/dataShare/uploadDataFile.io'
 		    ,accept: 'file' //普通文件
+		    ,size : 0
 		    ,auto:false
 		    ,data:{docTitle:function(){
 		    	return $(".docTitle").val().trim();

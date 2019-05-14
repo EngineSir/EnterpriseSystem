@@ -1,6 +1,4 @@
-html body{
-	background-image:url(../images/bg.jpg);
-}
+
 .body_layer {
 	position: absolute;
 	top: 15%;
@@ -89,6 +87,6 @@ span {
 }
 .layui-table tbody tr:hover {background-color: #0080c0}
 .layui-table{
-	background-color:rgba(0,0,0,0.5);
-	color:#ffffff;
+	
+	color:#000;
 }

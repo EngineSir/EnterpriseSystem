@@ -22,4 +22,7 @@
   	<delete id="delAuthority" parameterType="Map">
   		delete from user_resource where userId=#{userId} and resourceId=#{resourceId}
   	</delete>
+  	<select id="getUserResoure" parameterType="string" resultType="io.dtchain.entity.UserResoure">
+  		select * from user_resource where userId=#{userId} and resourceId=#{resourceId}
+  	</select>
   </mapper>

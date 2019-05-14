@@ -5,7 +5,7 @@
 body{
 	background:#232332;
 	overflow:hidden;
-	font-family:'Î¢ÈíÑÅºÚ';
+	font-family:'Î¢ï¿½ï¿½ï¿½Åºï¿½';
 }
 .global{
 	width:1px;
@@ -94,7 +94,7 @@ dt{
 }
 h3{
 	line-height:55px;
-	font-family:'ËÎÌå';
+	font-family:'ï¿½ï¿½ï¿½ï¿½';
 	font-size:25px;
 	font-weight:400;
 	text-indent:1.5em;
@@ -170,6 +170,9 @@ input[type=text],input[type=password]{
 	text-indent: 30px;
 	background:#fff url(../images/pass.png) no-repeat 7px 5px;
 }
-.layui-form-checkbox i{
+/*.layui-form-checkbox i{
+	left:180px;
+}*/
+.layui-form-checkbox[lay-skin=primary] i{
 	left:80px;
 }
