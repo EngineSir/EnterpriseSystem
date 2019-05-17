@@ -302,12 +302,13 @@ function createTr(num,data) {
 	str += "<td>" + data.empSchool + "</td>";
 	str += "<td>" + data.empPosition + "</td>";
 	str += "<td>" + data.empAddress + "</td>";
-	str += "<td>" + data.empSalary + "</td>";
+	
 	if (state == 1) {
 		/*
 		 * str += "<td><button type='button' class='layui-btn layui-btn-normal delete'>删除</button></td>";
 		str += "<td><button type='button' class='layui-btn layui-btn-normal update'>修改</button></td>";
 		 * */
+		str += "<td>" + data.empSalary + "</td>";
 		str += "<td><span class='update'>修改</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class='delete'>删除</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class='reset'>重置</span></td>";
 	}
 	str += "</tr>";
